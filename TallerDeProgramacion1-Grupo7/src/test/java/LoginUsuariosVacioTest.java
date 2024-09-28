@@ -89,7 +89,7 @@ public class LoginUsuariosVacioTest {
     }
 
     @Test
-    public void testLoginContraseñaNoExiste(){
+    public void testLoginContraseniaNoExiste(){
         try {
             Empresa.getInstance().login("a","123");
             fail("Se logueo un Cliente");
@@ -99,5 +99,7 @@ public class LoginUsuariosVacioTest {
             fail("No deberia tirar este error porque directamente esta vacio el arreglo de clientes");
         }
     }
+
+
 
 }
