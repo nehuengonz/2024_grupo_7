@@ -100,6 +100,54 @@ public class LoginUsuariosVacioTest {
         }
     }
 
+    @Test
+    public void testLoginAdmin_2_1(){
+        try {
+            Empresa.getInstance().login("ADMIN","admin");
+            fail("Se logueo un Administrador");
+        } catch (UsuarioNoExisteException e) {
+            Assert.assertNull(Empresa.getInstance().getUsuarioLogeado());
+
+        } catch (PasswordErroneaException e) {
+            fail("No deberia tirar este error");
+        }
+    }
+
+    @Test
+    public void testLoginAdmin_2(){
+        try {
+            Empresa.getInstance().login("Admin","admin");
+            fail("Se logueo un Administrador");
+        } catch (UsuarioNoExisteException e) {
+            Assert.assertNull(Empresa.getInstance().getUsuarioLogeado());
+        } catch (PasswordErroneaException e) {
+            fail("No deberia tirar este error");
+        }
+    }
+
+    @Test
+    public void testLoginAdmin_6(){
+        try {
+            Empresa.getInstance().login("admin","Admin");
+            fail("Se logueo un Administrador");
+        } catch (UsuarioNoExisteException e) {
+            fail("No deberia tirar este error");
+        } catch (PasswordErroneaException e) {
+            Assert.assertNull(Empresa.getInstance().getUsuarioLogeado());
+
+        }
+    }
 
 
+    @Test
+    public void testLoginAdmin_6_1(){
+        try {
+            Empresa.getInstance().login("admin","ADMIN");
+            fail("Se logueo un Administrador");
+        } catch (UsuarioNoExisteException e) {
+            fail("No deberia tirar este error");
+        } catch (PasswordErroneaException e) {
+            Assert.assertNull(Empresa.getInstance().getUsuarioLogeado());
+        }
+    }
 }

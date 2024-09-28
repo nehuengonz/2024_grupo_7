@@ -68,7 +68,7 @@ public class LoginUsuariosNoVacioTest {
     }
 
     @Test
-    public void loginClienteNombreMalContraseniaBien(){
+    public void loginCliente8_1(){
         try{
             Empresa.getInstance().login("Fulgen", "4321");
             fail("el nombre de usuario no existe");
@@ -89,5 +89,7 @@ public class LoginUsuariosNoVacioTest {
             fail("El metodo no deberia arrojar esta excepcion");
         }
     }
+
+
 
 }
