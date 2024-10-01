@@ -1,17 +1,18 @@
 package test;
 
+import modeloDatos.Cliente;
+
 public class EscenarioVacio {
-    public Object sistema;
+    public Cliente cliente;
 
     public EscenarioVacio(){
-
     }
 
     public void setUp(){
-        sistema = new Object();
     }
 
     public void tearDown(){
-        sistema = null;
     }
+    
+    
 }
