@@ -14,7 +14,7 @@ import org.junit.runner.JUnitCore;
 import static org.junit.Assert.*;
 
 public class AgregaChoferTest {
-    private Empresa empresa;
+
 
     public AgregaChoferTest() {
     }
