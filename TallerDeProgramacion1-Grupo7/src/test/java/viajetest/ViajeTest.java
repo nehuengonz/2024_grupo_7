@@ -13,7 +13,6 @@ public class ViajeTest {
     private Viaje viajeConMascota_Peligrosa;
     private Viaje viajeConBaul_SinAsfaltar;
     private Viaje viajeSinExtras_SinAsfaltar;
-    private Viaje viajeConExtras_Standard;
     private Viaje viajeSinExtras_Peligrosa;
     private Viaje viajeConMascota_Standard;
 
@@ -68,9 +67,12 @@ public class ViajeTest {
 
     @After
     public void tearDown(){
-
         viajeSinExtras_Standard = null;
         viajeConMascota_Peligrosa = null;
+        viajeSinExtras_Peligrosa = null;
+        viajeConMascota_Standard = null;
+        viajeSinExtras_SinAsfaltar = null;
+        viajeConBaul_SinAsfaltar = null;
     }
 
     //CASO BASE
@@ -115,8 +117,6 @@ public class ViajeTest {
 
         Assert.assertEquals("No se calcula bien el valor del viaje con baul sin asfaltar",21.0, viajeConBaul_SinAsfaltar.getValor(),0.0000001);
     }
-
-
 
     @Test
     public void finalizarViajeTest(){
