@@ -122,6 +122,7 @@ public class ViajeTest {
     public void finalizarViajeTest(){
         viajeSinExtras_Standard.finalizarViaje(3);
         Assert.assertEquals("No se setea bien el valor de calificacion", viajeSinExtras_Standard.getCalificacion(),3);
+        Assert.assertTrue("No se setea bien el estado de finalizado", viajeSinExtras_Standard.isFinalizado());
     }
 
 
