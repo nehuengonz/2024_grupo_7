@@ -11,6 +11,7 @@ import util.Constantes;
 public class PedidoTest {
 	
 	private Pedido pedido;
+	private Cliente cliente;
     //private EscenarioVacio escenarioVacio = new EscenarioVacio();
 
     public PedidoTest() {
@@ -24,6 +25,7 @@ public class PedidoTest {
     @Before
     public void setUp() throws Exception {
         //escenarioVacio.setUp();
+    	cliente = new Cliente("wutang", "12345", "Thiago");
     }
 
     @After
@@ -42,49 +44,35 @@ public class PedidoTest {
 
 
     @Test
-    public void testConstructorPrueba1(){
-    	Cliente cliente = new Cliente("wutang", "12345", "Thiago");
+    public void testConstructorPedido1(){
     	this.pedido = new Pedido(cliente, 1, true, true, 10, Constantes.ZONA_PELIGROSA);
     	assertNotNull("El pedido no fue creado correctamente",this.pedido);
     }
     @Test
-    public void testConstructorPrueba2(){
-    	Cliente cliente = new Cliente("wutang", "12345", "Thiago");
+    public void testConstructorPedido2(){
     	this.pedido = new Pedido(cliente, 10, false, false, 5, Constantes.ZONA_SIN_ASFALTAR);
     	assertNotNull("El pedido no fue creado correctamente", this.pedido);
     }
     @Test
-    public void testConstructorPrueba3(){
-    	Cliente cliente = new Cliente("wutang", "12345", "Thiago");
+    public void testConstructorPedido3(){
     	this.pedido = new Pedido(cliente, 5, false, true, 0, Constantes.ZONA_STANDARD);
     	assertNotNull("El pedido no fue creado correctamente", this.pedido);
     }
     
     @Test
-    public void testConstructorPrueba4(){
-    	this.pedido = new Pedido(null, 5, true, true, 5, Constantes.ZONA_PELIGROSA);
-    	assertNull("El pedido no fue creado correctamente", this.pedido);
+    public void testGetCliente() {
+    	this.pedido = new Pedido(cliente, 1, true, true, 10, Constantes.ZONA_PELIGROSA);
+    	assertEquals("No devuelve correctamente el cliente", cliente, pedido.getCliente());
     }
     
     @Test
-    public void testConstructorPrueba5(){
-    	Cliente cliente = new Cliente("wutang", "12345", "Thiago");
-    	this.pedido = new Pedido(cliente, 0, true, true, 5, Constantes.ZONA_PELIGROSA);
-    }
-    
-    @Test
-    public void testConstructorPrueba6(){
-    	Cliente cliente = new Cliente("wutang", "12345", "Thiago");
-    	this.pedido = new Pedido(cliente, 15, true, true, 5, Constantes.ZONA_PELIGROSA);
+    public void testIsMascota() {
+    	this.pedido = new Pedido(cliente, 1, true, true, 10, Constantes.ZONA_PELIGROSA);
+    	assertTrue("No devuelve correctamente la mascota", pedido.isMascota());
     }
     @Test
-    public void testConstructorPrueba7(){
-    	Cliente cliente = new Cliente("wutang", "12345", "Thiago");
-    	this.pedido = new Pedido(cliente, 5, true, true, -5, Constantes.ZONA_PELIGROSA);
-    }
-    @Test
-    public void testConstructorPrueba8(){
-    	Cliente cliente = new Cliente("wutang", "12345", "Thiago");
-    	this.pedido = new Pedido(cliente, 5, true, true, 5, "Zona Peligrosa");
+    public void testGetZona() {
+    	this.pedido = new Pedido(cliente, 1, true, true, 10, Constantes.ZONA_PELIGROSA);
+    	assertEquals("No devuelve correctamente la zona", Constantes.ZONA_PELIGROSA, pedido.getZona());
     }
 }
