@@ -4,7 +4,6 @@ public class EscenarioVacio {
     public Object sistema;
 
     public EscenarioVacio(){
-
     }
 
     public void setUp(){
