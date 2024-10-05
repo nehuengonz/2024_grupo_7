@@ -22,8 +22,11 @@ public class TestCombi {
 
     @After
     public void tearDown() throws Exception {
+        combi = null; // Limpiar referencia a combi
+        cliente = null; // Limpiar referencia a cliente
     }
 
+    // Tests de puntajes válidos
     @Test
     public void testGetPuntajePedidoValidoConMascota() {
         Pedido pedido = new Pedido(cliente, 6, true, false, 25, Constantes.ZONA_SIN_ASFALTAR);
@@ -37,12 +40,6 @@ public class TestCombi {
     }
 
     @Test
-    public void testGetPuntajePedidoInvalidoPorPasajerosExcedidos() {
-        Pedido pedido = new Pedido(cliente, 11, false, false, 25, Constantes.ZONA_SIN_ASFALTAR); // Más pasajeros que capacidad.
-        assertNull("El método debería devolver null", combi.getPuntajePedido(pedido));
-    }
-
-    @Test
     public void testGetPuntajePedidoValidoConBaulConMascota() {
         Pedido pedido = new Pedido(cliente, 6, true, true, 25, Constantes.ZONA_SIN_ASFALTAR);
         assertEquals("El puntaje no se calcula correctamente con baúl y mascota", Integer.valueOf(160), combi.getPuntajePedido(pedido));
@@ -52,5 +49,31 @@ public class TestCombi {
     public void testGetPuntajePedidoValidoConBaulSinMascota() {
         Pedido pedido = new Pedido(cliente, 6, false, true, 25, Constantes.ZONA_SIN_ASFALTAR);
         assertEquals("El puntaje no se calcula correctamente con baúl y sin mascota", Integer.valueOf(160), combi.getPuntajePedido(pedido));
+    }
+
+    @Test
+    public void testGetPuntajePedidoInvalidoPorPasajerosExcedidos() {
+        Pedido pedido = new Pedido(cliente, 11, false, false, 25, Constantes.ZONA_SIN_ASFALTAR); // Más pasajeros que capacidad.
+        assertNull("El método debería devolver null", combi.getPuntajePedido(pedido));
+    }
+
+    @Test
+    public void testGetPuntajePedidoInvalidoPorMascotaSinPermiso() {
+        combi = new Combi("BBB 456", 10, false); // Combi que no permite mascotas
+        Pedido pedido = new Pedido(cliente, 6, true, false, 25, Constantes.ZONA_SIN_ASFALTAR);
+        assertNull("El método debería devolver null porque la combi no acepta mascotas", combi.getPuntajePedido(pedido));
+    }
+
+    @Test
+    public void testGetPuntajePedidoConMenosPasajeros() {
+        Pedido pedido = new Pedido(cliente, 4, true, false, 25, Constantes.ZONA_SIN_ASFALTAR); // Justo en el límite inferior
+        assertNull("El método debería devolver null porque hay menos de 5 pasajeros", combi.getPuntajePedido(pedido));
+    }
+
+    @Test
+    public void testGetPuntajePedidoConUnaMascotaSinPermiso() {
+        combi = new Combi("EEE 123", 10, false); // Combi que no permite mascotas
+        Pedido pedido = new Pedido(cliente, 6, true, false, 25, Constantes.ZONA_SIN_ASFALTAR); // Con mascota
+        assertNull("El método debería devolver null porque la combi no acepta mascotas", combi.getPuntajePedido(pedido));
     }
 }
