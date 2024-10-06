@@ -26,6 +26,14 @@ public class TestMoto {
         cliente = null; // Limpiar referencia a cliente
     }
 
+    @Test
+    public void testConstructor() {
+        assertNotNull("La moto no debería ser nula", moto);
+        assertEquals("La patente debería ser AAA 123", "AAA 123", moto.getPatente());
+        assertEquals("La cantidad de plazas debería ser 1", 1, moto.getCantidadPlazas());
+        assertFalse("La mascota debería estar en false", moto.isMascota());
+    }
+
     // Tests para getPuntajePedido
     @Test
     public void testGetPuntajePedidoValido() {

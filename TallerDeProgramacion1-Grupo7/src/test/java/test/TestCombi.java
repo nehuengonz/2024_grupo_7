@@ -26,6 +26,14 @@ public class TestCombi {
         cliente = null; // Limpiar referencia a cliente
     }
 
+    @Test
+    public void testConstructorValido() {
+        Combi combiTest = new Combi("AAA 123", 10, true);
+        assertEquals("La patente no se inicializa correctamente", "AAA 123", combiTest.getPatente());
+        assertEquals("La cantidad de plazas no se inicializa correctamente", 10, combiTest.getCantidadPlazas());
+        assertTrue("La mascota debe estar permitida", combiTest.isMascota());
+    }
+
     // Tests de puntajes válidos
     @Test
     public void testGetPuntajePedidoValidoConMascota() {
