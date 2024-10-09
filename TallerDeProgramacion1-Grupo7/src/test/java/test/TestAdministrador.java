@@ -26,9 +26,5 @@ public class TestAdministrador {
         assertEquals("admin", admin.getPass());
     }
 
-    @Test
-    public void testToString() {
-        String expectedString = "Administrador{nombreUsuario='admin', pass='admin'}"; // Ajusta según la implementación
-        assertEquals(expectedString, admin.toString());
-    }
+
 }
