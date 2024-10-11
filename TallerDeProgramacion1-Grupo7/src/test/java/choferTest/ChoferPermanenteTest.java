@@ -35,9 +35,9 @@ public class ChoferPermanenteTest {
 
     @Test
     public void ChoferPermanenteConstructor1900Test() {
-        ChoferPermanente choferPermanente = new ChoferPermanente("1234567","Facundo",1900,0);
+        ChoferPermanente choferPermanente = new ChoferPermanente("1234589","Santiago",1900,0);
 
-        assertEquals("El dni del chofer no fue inicializado correctamente","1234567", choferPermanente.getDni());
+        assertEquals("El dni del chofer no fue inicializado correctamente","1234589", choferPermanente.getDni());
         assertEquals("El nombre del chofer no fue inicializado correctamente", "Facundo", choferPermanente.getNombre());
         assertEquals("El anio de ingreso de chofer no fue inicializado correctamente",1900, choferPermanente.getAnioIngreso());
         assertEquals("la cantidad de hijos del chofer no fue inicializado correctamente", 0, choferPermanente.getCantidadHijos());
@@ -45,10 +45,10 @@ public class ChoferPermanenteTest {
 
     @Test
     public void ChoferPermanenteConstructor3000Test() {
-        ChoferPermanente choferPermanente = new ChoferPermanente("1234567","Facundo",3000,0);
+        ChoferPermanente choferPermanente = new ChoferPermanente("1234534","Florencia",3000,0);
         //fail("Enrealidad si bien cumple el contrato no deberia dejar crear");
-        assertEquals("El dni del chofer no fue inicializado correctamente","1234567", choferPermanente.getDni());
-        assertEquals("El nombre del chofer no fue inicializado correctamente", "Facundo", choferPermanente.getNombre());
+        assertEquals("El dni del chofer no fue inicializado correctamente","1234534", choferPermanente.getDni());
+        assertEquals("El nombre del chofer no fue inicializado correctamente", "Florencia", choferPermanente.getNombre());
         assertEquals("El anio de ingreso de chofer no fue inicializado correctamente",3000, choferPermanente.getAnioIngreso());
         assertEquals("la cantidad de hijos del chofer no fue inicializado correctamente", 0, choferPermanente.getCantidadHijos());
     }
