@@ -18,15 +18,13 @@ public class TestPersistencia {
 
     @Before
     public void setUp() throws Exception {
-        // Inicializar la persistencia y la empresa
         persistencia = new PersistenciaBIN();
         empresa = new EmpresaDTO();
-        llenaEmpresa(empresa);  // Llenar la empresa con algunos datos de prueba
+        llenaEmpresa(empresa);
     }
 
     @After
     public void tearDown() {
-        // Aquí puedes eliminar el archivo de prueba si lo deseas
         File archivo = new File("empresaPrueba.bin");
         if (archivo.exists()) {
             archivo.delete();
@@ -95,17 +93,16 @@ public class TestPersistencia {
             Assert.assertNotNull("La empresa leída no debería ser nula", empresaLeida);
 
             Assert.assertEquals("La cantidad de clientes no coincide", this.empresa.getClientes().size(), empresaLeida.getClientes().size());
-
             for (String nombreUsuario : this.empresa.getClientes().keySet()) {
                 Cliente clienteOriginal = this.empresa.getClientes().get(nombreUsuario);
                 Cliente clienteLeido = empresaLeida.getClientes().get(nombreUsuario);
+                Assert.assertNotNull("El cliente leído no debería ser nulo", clienteLeido);
                 Assert.assertEquals("El nombre de usuario de cliente no coincide", clienteOriginal.getNombreUsuario(),clienteLeido.getNombreUsuario());
                 Assert.assertEquals("El nombre de cliente no coincide", clienteOriginal.getNombreReal(),clienteLeido.getNombreReal());
                 Assert.assertEquals("La contrasenia de cliente no coincide", clienteOriginal.getPass(),clienteLeido.getPass());
             }
 
             Assert.assertEquals("La cantidad de vehiculos no coincide", this.empresa.getVehiculos().size(), empresaLeida.getVehiculos().size());
-
             for(String patente : this.empresa.getVehiculos().keySet()){
                 Vehiculo vehiculoOriginal = this.empresa.getVehiculos().get(patente);
                 Vehiculo vehiculoLeido = empresaLeida.getVehiculos().get(patente);
@@ -114,14 +111,54 @@ public class TestPersistencia {
             }
 
             Assert.assertEquals("La cantidad de choferes no coincide", this.empresa.getChoferes().size(), empresaLeida.getChoferes().size());
-
             for(String dni : this.empresa.getChoferes().keySet()){
                 Chofer choferOriginal = this.empresa.getChoferes().get(dni);
                 Chofer choferLeido = empresaLeida.getChoferes().get(dni);
-                Assert.assertEquals("La patente no coincide", choferOriginal.getDni(),choferLeido.getDni());
+                Assert.assertNotNull("El chofer leído no debería ser nulo", choferLeido);
+                Assert.assertEquals("El DNI del chofer no coincide", choferOriginal.getDni(),choferLeido.getDni());
                 Assert.assertEquals("El nombre del chofer no coincide", choferOriginal.getNombre(),choferLeido.getNombre());
-                Assert.assertEquals("El sueldo bruto del chofer no coincide", choferOriginal.getSueldoBruto(),choferLeido.getSueldoBruto());
-                Assert.assertEquals("El sueldo neto del chofer no coincide", choferOriginal.getSueldoNeto(),choferLeido.getSueldoNeto());
+                Assert.assertEquals("El sueldo bruto del chofer no coincide", choferOriginal.getSueldoBruto(),choferLeido.getSueldoBruto(),0.001);
+                Assert.assertEquals("El sueldo neto del chofer no coincide", choferOriginal.getSueldoNeto(),choferLeido.getSueldoNeto(),0.001);
+            }
+
+            Assert.assertEquals("La cantidad de pedidos no coincide", this.empresa.getPedidos().size(), empresaLeida.getPedidos().size());
+            for (Cliente cliente : this.empresa.getPedidos().keySet()) {
+                Pedido pedidoOriginal = this.empresa.getPedidos().get(cliente);
+                Pedido pedidoLeido = empresaLeida.getPedidos().get(cliente);
+                Assert.assertNotNull("El pedido leído no debería ser nulo", pedidoLeido);
+                Assert.assertEquals("El cliente del pedido no coincide", pedidoOriginal.getCliente(), pedidoLeido.getCliente());
+                Assert.assertEquals("El km del pedido no coincide", pedidoOriginal.getKm(), pedidoLeido.getKm());
+                Assert.assertEquals("La zona del pedido no coincide", pedidoOriginal.getZona(), pedidoLeido.getZona());
+                Assert.assertEquals("La cantidad de pasajeros del pedido no coincide", pedidoOriginal.getCantidadPasajeros(), pedidoLeido.getCantidadPasajeros());
+                Assert.assertEquals("Mascota no coincide en pedido", pedidoOriginal.isMascota(), pedidoLeido.isMascota());
+                Assert.assertEquals("Baul no coincide en pedido", pedidoOriginal.isBaul(), pedidoLeido.isBaul());
+            }
+
+
+            Assert.assertEquals("La cantidad de viajes iniciados no coincide", this.empresa.getViajesIniciados().size(), empresaLeida.getViajesIniciados().size());
+            for (Cliente cliente : this.empresa.getViajesIniciados().keySet()) {
+                Viaje viajeOriginal = this.empresa.getViajesIniciados().get(cliente);
+                Viaje viajeLeido = empresaLeida.getViajesIniciados().get(cliente);
+                Assert.assertEquals("El chofer del viaje no coincide", viajeOriginal.getChofer(), viajeLeido.getChofer());
+                Assert.assertEquals("El pedido del viaje no coincide", viajeOriginal.getPedido(), viajeLeido.getPedido());
+                Assert.assertEquals("El valor del viaje no coincide", viajeOriginal.getValor(), viajeLeido.getValor());
+                Assert.assertEquals("El vehículo del viaje no coincide", viajeOriginal.getVehiculo(), viajeLeido.getVehiculo());
+                Assert.assertEquals("La calificación del viaje no coincide", viajeOriginal.getCalificacion(), viajeLeido.getCalificacion());
+            }
+
+            Assert.assertEquals("La cantidad de viajes terminados no coincide", this.empresa.getViajesTerminados().size(), empresaLeida.getViajesTerminados().size());
+            for (Viaje viaje : this.empresa.getViajesTerminados()) {
+                Assert.assertTrue("El viaje terminado no se encontró", empresaLeida.getViajesTerminados().contains(viaje));
+            }
+
+            Assert.assertEquals("La cantidad de choferes desocupados no coincide", this.empresa.getChoferesDesocupados().size(), empresaLeida.getChoferesDesocupados().size());
+            for (Chofer chofer : this.empresa.getChoferesDesocupados()) {
+                Assert.assertTrue("El chofer desocupado no se encontró", empresaLeida.getChoferesDesocupados().contains(chofer));
+            }
+
+            Assert.assertEquals("La cantidad de vehículos desocupados no coincide", this.empresa.getVehiculosDesocupados().size(), empresaLeida.getVehiculosDesocupados().size());
+            for (Vehiculo vehiculo : this.empresa.getVehiculosDesocupados()) {
+                Assert.assertTrue("El vehículo desocupado no se encontró", empresaLeida.getVehiculosDesocupados().contains(vehiculo));
             }
 
         } catch (IOException | ClassNotFoundException e) {
@@ -131,8 +168,34 @@ public class TestPersistencia {
 
 
     private void llenaEmpresa(EmpresaDTO empresa) {
-        empresa.getClientes().put("Sofia123", new Cliente("Sofia123", "123456", "Sofia"));
-        empresa.getChoferes().put("87654321", new ChoferTemporario("87654321", "Carlos P"));
-        empresa.getVehiculos().put("ABC123", new Auto("ABC123", 4, true));
+        Cliente cliente1 = new Cliente("Sofia123", "123456", "Sofia");
+        empresa.getClientes().put(cliente1.getNombreUsuario(), cliente1);
+        System.out.println("Cliente agregado: " + cliente1.getNombreUsuario());
+
+        Chofer chofer1 = new ChoferTemporario("87654321", "Carlos P");
+        empresa.getChoferes().put(chofer1.getDni(), chofer1);
+        System.out.println("Chofer agregado: " + chofer1.getDni());
+
+        Vehiculo vehiculo1 = new Auto("ABC123", 4, true);
+        empresa.getVehiculos().put(vehiculo1.getPatente(), vehiculo1);
+        System.out.println("Vehículo agregado: " + vehiculo1.getPatente());
+
+        empresa.getChoferesDesocupados().add(chofer1);
+        empresa.getVehiculosDesocupados().add(vehiculo1);
+        System.out.println("Chofer y vehículo agregados a la lista desocupados.");
+
+        Pedido pedido1 = new Pedido(cliente1, 3, true, false, 10, "ZONA_PELIGROSA");
+        empresa.getPedidos().put(cliente1, pedido1);
+        System.out.println("Pedido agregado para cliente: " + cliente1.getNombreUsuario());
+
+        Viaje viaje1 = new Viaje(pedido1, chofer1, vehiculo1);
+        empresa.getViajesIniciados().put(cliente1, viaje1);
+        System.out.println("Viaje iniciado para cliente: " + cliente1.getNombreUsuario());
+
+        empresa.getViajesTerminados().add(new Viaje(pedido1, chofer1, vehiculo1));
+        System.out.println("Viaje terminado agregado.");
     }
+
+
 }
+
