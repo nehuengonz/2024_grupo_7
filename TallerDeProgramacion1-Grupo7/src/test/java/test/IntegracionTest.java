@@ -65,6 +65,7 @@ public class IntegracionTest {
         when(vista.getTipoChofer()).thenReturn(Constantes.TEMPORARIO);
         when(vista.getNombreChofer()).thenReturn("Facundo");
         when(vista.getDNIChofer()).thenReturn("123456789");
+
         controlador.setVista(vista);
 
         controlador.login();
