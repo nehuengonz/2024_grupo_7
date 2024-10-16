@@ -11,7 +11,6 @@ import test.TestVacio;
 import static org.junit.Assert.*;
 
 public class LoginUsuariosNoVacioTest {
-    private Empresa empresa;
 
     public LoginUsuariosNoVacioTest() {
     }
@@ -43,8 +42,7 @@ public class LoginUsuariosNoVacioTest {
     @AfterClass
     public static void tearDownAfterClass() throws Exception {
     }
-
-
+    
     @Test
     public void loginClienteCorrecto(){
         try{
