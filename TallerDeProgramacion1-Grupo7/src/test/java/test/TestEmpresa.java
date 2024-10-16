@@ -17,19 +17,33 @@ public class TestEmpresa {
     private Empresa empresa;
     private Cliente cliente;
     private Vehiculo vehiculo;
-    private Chofer chofer;
+    private Chofer chofer, choferSinViajes;
+    private Pedido pedido1,pedido2;
+    private Viaje viaje1, viaje2;
 
     @Before
-    public void setUp() throws UsuarioYaExisteException, ChoferRepetidoException, VehiculoRepetidoException {
+    public void setUp() throws ClienteNoExisteException, ClienteConViajePendienteException, SinVehiculoParaPedidoException, ClienteConPedidoPendienteException, UsuarioYaExisteException, ChoferRepetidoException, VehiculoRepetidoException {
         empresa = Empresa.getInstance();
 
         cliente = new Cliente("Sofia1", "123456789", "Sofia Palladino");
         vehiculo = new Moto("AAA111");
         chofer = new ChoferTemporario("1111111", "Carlos P");
+        choferSinViajes = new ChoferTemporario("222222", "Laura E");
+            empresa.agregarCliente("Sofia1", "123456789", "Sofia Palladino");
+            empresa.agregarChofer(chofer);
+            empresa.agregarChofer(choferSinViajes);
+            empresa.agregarVehiculo(vehiculo);
 
-        empresa.agregarCliente("Sofia1", "123456789", "Sofia Palladino");
-        empresa.agregarChofer(chofer);
-        empresa.agregarVehiculo(vehiculo);
+            pedido1 = new Pedido(cliente, 2, false, false, 10, "ZONA_SEGURA");
+            pedido2 = new Pedido(cliente, 1, false, false, 5, "ZONA_SEGURA");
+
+                empresa.agregarPedido(pedido1);
+
+            viaje1 = new Viaje(pedido1, chofer, vehiculo);
+            empresa.getViajesIniciados().put(cliente,viaje1);
+            empresa.
+            empresa.getViajesTerminados().add(viaje1); // Mover el viaje a terminados
+
     }
 
 
@@ -80,6 +94,7 @@ public class TestEmpresa {
         }
     }
 
+
     @Test
     public void testAgregarPedidoNoCumple() {
         Cliente cliente = empresa.getClientes().get("Sofia1");
@@ -91,11 +106,11 @@ public class TestEmpresa {
         } catch (ClienteNoExisteException e) {
             fail("Se esperaba que el cliente existiera, pero ocurrió una excepción: " + e.getMessage());
         } catch (ClienteConViajePendienteException e) {
-            fail("El cliente tiene un viaje pendiente: " + e.getMessage());
+            fail("Se esperaba que el pedido se agregara, pero el cliente tiene un viaje pendiente: " + e.getMessage());
         } catch (SinVehiculoParaPedidoException e) {
-            fail("No hay vehículo disponible: " + e.getMessage());
+            fail("Se esperaba que el pedido se agregara, pero no hay vehículo disponible: " + e.getMessage());
         } catch (ClienteConPedidoPendienteException e) {
-            fail("El cliente ya tiene un pedido pendiente: " + e.getMessage());
+            fail("Se esperaba que el pedido se agregara, pero el cliente ya tiene un pedido pendiente: " + e.getMessage());
         }
     }
 
@@ -113,7 +128,7 @@ public class TestEmpresa {
     @Test
     public void testAgregarChoferDuplicado() {
         try {
-            empresa.agregarChofer(chofer);
+            empresa.agregarChofer(chofer); // Ya fue agregado en el setup
             fail("Se esperaba una excepción ChoferRepetidoException");
         } catch (ChoferRepetidoException e) {
             assertEquals("El chofer con DNI 111111 ya está registrado.", e.getMessage());
@@ -122,6 +137,7 @@ public class TestEmpresa {
 
     @Test
     public void testAgregarVehiculoExitoso() {
+        // Crear un nuevo vehículo
         Vehiculo nuevoVehiculo = new Moto("XYZ789");
 
         try {
@@ -133,11 +149,10 @@ public class TestEmpresa {
         }
     }
 
-
     @Test
     public void testAgregarVehiculoDuplicado() {
         try {
-            empresa.agregarVehiculo(vehiculo);
+            empresa.agregarVehiculo(vehiculo); // Ya fue agregado en el setup
             fail("Se esperaba una excepción VehiculoRepetidoException");
         } catch (VehiculoRepetidoException e) {
             assertEquals("El vehículo con patente AAA111 ya está registrado.", e.getMessage());
@@ -151,8 +166,16 @@ public class TestEmpresa {
         assertTrue(clientes.containsKey("Sofia1"));
     }
 
-
-
+    @Test
+    public void testCalificacionDeChoferSinViajes(){ // no lanza la excepcion, pero esta bien hecho el test en mi opinion, entonces debe ser un error en la clase Empresa
+        try {
+             empresa.calificacionDeChofer(choferSinViajes);
+             fail("Se esperaba que se lanzara una excepción SinViajesException");
+        } catch (SinViajesException e) {
+            assertNotNull("La excepción SinViajesException debería haber sido lanzada", e);
+            assertEquals("El chofer no tiene viajes registrados", e.getMessage());
+        }
+    }
 
 
 

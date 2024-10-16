@@ -21,6 +21,7 @@ public class TestPersistencia {
         persistencia = new PersistenciaBIN();
         empresa = new EmpresaDTO();
         llenaEmpresa(empresa);
+
     }
 
     @After
@@ -167,33 +168,48 @@ public class TestPersistencia {
     }
 
 
-    private void llenaEmpresa(EmpresaDTO empresa) {
-        Cliente cliente1 = new Cliente("Sofia123", "123456", "Sofia");
+    public void llenaEmpresa(EmpresaDTO empresa) {
+        // Agregar cliente
+        Cliente cliente1 = new Cliente("Sofia", "123456", "Sofia123");
         empresa.getClientes().put(cliente1.getNombreUsuario(), cliente1);
         System.out.println("Cliente agregado: " + cliente1.getNombreUsuario());
 
+        // Agregar chofer
         Chofer chofer1 = new ChoferTemporario("87654321", "Carlos P");
         empresa.getChoferes().put(chofer1.getDni(), chofer1);
         System.out.println("Chofer agregado: " + chofer1.getDni());
 
+        // Agregar vehículo
         Vehiculo vehiculo1 = new Auto("ABC123", 4, true);
         empresa.getVehiculos().put(vehiculo1.getPatente(), vehiculo1);
         System.out.println("Vehículo agregado: " + vehiculo1.getPatente());
 
+        // Agregar chofer y vehículo a la lista de desocupados
         empresa.getChoferesDesocupados().add(chofer1);
         empresa.getVehiculosDesocupados().add(vehiculo1);
         System.out.println("Chofer y vehículo agregados a la lista desocupados.");
 
+        // Crear y agregar pedido
         Pedido pedido1 = new Pedido(cliente1, 3, true, false, 10, "ZONA_PELIGROSA");
-        empresa.getPedidos().put(cliente1, pedido1);
+        empresa.getPedidos().put(cliente1, pedido1); // Aquí aseguramos que el pedido se almacene
         System.out.println("Pedido agregado para cliente: " + cliente1.getNombreUsuario());
 
+        // Iniciar viaje
         Viaje viaje1 = new Viaje(pedido1, chofer1, vehiculo1);
         empresa.getViajesIniciados().put(cliente1, viaje1);
         System.out.println("Viaje iniciado para cliente: " + cliente1.getNombreUsuario());
 
+        // Agregar viaje terminado
         empresa.getViajesTerminados().add(new Viaje(pedido1, chofer1, vehiculo1));
         System.out.println("Viaje terminado agregado.");
+
+        // Comprobación de pedido
+        Pedido pedidoRecuperado = empresa.getPedidos().get(cliente1);
+        if (pedidoRecuperado == null) {
+            System.out.println("El pedido es null para el cliente: " + cliente1.getNombreUsuario());
+        } else {
+            System.out.println("Pedido recuperado: " + pedidoRecuperado);
+        }
     }
 
 
