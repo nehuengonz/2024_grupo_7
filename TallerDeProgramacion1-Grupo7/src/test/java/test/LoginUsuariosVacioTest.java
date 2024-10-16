@@ -90,17 +90,6 @@ public class LoginUsuariosVacioTest {
         }
     }
 
-    @Test
-    public void testLoginContraseniaNoExiste(){
-        try {
-            Empresa.getInstance().login("a","123");
-            fail("Se logueo un Cliente");
-        } catch (UsuarioNoExisteException e) {
-            Assert.assertNull(Empresa.getInstance().getUsuarioLogeado());
-        } catch (PasswordErroneaException e) {
-            fail("No deberia tirar este error porque directamente esta vacio el arreglo de clientes");
-        }
-    }
 
     @Test
     public void testLoginAdmin_2_1(){

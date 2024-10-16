@@ -42,7 +42,7 @@ public class LoginUsuariosNoVacioTest {
     @AfterClass
     public static void tearDownAfterClass() throws Exception {
     }
-    
+
     @Test
     public void loginClienteCorrecto(){
         try{
