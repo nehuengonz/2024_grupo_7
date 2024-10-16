@@ -41,8 +41,7 @@ public class TestEmpresa {
 
             viaje1 = new Viaje(pedido1, chofer, vehiculo);
             empresa.getViajesIniciados().put(cliente,viaje1);
-            empresa.
-            empresa.getViajesTerminados().add(viaje1); // Mover el viaje a terminados
+
 
     }
 
@@ -167,7 +166,7 @@ public class TestEmpresa {
     }
 
     @Test
-    public void testCalificacionDeChoferSinViajes(){ // no lanza la excepcion, pero esta bien hecho el test en mi opinion, entonces debe ser un error en la clase Empresa
+    public void testCalificacionDeChoferSinViajes(){
         try {
              empresa.calificacionDeChofer(choferSinViajes);
              fail("Se esperaba que se lanzara una excepción SinViajesException");
