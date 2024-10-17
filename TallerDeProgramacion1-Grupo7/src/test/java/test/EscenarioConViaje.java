@@ -17,7 +17,6 @@ import util.Constantes;
 
 public class EscenarioConViaje {
 
-	Empresa empresa;
     Pedido pedido;
     Chofer chofer;
     Vehiculo vehiculo;
@@ -46,10 +45,10 @@ public class EscenarioConViaje {
 		pedido = new Pedido(cliente,cantPasajeros,mascota,baul,km,zona);
 		chofer = new ChoferPermanente("a","a",anioInicio,CantHijos);
 		vehiculo = new Auto("patente",CantPlazas,mascota);
-		empresa.agregarChofer(chofer);
-		empresa.agregarCliente("a", "a", "a");
-		empresa.agregarPedido(pedido);
-		empresa.agregarVehiculo(vehiculo);
+		Empresa.getInstance().agregarChofer(chofer);
+		Empresa.getInstance().agregarCliente("a", "a", "a");
+		Empresa.getInstance().agregarPedido(pedido);
+		Empresa.getInstance().agregarVehiculo(vehiculo);
 	}
 
 	@After
