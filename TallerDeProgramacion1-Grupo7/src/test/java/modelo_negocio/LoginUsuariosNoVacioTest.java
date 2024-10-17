@@ -11,6 +11,7 @@ import test.TestVacio;
 import static org.junit.Assert.*;
 
 public class LoginUsuariosNoVacioTest {
+    Escenario2 escenario2;
 
     public LoginUsuariosNoVacioTest() {
     }
@@ -22,31 +23,19 @@ public class LoginUsuariosNoVacioTest {
 
     @Before
     public void setUp() throws Exception {
-        Empresa.getInstance();
-        Empresa.getInstance().agregarCliente("Roberto", "1234", "Roberto Perez");
-        Empresa.getInstance().agregarCliente("Fulgencio", "4321", "Fulgencio Garcia");
-        Empresa.getInstance().agregarCliente("Facundo", "1234", "Facundo Delgado");
-        Empresa.getInstance().agregarCliente("Lucas", "1234", "Lucas Warner");
+        escenario2 = new Escenario2();
+        escenario2.setup();
     }
 
     @After
     public void tearDown() throws Exception {
-
-    }
-
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-
-    }
-
-    @AfterClass
-    public static void tearDownAfterClass() throws Exception {
+        escenario2.tearDown();
     }
 
     @Test
     public void loginClienteCorrecto(){
         try{
-            Empresa.getInstance().login("Roberto", "1234");
+            Empresa.getInstance().login("facundo", "123");
             assertEquals("Roberto", Empresa.getInstance().getUsuarioLogeado().getNombreUsuario());
         } catch (UsuarioNoExisteException e) {
             fail("Segun el escenario planteado el usuario Roberto existe");
