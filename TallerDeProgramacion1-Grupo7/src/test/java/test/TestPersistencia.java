@@ -1,6 +1,7 @@
 package test;
 
 import modeloDatos.*;
+import modeloNegocio.Empresa;
 import org.junit.Assert;
 import org.junit.After;
 import org.junit.Before;
@@ -11,6 +12,8 @@ import persistencia.EmpresaDTO;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class TestPersistencia {
     private IPersistencia persistencia;
@@ -125,13 +128,28 @@ public class TestPersistencia {
 
             Assert.assertEquals("La cantidad de pedidos no coincide", this.empresa.getPedidos().size(), empresaLeida.getPedidos().size());
 
-            for (Cliente cliente : this.empresa.getPedidos().keySet()) {
-                Pedido pedidoOriginal = this.empresa.getPedidos().get(cliente);
-                Pedido pedidoLeido = empresaLeida.getPedidos().get(cliente);
+            for (Cliente clienteLeido : empresaLeida.getPedidos().keySet()) {
+                Pedido pedidoLeido = empresaLeida.getPedidos().get(clienteLeido);
+
+                Iterator<Cliente> iteradorClientesOriginales = this.empresa.getPedidos().keySet().iterator();
+                Cliente clienteOriginalEncontrado = null;
+
+                while (iteradorClientesOriginales.hasNext() && clienteOriginalEncontrado == null) {
+                    Cliente clienteOriginal = iteradorClientesOriginales.next();
+                    if (clienteOriginal.getNombreUsuario().equals(clienteLeido.getNombreUsuario())) {
+                        clienteOriginalEncontrado = clienteOriginal;
+                    }
+                }
+
+                Assert.assertNotNull("No se encontró un Cliente persistido (" + clienteLeido.getNombreUsuario() + ") en la empresa Original", clienteOriginalEncontrado);
+
+                Pedido pedidoOriginal = this.empresa.getPedidos().get(clienteOriginalEncontrado);
+
                 System.out.println("Pedidos originales: " + this.empresa.getPedidos());
                 System.out.println("Pedidos leídos: " + empresaLeida.getPedidos());
-                Assert.assertNotNull("El pedido leído no debería ser nulo", pedidoLeido);
-                Assert.assertEquals("El cliente del pedido no coincide", pedidoOriginal.getCliente(), pedidoLeido.getCliente());
+
+                Assert.assertNotNull("El pedido original no debería ser nulo", pedidoOriginal);
+                Assert.assertEquals("El cliente del pedido no coincide", pedidoOriginal.getCliente().getNombreUsuario(), pedidoLeido.getCliente().getNombreUsuario());
                 Assert.assertEquals("El km del pedido no coincide", pedidoOriginal.getKm(), pedidoLeido.getKm());
                 Assert.assertEquals("La zona del pedido no coincide", pedidoOriginal.getZona(), pedidoLeido.getZona());
                 Assert.assertEquals("La cantidad de pasajeros del pedido no coincide", pedidoOriginal.getCantidadPasajeros(), pedidoLeido.getCantidadPasajeros());
@@ -140,13 +158,26 @@ public class TestPersistencia {
             }
 
             Assert.assertEquals("La cantidad de viajes iniciados no coincide", this.empresa.getViajesIniciados().size(), empresaLeida.getViajesIniciados().size());
-            for (Cliente cliente : this.empresa.getViajesIniciados().keySet()) {
-                Viaje viajeOriginal = this.empresa.getViajesIniciados().get(cliente);
-                Viaje viajeLeido = empresaLeida.getViajesIniciados().get(cliente);
-                Assert.assertEquals("El chofer del viaje no coincide", viajeOriginal.getChofer(), viajeLeido.getChofer());
-                Assert.assertEquals("El pedido del viaje no coincide", viajeOriginal.getPedido(), viajeLeido.getPedido());
-                Assert.assertEquals("El valor del viaje no coincide", viajeOriginal.getValor(), viajeLeido.getValor());
-                Assert.assertEquals("El vehículo del viaje no coincide", viajeOriginal.getVehiculo(), viajeLeido.getVehiculo());
+            for (Cliente clienteLeido : empresaLeida.getViajesIniciados().keySet()) {
+                Viaje viajeLeido = empresaLeida.getViajesIniciados().get(clienteLeido);
+
+                Iterator<Cliente> iteradorClientesOriginales = this.empresa.getViajesIniciados().keySet().iterator();
+                Cliente clienteOriginalEncontrado = null;
+
+                while (iteradorClientesOriginales.hasNext() && clienteOriginalEncontrado == null) {
+                    Cliente clienteOriginal = iteradorClientesOriginales.next();
+                    if (clienteOriginal.getNombreUsuario().equals(clienteLeido.getNombreUsuario())) {
+                        clienteOriginalEncontrado = clienteOriginal; // Asigna el cliente cuando lo encuentres
+                    }
+                }
+                Assert.assertNotNull("No se encontró un Cliente persistido (" + clienteLeido.getNombreUsuario() + ") en la empresa Original", clienteOriginalEncontrado);
+                Viaje viajeOriginal = this.empresa.getViajesIniciados().get(clienteOriginalEncontrado);
+
+                Assert.assertNotNull("El viaje original no debería ser nulo", viajeOriginal);
+                Assert.assertEquals("El chofer del viaje no coincide", viajeOriginal.getChofer().getDni(), viajeLeido.getChofer().getDni());
+                Assert.assertEquals("El pedido del viaje no coincide", viajeOriginal.getPedido().getCliente().getNombreReal(), viajeLeido.getPedido().getCliente().getNombreReal());
+                Assert.assertEquals("El valor del viaje no coincide", viajeOriginal.getValor(), viajeLeido.getValor(),0.0001);
+                Assert.assertEquals("El vehículo del viaje no coincide", viajeOriginal.getVehiculo().getPatente(), viajeLeido.getVehiculo().getPatente());
                 Assert.assertEquals("La calificación del viaje no coincide", viajeOriginal.getCalificacion(), viajeLeido.getCalificacion());
             }
 
