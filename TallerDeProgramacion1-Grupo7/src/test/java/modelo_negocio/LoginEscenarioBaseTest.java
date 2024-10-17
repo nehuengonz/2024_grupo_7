@@ -5,7 +5,9 @@ import excepciones.UsuarioNoExisteException;
 import modeloNegocio.Empresa;
 import org.junit.*;
 import org.junit.runner.JUnitCore;
+import util.Mensajes;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 public class LoginEscenarioBaseTest {
@@ -49,7 +51,8 @@ public class LoginEscenarioBaseTest {
             Empresa.getInstance().login("a","admin");
             fail("Se logueo un Administrador");
         } catch (UsuarioNoExisteException e) {
-            Assert.assertNull(Empresa.getInstance().getUsuarioLogeado());
+            assertEquals("El mensaje de la excepcion no es correcto ",e.getMessage(), Mensajes.USUARIO_DESCONOCIDO.getValor());
+            assertEquals("El mensaje de la excepcion no es correcto ",e.getUsuarioPretendido(), "a");
         } catch (PasswordErroneaException e) {
             fail("No deberia tirar este error");
         }
@@ -63,7 +66,9 @@ public class LoginEscenarioBaseTest {
         } catch (UsuarioNoExisteException e) {
             fail("No deberia tirar este error");
         } catch (PasswordErroneaException e) {
-            Assert.assertNull(Empresa.getInstance().getUsuarioLogeado());
+            assertEquals("El mensaje de la excepcion no es correcto ",e.getMessage(), Mensajes.PASS_ERRONEO.getValor());
+            assertEquals("El mensaje de la excepcion no es correcto ",e.getUsuarioPretendido(), "admin");
+            assertEquals("El mensaje de la excepcion no es correcto ",e.getPasswordPretendida(), "123");
         }
     }
 
@@ -73,7 +78,8 @@ public class LoginEscenarioBaseTest {
             Empresa.getInstance().login("a","123");
             fail("Se logueo un Cliente");
         } catch (UsuarioNoExisteException e) {
-            Assert.assertNull(Empresa.getInstance().getUsuarioLogeado());
+            assertEquals("El mensaje de la excepcion no es correcto ",e.getMessage(), Mensajes.USUARIO_DESCONOCIDO.getValor());
+            assertEquals("El mensaje de la excepcion no es correcto ",e.getUsuarioPretendido(), "a");
 
         } catch (PasswordErroneaException e) {
             fail("No deberia tirar este error");
@@ -87,8 +93,8 @@ public class LoginEscenarioBaseTest {
             Empresa.getInstance().login("ADMIN","admin");
             fail("Se logueo un Administrador");
         } catch (UsuarioNoExisteException e) {
-            Assert.assertNull(Empresa.getInstance().getUsuarioLogeado());
-
+            assertEquals("El mensaje de la excepcion no es correcto ",e.getMessage(), Mensajes.USUARIO_DESCONOCIDO.getValor());
+            assertEquals("El mensaje de la excepcion no es correcto ",e.getUsuarioPretendido(), "ADMIN");
         } catch (PasswordErroneaException e) {
             fail("No deberia tirar este error");
         }
@@ -100,7 +106,9 @@ public class LoginEscenarioBaseTest {
             Empresa.getInstance().login("Admin","admin");
             fail("Se logueo un Administrador");
         } catch (UsuarioNoExisteException e) {
-            Assert.assertNull(Empresa.getInstance().getUsuarioLogeado());
+            assertEquals("El mensaje de la excepcion no es correcto ",e.getMessage(), Mensajes.USUARIO_DESCONOCIDO.getValor());
+            assertEquals("El mensaje de la excepcion no es correcto ",e.getUsuarioPretendido(), "Admin");
+
         } catch (PasswordErroneaException e) {
             fail("No deberia tirar este error");
         }
