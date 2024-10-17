@@ -5,15 +5,13 @@ import excepciones.UsuarioNoExisteException;
 import modeloNegocio.Empresa;
 import org.junit.*;
 import org.junit.runner.JUnitCore;
-import test.EscenarioVacio;
-import test.TestVacio;
 
 import static org.junit.Assert.*;
 
-public class LoginUsuariosNoVacioTest {
+public class LoginEscenario2Test {
     Escenario2 escenario2;
 
-    public LoginUsuariosNoVacioTest() {
+    public LoginEscenario2Test() {
     }
 
     public static void main(String[] args) {
@@ -36,7 +34,7 @@ public class LoginUsuariosNoVacioTest {
     public void loginClienteCorrecto(){
         try{
             Empresa.getInstance().login("facundo", "123");
-            assertEquals("Roberto", Empresa.getInstance().getUsuarioLogeado().getNombreUsuario());
+            assertEquals("facundo", Empresa.getInstance().getUsuarioLogeado().getNombreUsuario());
         } catch (UsuarioNoExisteException e) {
             fail("Segun el escenario planteado el usuario Roberto existe");
         } catch (PasswordErroneaException e) {

@@ -8,15 +8,15 @@ import org.junit.runner.JUnitCore;
 
 import static org.junit.Assert.fail;
 
-public class LoginUsuariosVacioTest {
+public class LoginEscenarioBaseTest {
     private Empresa empresa;
 
-    public LoginUsuariosVacioTest() {
+    public LoginEscenarioBaseTest() {
 
     }
 
     public static void main(String[] args) {
-        String[] args2 = { LoginUsuariosVacioTest.class.getName() };
+        String[] args2 = { LoginEscenarioBaseTest.class.getName() };
         JUnitCore.main(args2);
     }
 

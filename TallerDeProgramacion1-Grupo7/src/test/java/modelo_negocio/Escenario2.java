@@ -56,9 +56,9 @@ public class Escenario2 {
         Empresa.getInstance().agregarVehiculo(combi1);
         Empresa.getInstance().agregarVehiculo(combi2);
 
-        Pedido pedido1=new Pedido(cliente1,3,true,true,10,Constantes.ZONA_PELIGROSA);
-        Pedido pedido2=new Pedido(cliente2,1,false,false,3,Constantes.ZONA_STANDARD);
-        Pedido pedido3=new Pedido(cliente3,8,false,true,1,Constantes.ZONA_PELIGROSA);
+        Pedido pedido1=new Pedido(Empresa.getInstance().getClientes().get("facundo"), 3,true,true,10,Constantes.ZONA_PELIGROSA);
+        Pedido pedido2=new Pedido(Empresa.getInstance().getClientes().get("thiago"),1,false,false,3,Constantes.ZONA_STANDARD);
+        Pedido pedido3=new Pedido(Empresa.getInstance().getClientes().get("nehuen"),8,false,true,1,Constantes.ZONA_PELIGROSA);
 
         Empresa.getInstance().agregarPedido(pedido1);
         Empresa.getInstance().agregarPedido(pedido2);
