@@ -28,18 +28,8 @@ public class LoginEscenarioBaseTest {
 
     @After
     public void tearDown() throws Exception {
-
+        Empresa.getInstance().setUsuarioLogeado(null);
     }
-
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-
-    }
-
-    @AfterClass
-    public static void tearDownAfterClass() throws Exception {
-    }
-
 
     @Test
     public void testLoginAdmin(){
