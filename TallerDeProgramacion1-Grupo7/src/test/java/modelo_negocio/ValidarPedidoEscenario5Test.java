@@ -10,6 +10,8 @@ import org.junit.Test;
 
 import java.util.HashMap;
 
+import static org.junit.Assert.assertTrue;
+
 public class ValidarPedidoEscenario5Test {
     Escenario5 escenario5 = new Escenario5();
     @Before
@@ -28,7 +30,7 @@ public class ValidarPedidoEscenario5Test {
         Cliente cliente = Empresa.getInstance().getClientes().get("thiago");
         Pedido pedidoValidar = pedidos.get(cliente);
 
-        Assert.assertTrue("hay vehiculos desocupados que estan disponibles",Empresa.getInstance().validarPedido(pedidoValidar));
+        assertTrue("Hay vehiculos que estan disponibles",Empresa.getInstance().validarPedido(pedidoValidar));
     }
 
     @Test
@@ -49,9 +51,21 @@ public class ValidarPedidoEscenario5Test {
         Cliente cliente = Empresa.getInstance().getClientes().get("sofi");
         Pedido pedidoValidar = pedidos.get(cliente);
 
-        Assert.assertFalse("No hay vehiculos desocupados que satisfagan este pedido",Empresa.getInstance().validarPedido(pedidoValidar));
-
+        assertTrue("Hay vehiculos que satisfacen este pedido",Empresa.getInstance().validarPedido(pedidoValidar));
     }
 
+    @Test
+    public void testValidarPedidoConVehiculoNoValidoPorMascota() {
+        Cliente cliente = Empresa.getInstance().getClientes().get("sofi");
+        Pedido pedido = new Pedido(cliente, 5,true,false,20,"ZONA_STANDARD");
+        Assert.assertFalse("No debería encontrar un vehículo adecuado.", Empresa.getInstance().validarPedido(pedido));
+    }
+
+    @Test
+    public void testValidarPedidoConVehiculoNoValidoPorPlazas() {
+        Cliente cliente = Empresa.getInstance().getClientes().get("sofi");
+        Pedido pedido = new Pedido(cliente, 10,false,false,20,"ZONA_STANDARD");
+        Assert.assertFalse("No debería encontrar un vehículo adecuado.", Empresa.getInstance().validarPedido(pedido));
+    }
 
 }
