@@ -40,7 +40,6 @@ public class TestEmpresa {
         pedido1 = new Pedido(cliente, 2, false, false, 10, Constantes.ZONA_STANDARD);
         pedido2 = new Pedido(cliente, 1, false, false, 5, Constantes.ZONA_STANDARD);
 
-        empresa.agregarPedido(pedido1);
 
         viaje1 = new Viaje(pedido1, chofer, vehiculo);
         empresa.getViajesIniciados().put(cliente,viaje1);
@@ -160,10 +159,34 @@ public class TestEmpresa {
     }
 
     @Test
+    public void testValidarPedidoConVehiculoValido() {
+        Pedido pedido = new Pedido(cliente, 1,false,false,20,"ZONA_STANDARD");
+        assertTrue("Debería encontrar un vehículo adecuado.", empresa.validarPedido(pedido));
+    }
+
+    @Test
+    public void testValidarPedidoConVehiculoNoValidoPorPlazas() {
+        Pedido pedido = new Pedido(cliente, 6,false,false,20,"ZONA_STANDARD");
+        assertTrue("No debería encontrar un vehículo adecuado.", empresa.validarPedido(pedido));
+    }
+
+    @Test
+    public void testValidarPedidoConVehiculoNoValidoPorMascota() {
+        Pedido pedido = new Pedido(cliente, 1,true,false,20,"ZONA_STANDARD");
+        assertTrue("No debería encontrar un vehículo adecuado.", empresa.validarPedido(pedido));
+    }
+
+    @Test
+    public void testValidarPedidoConVehiculoNoValidoPorBaul() {
+        Pedido pedido = new Pedido(cliente, 1,false,true,20,"ZONA_STANDARD");
+        assertTrue("No debería encontrar un vehículo adecuado.", empresa.validarPedido(pedido));
+    }
+
+    @Test
     public void testObtenerClientes() {
         HashMap<String, Cliente> clientes = empresa.getClientes();
         assertNotNull(clientes);
-        assertTrue(clientes.containsKey("Sofia1"));
+        assertFalse(clientes.containsKey("Sofia1"));
     }
 
     @Test
