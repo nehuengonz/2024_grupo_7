@@ -1,12 +1,12 @@
-package test;
+package modelo_negocio;
 
 import excepciones.PasswordErroneaException;
 import excepciones.UsuarioNoExisteException;
 import modeloNegocio.Empresa;
 import org.junit.*;
 import org.junit.runner.JUnitCore;
-import test.EscenarioVacio;
-import test.TestVacio;
+import modelo_datos.EscenarioVacio;
+import modelo_datos.TestVacio;
 
 import static org.junit.Assert.*;
 

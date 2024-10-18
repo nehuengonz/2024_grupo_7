@@ -22,7 +22,6 @@ import modeloDatos.Cliente;
 import modeloDatos.Pedido;
 import modeloDatos.Vehiculo;
 import modeloNegocio.Empresa;
-import test.EscenarioConViaje;
 import util.Constantes;
 
 public class TestEmpresa_CrearViaje {

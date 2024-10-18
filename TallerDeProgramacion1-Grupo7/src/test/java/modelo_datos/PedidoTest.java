@@ -1,4 +1,4 @@
-package test;
+package modelo_datos;
 
 import org.junit.*;
 import org.junit.runner.JUnitCore;

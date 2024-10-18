@@ -1,10 +1,10 @@
-package viajetest;
+package modelo_datos;
 
 import modeloDatos.*;
 import org.junit.*;
 import org.junit.runner.JUnitCore;
-import test.EscenarioVacio;
-import test.TestVacio;
+import modelo_datos.EscenarioVacio;
+import modelo_datos.TestVacio;
 import util.Constantes;
 
 import static org.junit.Assert.assertEquals;

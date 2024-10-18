@@ -1,7 +1,8 @@
-package test;
+package modelo_datos;
 
 import static org.junit.Assert.*;
 
+import modelo_negocio.EscenarioEmpresa;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -14,7 +15,6 @@ import excepciones.ClienteNoExisteException;
 import excepciones.SinVehiculoParaPedidoException;
 import excepciones.UsuarioYaExisteException;
 import excepciones.VehiculoRepetidoException;
-import modeloDatos.Auto;
 import modeloDatos.ChoferPermanente;
 import modeloDatos.ChoferTemporario;
 import modeloDatos.Cliente;

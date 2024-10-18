@@ -1,4 +1,4 @@
-package viajetest;
+package modelo_datos;
 
 import modeloDatos.*;
 import org.junit.After;

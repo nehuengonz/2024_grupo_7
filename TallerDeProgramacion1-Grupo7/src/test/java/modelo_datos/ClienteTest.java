@@ -1,4 +1,4 @@
-package test;
+package modelo_datos;
 
 import static org.junit.Assert.*;
 
@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import modeloDatos.Cliente;
-import modeloDatos.Usuario;
 
 public class ClienteTest {
 	

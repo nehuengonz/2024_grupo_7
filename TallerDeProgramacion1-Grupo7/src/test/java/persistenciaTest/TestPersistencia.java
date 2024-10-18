@@ -1,4 +1,4 @@
-package test;
+package persistenciaTest;
 
 import modeloDatos.*;
 import org.junit.Assert;

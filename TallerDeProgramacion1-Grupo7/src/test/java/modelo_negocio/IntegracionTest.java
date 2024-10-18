@@ -1,22 +1,18 @@
-package test;
+package modelo_negocio;
 
 import controlador.Controlador;
-import modeloDatos.ChoferTemporario;
 import modeloNegocio.Empresa;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito.*;
 import persistencia.IPersistencia;
 import persistencia.PersistenciaBIN;
 import util.Constantes;
 import vista.IVista;
-import vista.PanelLogin;
 import vista.Ventana;
 
 import java.io.File;
-import java.util.EnumMap;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

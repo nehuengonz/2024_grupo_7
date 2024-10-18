@@ -1,12 +1,9 @@
-package test;
+package modelo_negocio;
 
 import excepciones.UsuarioYaExisteException;
 import excepciones.VehiculoRepetidoException;
 import modeloDatos.Auto;
-import modeloDatos.Cliente;
-import modeloDatos.Pedido;
 import modeloNegocio.Empresa;
-import util.Constantes;
 
 public class EscenarioEmpresa {
     public Empresa empresa;
