@@ -67,9 +67,9 @@ public class Escenario5 {
     }
 
     public void teardown(){
-        Empresa.getInstance().getHistorialViajeCliente(Empresa.getInstance().getClientes().get("facundo"));
-        Empresa.getInstance().getHistorialViajeCliente(Empresa.getInstance().getClientes().get("thiago"));
-        Empresa.getInstance().getHistorialViajeCliente(Empresa.getInstance().getClientes().get("nehuen"));
+        Empresa.getInstance().getHistorialViajeCliente(Empresa.getInstance().getClientes().get("facundo")).clear();
+        Empresa.getInstance().getHistorialViajeCliente(Empresa.getInstance().getClientes().get("thiago")).clear();
+        Empresa.getInstance().getHistorialViajeCliente(Empresa.getInstance().getClientes().get("nehuen")).clear();
         Empresa.getInstance().getChoferes().clear();
         Empresa.getInstance().getVehiculos().clear();
         Empresa.getInstance().getVehiculosDesocupados().clear();
