@@ -43,5 +43,5 @@ public class ValidarPedidoEscenario2Test {
         Assert.assertTrue("Se supone que existe un vehiculo que lo puede satisfacer",Empresa.getInstance().validarPedido(pedidoValidar2));
     }
 
-    
+
 }
