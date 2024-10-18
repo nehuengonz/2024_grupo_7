@@ -23,24 +23,35 @@ public class ValidarPedidoEscenario5Test {
     }
 
     @Test
-    public void validarPedidoEscenario5Test() {
+    public void pedidoValidoHayVehiculo() {
+        HashMap<Cliente, Pedido> pedidos = Empresa.getInstance().getPedidos();
+        Cliente cliente = Empresa.getInstance().getClientes().get("thiago");
+        Pedido pedidoValidar = pedidos.get(cliente);
+
+        Assert.assertTrue("hay vehiculos desocupados que estan disponibles",Empresa.getInstance().validarPedido(pedidoValidar));
+    }
+
+    @Test
+    public void validarPedidosNoValidosTest() {
 
             HashMap<Cliente, Pedido> pedidos = Empresa.getInstance().getPedidos();
             Cliente cliente = Empresa.getInstance().getClientes().get("facundo");
             Pedido pedidoValidar = pedidos.get(cliente);
 
-            Assert.assertTrue("Se supone que existe un vehiculo que lo puede satisfacer",Empresa.getInstance().validarPedido(pedidoValidar));
-
-            Cliente cliente1 = Empresa.getInstance().getClientes().get("nehuen");
-            Pedido pedidoValidar1 = pedidos.get(cliente1);
-
-            Assert.assertTrue("Se supone que existe un vehiculo que lo puede satisfacer",Empresa.getInstance().validarPedido(pedidoValidar1));
-
-            Cliente cliente2 = Empresa.getInstance().getClientes().get("thiago");
-            Pedido pedidoValidar2 = pedidos.get(cliente2);
-
-            Assert.assertTrue("Se supone que existe un vehiculo que lo puede satisfacer",Empresa.getInstance().validarPedido(pedidoValidar2));
-
+            Assert.assertFalse("No hay vehiculos cargados que satisfagan este pedido",Empresa.getInstance().validarPedido(pedidoValidar));
 
     }
+
+    @Test
+    public void pedidoValidoPeroVehiculoOcupado() {
+
+        HashMap<Cliente, Pedido> pedidos = Empresa.getInstance().getPedidos();
+        Cliente cliente = Empresa.getInstance().getClientes().get("sofi");
+        Pedido pedidoValidar = pedidos.get(cliente);
+
+        Assert.assertFalse("No hay vehiculos desocupados que satisfagan este pedido",Empresa.getInstance().validarPedido(pedidoValidar));
+
+    }
+
+
 }
