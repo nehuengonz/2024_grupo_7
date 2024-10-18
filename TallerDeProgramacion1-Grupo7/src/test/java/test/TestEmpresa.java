@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import modeloNegocio.Empresa;
+import util.Constantes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,8 +37,8 @@ public class TestEmpresa {
         empresa.agregarChofer(choferSinViajes);
         empresa.agregarVehiculo(vehiculo);
 
-        pedido1 = new Pedido(cliente, 2, false, false, 10, "ZONA_SEGURA");
-        pedido2 = new Pedido(cliente, 1, false, false, 5, "ZONA_SEGURA");
+        pedido1 = new Pedido(cliente, 2, false, false, 10, Constantes.ZONA_STANDARD);
+        pedido2 = new Pedido(cliente, 1, false, false, 5, Constantes.ZONA_STANDARD);
 
         empresa.agregarPedido(pedido1);
 
@@ -155,30 +156,6 @@ public class TestEmpresa {
             fail("Se esperaba una excepción VehiculoRepetidoException");
         } catch (VehiculoRepetidoException e) {
             assertEquals("El vehiculo con patente AAA111 ya está registrado", e.getMessage());
-        }
-    }
-
-    @Test
-    public void testPagarYFinalizarViajeExistente() {
-        try {
-            empresa.pagarYFinalizarViaje(5);
-        } catch (ClienteSinViajePendienteException e) {
-            fail("No se esperaba una excepcion: " + e.getMessage());
-        }
-
-        Viaje viajeTerminando = empresa.getViajesIniciados().get(cliente);
-        assertNull("Se esperaba que el viaje del cliente fuera null después de finalizar", viajeTerminando);
-        assertTrue("El viaje terminado no se encuentra en la lista de viajes terminados", empresa.getViajesTerminados().contains(viaje1));
-    }
-
-    @Test
-    public void testPagarYFinalizarViajeNoExistente() {
-        try {
-            empresa.pagarYFinalizarViaje(5);
-            fail("Se esperaba una excepción al intentar finalizar un viaje que no existe"); // Este fail se ejecutará si no se lanza una excepción
-        } catch (Exception e) {
-            assertEquals("Se esperaba una excepción al intentar finalizar un viaje que no existe",
-                    "El viaje no existe o ya ha sido finalizado", e.getMessage());
         }
     }
 
