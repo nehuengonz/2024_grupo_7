@@ -190,7 +190,7 @@ public class TestPersistencia {
         // Agregar chofer y vehículo a la lista de desocupados
         empresa.getChoferesDesocupados().add(chofer1);
         empresa.getVehiculosDesocupados().add(vehiculo1);
-        System.out.println("Chofer y vehículo agregados a la lista desocupados.");
+        System.out.println("Chofer y vehículo agregados a la lista desocupados");
 
         // Crear y agregar pedido
         Pedido pedido1 = new Pedido(cliente1, 3, true, false, 10, "ZONA_PELIGROSA");
@@ -204,7 +204,7 @@ public class TestPersistencia {
 
         // Agregar viaje terminado
         empresa.getViajesTerminados().add(new Viaje(pedido1, chofer1, vehiculo1));
-        System.out.println("Viaje terminado agregado.");
+        System.out.println("Viaje terminado agregado");
 
         // Comprobación de pedido
         Pedido pedidoRecuperado = empresa.getPedidos().get(cliente1);
