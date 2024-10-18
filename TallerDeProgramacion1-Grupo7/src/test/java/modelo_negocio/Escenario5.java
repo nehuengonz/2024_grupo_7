@@ -1,4 +1,4 @@
-package modelo_negocio;
+/*package modelo_negocio;
 
 import excepciones.*;
 import modeloDatos.*;
@@ -82,3 +82,4 @@ public class Escenario5 {
         Empresa.getInstance().getHistorialViajeChofer(chofer4).clear();
     }
 }
+*/
