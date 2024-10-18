@@ -7,14 +7,14 @@ import util.Constantes;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Escenario3 {
+public class Escenario4 {
     private ChoferPermanente chofer1;
     private ChoferPermanente chofer2;
     private ChoferTemporario chofer3;
     private ChoferTemporario chofer4;
 
 
-    public Escenario3() {
+    public Escenario4() {
     }
 
     public void setup() throws Exception {
@@ -23,7 +23,7 @@ public class Escenario3 {
         Cliente cliente2 = new Cliente("thiago", "321", "Thiago");
         Cliente cliente3 = new Cliente("nehuen", "4567", "Nehuen");
 
-        ChoferPermanente chofer1 = new ChoferPermanente("1234567", "Roberto", 2020, 0),
+        ChoferPermanente chofer1 = new ChoferPermanente("1234567", "Roberto", 2020, 0);
         ChoferPermanente chofer2 = new ChoferPermanente("1234568", "Alberto", 2019, 3);
         ChoferTemporario chofer3 = new ChoferTemporario("11111111", "Javier");
         ChoferTemporario chofer4 = new ChoferTemporario("22222222", "Sergio");
@@ -46,12 +46,6 @@ public class Escenario3 {
         Empresa.getInstance().agregarVehiculo(moto1);
         Empresa.getInstance().agregarVehiculo(combi1);
         Empresa.getInstance().agregarVehiculo(combi2);
-
-        Pedido pedido2 = new Pedido(Empresa.getInstance().getClientes().get("thiago"), 1, false, false, 3, Constantes.ZONA_STANDARD);
-        Pedido pedido3 = new Pedido(Empresa.getInstance().getClientes().get("nehuen"), 8, false, true, 1, Constantes.ZONA_PELIGROSA);
-
-        Empresa.getInstance().agregarPedido(pedido2);
-        Empresa.getInstance().agregarPedido(pedido3);
 
         ArrayList<Chofer> chofdesocupados = new ArrayList<>();
         chofdesocupados.add(chofer2);
@@ -78,7 +72,25 @@ public class Escenario3 {
                 )
         );
 
+        HashMap<Cliente, Viaje> viajesTerminados = new HashMap<>();
 
+        viajesTerminados.put(
+                Empresa.getInstance().getClientes().get("thiago"),
+                new Viaje(
+                        new Pedido(Empresa.getInstance().getClientes().get("thiago"), 1, false, false, 3, Constantes.ZONA_STANDARD),
+                        chofer4,
+                        moto1
+                )
+        );
+
+        viajesTerminados.put(
+                Empresa.getInstance().getClientes().get("nehuen"),
+                new Viaje(
+                        new Pedido(Empresa.getInstance().getClientes().get("nehuen"), 8, false, true, 1, Constantes.ZONA_PELIGROSA),
+                        chofer3,
+                        combi1
+                )
+        );
     }
 
     public void tearDown() {
@@ -96,5 +108,6 @@ public class Escenario3 {
         Empresa.getInstance().getHistorialViajeChofer(chofer3).clear();
         Empresa.getInstance().getHistorialViajeChofer(chofer4).clear();
         Empresa.getInstance().getViajesIniciados().clear();
+        Empresa.getInstance().getViajesTerminados().clear();
     }
 }
