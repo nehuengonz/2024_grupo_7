@@ -1,4 +1,4 @@
-/*package modelo_negocio;
+package modelo_negocio;
 
 import excepciones.*;
 import modeloDatos.*;
@@ -6,6 +6,7 @@ import modeloNegocio.Empresa;
 import util.Constantes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Escenario5 {
     private ChoferPermanente chofer1;
@@ -47,9 +48,13 @@ public class Escenario5 {
         Pedido pedido2=new Pedido(Empresa.getInstance().getClientes().get("thiago"),1,true,false,3,Constantes.ZONA_STANDARD);
         Pedido pedido3=new Pedido(Empresa.getInstance().getClientes().get("nehuen"),8,true,true,1,Constantes.ZONA_PELIGROSA);
 
-        Empresa.getInstance().agregarPedido(pedido1);
-        Empresa.getInstance().agregarPedido(pedido2);
-        Empresa.getInstance().agregarPedido(pedido3);
+        HashMap<Cliente,Pedido> pedidoshashmap = new HashMap<>();
+        pedidoshashmap.put(Empresa.getInstance().getClientes().get("facundo"),pedido1);
+        pedidoshashmap.put(Empresa.getInstance().getClientes().get("thiago"),pedido2);
+        pedidoshashmap.put(Empresa.getInstance().getClientes().get("nehuen"),pedido3);
+
+        Empresa.getInstance().setPedidos(pedidoshashmap);
+
 
         ArrayList<Chofer> chofdesocupados= new ArrayList<>();
         chofdesocupados.add(chofer1);
@@ -82,4 +87,3 @@ public class Escenario5 {
         Empresa.getInstance().getHistorialViajeChofer(chofer4).clear();
     }
 }
-*/
