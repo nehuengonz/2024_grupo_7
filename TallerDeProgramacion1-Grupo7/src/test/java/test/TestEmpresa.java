@@ -141,7 +141,6 @@ public class TestEmpresa {
         Vehiculo nuevoVehiculo = new Moto("XYZ789");
         try {
             empresa.agregarVehiculo(nuevoVehiculo);
-            assertNotNull("El vehículo no debe ser nulo después de ser agregado", empresa.getVehiculos().get("XYZ789"));
             assertEquals("La patente del vehículo agregado no es la esperada", "XYZ789", empresa.getVehiculos().get("XYZ789").getPatente());
         } catch (VehiculoRepetidoException e) {
             fail("Se esperaba que el vehículo se agregara exitosamente, pero ocurrió una excepción: " + e.getMessage());
