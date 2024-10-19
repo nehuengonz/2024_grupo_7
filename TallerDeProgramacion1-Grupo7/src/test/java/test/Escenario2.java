@@ -106,4 +106,6 @@ public class Escenario2 {
     public Vehiculo getAuto1() {
         return auto1;
     }
+
+    
 }
