@@ -58,17 +58,22 @@ public class TestEmpresa {
 
     @Test
     public void testAgregarClienteExitoso() {
-        assertNotNull(empresa.getClientes().get("Sofia1"));
-        assertEquals("Sofia Palladino", empresa.getClientes().get("Sofia1").getNombreReal());
+        try {
+            Empresa.getInstance().agregarCliente("ClienteNuevo","123456","Cliente Nuevo");
+        } catch (UsuarioYaExisteException e) {
+            fail("Segun el escenario planteado el usuario ClienteNuevo existe en el sistema");
+        }
+        assertNotNull(Empresa.getInstance().getClientes().get("ClienteNuevo"));
+        assertEquals("Cliente Nuevo", Empresa.getInstance().getClientes().get("ClienteNuevo").getNombreReal());
     }
 
     @Test
     public void testAgregarClienteRepetido() {
         try {
-            empresa.agregarCliente("Sofia1", "123456789", "Sofia Palladino");
+            Empresa.getInstance().agregarCliente("Sofia1", "123456789", "Sofia Palladino");
             fail("Se esperaba una excepción UsuarioYaExisteException");
         } catch (UsuarioYaExisteException e) {
-            assertEquals("El usuario Sofia1 ya existe", e.getMessage());
+            fail("El usuario Sofia1 ya existe");
         }
     }
 
@@ -119,8 +124,8 @@ public class TestEmpresa {
     public void testAgregarChoferExitoso() {
         Chofer nuevoChofer = new ChoferTemporario("7777777", "Nuevo Chofer");
         try {
-            empresa.agregarChofer(nuevoChofer);
-            assertEquals("El DNI del chofer agregado no es el esperado", "7777777", empresa.getChoferes().get("7777777").getDni());
+            Empresa.getInstance().agregarChofer(nuevoChofer);
+            assertEquals("El DNI del chofer agregado no es el esperado", "7777777", Empresa.getInstance().getChoferes().get("7777777").getDni());
         } catch (ChoferRepetidoException e) {
             fail("Se esperaba que el chofer se agregara exitosamente, pero ocurrió una excepción: " + e.getMessage());
         }
@@ -129,10 +134,10 @@ public class TestEmpresa {
     @Test
     public void testAgregarChoferDuplicado() {
         try {
-            empresa.agregarChofer(chofer); // Ya fue agregado en el setup
+            Empresa.getInstance().agregarChofer(chofer); // Ya fue agregado en el setup
             fail("Se esperaba una excepción ChoferRepetidoException");
         } catch (ChoferRepetidoException e) {
-            assertEquals("El chofer con DNI 111111 ya está registrado", e.getMessage());
+            fail("El chofer con DNI 111111 ya está registrado");
         }
     }
 
@@ -140,8 +145,8 @@ public class TestEmpresa {
     public void testAgregarVehiculoExitoso() {
         Vehiculo nuevoVehiculo = new Moto("XYZ789");
         try {
-            empresa.agregarVehiculo(nuevoVehiculo);
-            assertEquals("La patente del vehículo agregado no es la esperada", "XYZ789", empresa.getVehiculos().get("XYZ789").getPatente());
+            Empresa.getInstance().agregarVehiculo(nuevoVehiculo);
+            assertEquals("La patente del vehículo agregado no es la esperada", "XYZ789", Empresa.getInstance().getVehiculos().get("XYZ789").getPatente());
         } catch (VehiculoRepetidoException e) {
             fail("Se esperaba que el vehículo se agregara exitosamente, pero ocurrió una excepción: " + e.getMessage());
         }
@@ -150,10 +155,10 @@ public class TestEmpresa {
     @Test
     public void testAgregarVehiculoDuplicado() {
         try {
-            empresa.agregarVehiculo(vehiculo); // Ya fue agregado en el setup
+            Empresa.getInstance().agregarVehiculo(vehiculo); // Ya fue agregado en el setup
             fail("Se esperaba una excepción VehiculoRepetidoException");
         } catch (VehiculoRepetidoException e) {
-            assertEquals("El vehiculo con patente AAA111 ya está registrado", e.getMessage());
+            fail("El vehiculo con patente abc123 ya está registrado");
         }
     }
 
