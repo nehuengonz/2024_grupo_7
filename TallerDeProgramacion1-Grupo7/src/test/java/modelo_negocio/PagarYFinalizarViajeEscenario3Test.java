@@ -53,7 +53,7 @@ public class PagarYFinalizarViajeEscenario3Test {
         try {
             Empresa.getInstance().pagarYFinalizarViaje(5);
             Empresa.getInstance().pagarYFinalizarViaje(5);
-            
+
             fail("El metodo no deberia continuar");
 
         } catch (ClienteSinViajePendienteException e) {
