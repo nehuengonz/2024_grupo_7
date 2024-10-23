@@ -63,7 +63,6 @@ public class AgregarPedidoEscenario4Test {
 	@Test
 	public void testAgregarPedidoClienteConViajeIniciado() {
 		Cliente cliente = Empresa.getInstance().getClientes().get("facundo");
-		System.out.println(Empresa.getInstance().getViajesIniciados());
 		Pedido p = new Pedido(cliente, 1, true, true, 2, Constantes.ZONA_PELIGROSA);
 		try {
 			Empresa.getInstance().agregarPedido(p);
@@ -77,21 +76,5 @@ public class AgregarPedidoEscenario4Test {
 			fail("No debería tirar excepcion " + ex.getMessage());
 		}
 	}
-	@Test
-	public void testAgregarPedidoClienteConPedidoIniciado() {
-		Cliente cliente = Empresa.getInstance().getClientes().get("facundo");
-		System.out.println(Empresa.getInstance().getViajesIniciados());
-		Pedido p = new Pedido(cliente, 1, true, true, 2, Constantes.ZONA_PELIGROSA);
-		try {
-			Empresa.getInstance().agregarPedido(p);
-			fail("Deberia tirar excepcion ClienteConViajePendienteException");
-		} catch (ClienteConViajePendienteException ex) {
-			// Debe ir por aquí
-			assertEquals("La excepcion no tira el mensaje correcto", "Cliente con viaje pendiente"
-					, Mensajes.CLIENTE_CON_VIAJE_PENDIENTE.getValor());
-		} catch (ClienteNoExisteException | SinVehiculoParaPedidoException
-				| ClienteConPedidoPendienteException ex) {
-			fail("No debería tirar excepcion " + ex.getMessage());
-		}
-	}
+	
 }
