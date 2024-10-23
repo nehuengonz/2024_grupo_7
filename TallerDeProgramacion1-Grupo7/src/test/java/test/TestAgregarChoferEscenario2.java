@@ -2,6 +2,7 @@ package test;
 
 import excepciones.ChoferRepetidoException;
 import modeloDatos.Chofer;
+import modeloDatos.ChoferPermanente;
 import modeloDatos.ChoferTemporario;
 import modeloNegocio.Empresa;
 import org.junit.After;
@@ -25,11 +26,22 @@ public class TestAgregarChoferEscenario2 {
     }
 
     @Test
-    public void testAgregarChoferExitoso() {
+    public void testAgregarChoferTemporarioExitoso() {
         Chofer nuevoChofer = new ChoferTemporario("7777777", "Constantino");
         try {
             Empresa.getInstance().agregarChofer(nuevoChofer);
             assertEquals("El DNI del chofer agregado no es el esperado", "7777777", Empresa.getInstance().getChoferes().get("7777777").getDni());
+        } catch (ChoferRepetidoException e) {
+            fail("Se esperaba que el chofer se agregara exitosamente, pero ocurrió una excepción: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testAgregarChoferPermanenteExitoso() {
+        Chofer nuevoChofer = new ChoferPermanente("41990235", "Martin",2020,2);
+        try {
+            Empresa.getInstance().agregarChofer(nuevoChofer);
+            assertEquals("El DNI del chofer agregado no es el esperado", "41990235", Empresa.getInstance().getChoferes().get("41990235").getDni());
         } catch (ChoferRepetidoException e) {
             fail("Se esperaba que el chofer se agregara exitosamente, pero ocurrió una excepción: " + e.getMessage());
         }

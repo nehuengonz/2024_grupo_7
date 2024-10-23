@@ -1,6 +1,8 @@
 package test;
 
 import excepciones.VehiculoRepetidoException;
+import modeloDatos.Auto;
+import modeloDatos.Combi;
 import modeloDatos.Moto;
 import modeloDatos.Vehiculo;
 import modeloNegocio.Empresa;
@@ -25,11 +27,33 @@ public class TestAgregarVehiculoEscenario2 {
     }
 
     @Test
-    public void testAgregarVehiculoExitoso() {
+    public void testAgregarVehiculoMotoExitoso() {
         Vehiculo nuevoVehiculo = new Moto("XYZ789");
         try {
             Empresa.getInstance().agregarVehiculo(nuevoVehiculo);
             assertEquals("La patente del vehículo agregado no es la esperada", "XYZ789", Empresa.getInstance().getVehiculos().get("XYZ789").getPatente());
+        } catch (VehiculoRepetidoException e) {
+            fail("Se esperaba que el vehículo se agregara exitosamente, pero ocurrió una excepción: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testAgregarVehiculoAutoExitoso() {
+        Vehiculo nuevoVehiculo = new Auto("ASD789",4,true);
+        try {
+            Empresa.getInstance().agregarVehiculo(nuevoVehiculo);
+            assertEquals("La patente del vehículo agregado no es la esperada", "ASD789", Empresa.getInstance().getVehiculos().get("ASD789").getPatente());
+        } catch (VehiculoRepetidoException e) {
+            fail("Se esperaba que el vehículo se agregara exitosamente, pero ocurrió una excepción: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testAgregarVehiculoCombiExitoso() {
+        Vehiculo nuevoVehiculo = new Combi("DDD789",6,false);
+        try {
+            Empresa.getInstance().agregarVehiculo(nuevoVehiculo);
+            assertEquals("La patente del vehículo agregado no es la esperada", "DDD789", Empresa.getInstance().getVehiculos().get("DDD789").getPatente());
         } catch (VehiculoRepetidoException e) {
             fail("Se esperaba que el vehículo se agregara exitosamente, pero ocurrió una excepción: " + e.getMessage());
         }
