@@ -24,22 +24,17 @@ import modeloNegocio.Empresa;
 import util.Constantes;
 
 public class TestEmpresa_CrearViaje {
-	private EscenarioConViaje Escenario0=new EscenarioConViaje();
+	private Escenario2 Escenario0=new Escenario2();
 	 Pedido pedido;
 	 Chofer chofer;
 	 Vehiculo vehiculo;
 	 Cliente cliente;
-	 //Pedido
-    private static final int cantPasajeros=5;
-    private static final boolean mascota=true;
-    private static final boolean baul=true;
-    private static final int km=100;
-    private static final String zona=Constantes.ZONA_PELIGROSA;
+	
     //chofer
     private static final int anioInicio=2015;
     private static final int CantHijos=0;
     //vehiculo
-    private static final int CantPlazas=3;
+    private static final int CantPlazas=2;
     
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -51,7 +46,7 @@ public class TestEmpresa_CrearViaje {
 
 	@Before
 	public void setUp() throws Exception {
-		Escenario0.setUp();
+		Escenario0.setup();
 	}
 
 	@After
@@ -62,22 +57,21 @@ public class TestEmpresa_CrearViaje {
 	//Se lanza si el pedido pasado como parametro no pertence al HashMap de pedidos
 	@Test
 	public void test_PedidoInexistenteException() {
-
 	    // Configuramos los objetos necesarios
-	    cliente = new Cliente("a", "a", "a");
-	    pedido = new Pedido(cliente, cantPasajeros, mascota, baul, km, zona);
-	    chofer = new ChoferPermanente("a", "a", anioInicio, CantHijos);
-	    vehiculo = new Auto("patente", CantPlazas, mascota);
-	    
+		cliente = Empresa.getInstance().getClientes().get("facundo");
+	    pedido = Empresa.getInstance().getPedidoDeCliente(cliente);
+	    vehiculo = Empresa.getInstance().getVehiculos().get("abc123");
+        chofer=Empresa.getInstance().getChoferesDesocupados().get(1);
+
 	    try {
 	        // Creamos un nuevo pedido que no ha sido agregado al HashMap de la empresa
-	        Pedido pedidoInexistente = new Pedido(new Cliente("b", "b", "b"), 3, false, true, 20, Constantes.ZONA_STANDARD);
+	        Pedido pedidoInexistente = new Pedido(new Cliente("c", "c", "c"), 3, false, true, 20, Constantes.ZONA_STANDARD);
 	        // Intentamos crear un viaje con el pedido inexistente, lo que debería lanzar PedidoInexistenteException
 	        Empresa.getInstance().crearViaje(pedidoInexistente, chofer, vehiculo);
 	        // Si llegamos aquí, significa que la excepción no fue lanzada, entonces fallamos el test
 	        fail("Se esperaba la excepción PedidoInexistenteException pero no fue lanzada.");        
 	    } catch (PedidoInexistenteException e) {
-	        assertEquals("El pedido no existe en el sistema", e.getMessage());
+	        assertEquals("El Pedido no figura en la lista", e.getMessage());
 	    }catch (ClienteConViajePendienteException e) {
 	        fail("No se esperaba ClienteConViajePendienteException en esta prueba.");
 	    }catch(VehiculoNoValidoException e) {
@@ -93,85 +87,105 @@ public class TestEmpresa_CrearViaje {
     public void test_ChoferNoDisponibleException() {
     
 
-        cliente = new Cliente("a", "a", "a");
-        pedido = new Pedido(cliente, cantPasajeros, mascota, baul, km, zona);
-        vehiculo = new Auto("patente", CantPlazas, mascota);
-
+        cliente = Empresa.getInstance().getClientes().get("facundo");
+        pedido = Empresa.getInstance().getPedidoDeCliente(cliente);
+        vehiculo = Empresa.getInstance().getVehiculos().get("abc123");
+        chofer=Empresa.getInstance().getChoferesDesocupados().get(1);
         try {
-            Chofer choferInexistente = new ChoferPermanente("x", "x", anioInicio, CantHijos);
+            //Chofer choferInexistente = new ChoferPermanente("x", "x", anioInicio, CantHijos);
 
-            Empresa.getInstance().crearViaje(pedido, choferInexistente, vehiculo);
-
+            Empresa.getInstance().crearViaje(pedido, chofer, vehiculo);
+           
             fail("Se esperaba la excepción ChoferNoDisponibleException pero no fue lanzada.");
         } catch (ChoferNoDisponibleException e) {
             assertEquals("El chofer no está disponible", e.getMessage());
-        } catch (PedidoInexistenteException | VehiculoNoDisponibleException | VehiculoNoValidoException | ClienteConViajePendienteException e) {
-            fail("No se esperaba ninguna otra excepción en esta prueba.");
-        }
+        }catch (ClienteConViajePendienteException e) {
+	        fail("No se esperaba ClienteConViajePendienteException en esta prueba.");
+	    }catch(VehiculoNoValidoException e) {
+	    	fail("No se esperaba VehiculoNoValidoException en esta prueba.");
+	    }catch(VehiculoNoDisponibleException e) {
+	    	fail("No se esperaba VehiculoNoDisponibleException en esta prueba.");
+	    }catch (PedidoInexistenteException e) {
+	    	fail("No se esperaba PedidoInexistenteException en esta prueba.");
+	    }
     }
 	//Se lanza si el vehiculo no pertenece al ArrayList de vehiculosDisponibles
 	@Test
     public void test_VehiculoNoDisponibleException() {
         
 
-        cliente = new Cliente("a", "a", "a");
-        pedido = new Pedido(cliente, cantPasajeros, mascota, baul, km, zona);
-        chofer = new ChoferPermanente("a", "a", anioInicio, CantHijos);
-
+		  cliente = Empresa.getInstance().getClientes().get("facundo");
+	      pedido = Empresa.getInstance().getPedidoDeCliente(cliente);
+	      vehiculo = Empresa.getInstance().getVehiculos().get("abc123");
+	      chofer=Empresa.getInstance().getChoferesDesocupados().get(1);
         try {
-            Vehiculo vehiculoInexistente = new Auto("otraPatente", CantPlazas, mascota);
+            Vehiculo vehiculoInexistente = new Auto("otraPatente", CantPlazas, true);
 
             Empresa.getInstance().crearViaje(pedido, chofer, vehiculoInexistente);
 
             fail("Se esperaba la excepción VehiculoNoDisponibleException pero no fue lanzada.");
         } catch (VehiculoNoDisponibleException e) {
-            assertEquals("El vehículo no está disponible", e.getMessage());
-        } catch (PedidoInexistenteException | ChoferNoDisponibleException | VehiculoNoValidoException | ClienteConViajePendienteException e) {
-            fail("No se esperaba ninguna otra excepción en esta prueba.");
-        }
+            assertEquals("El vehiculo no esta disponible", e.getMessage());
+        }catch (ChoferNoDisponibleException e) {
+        	fail("No se esperaba ChoferNoDisponibleException en esta prueba.");
+        }catch (ClienteConViajePendienteException e) {
+	        fail("No se esperaba ClienteConViajePendienteException en esta prueba.");
+	    }catch(VehiculoNoValidoException e) {
+	    	fail("No se esperaba VehiculoNoValidoException en esta prueba.");
+	    }catch (PedidoInexistenteException e) {
+	    	fail("No se esperaba PedidoInexistenteException en esta prueba.");
+	    }
     }
 	//Se lanza si el vehiculo no puede satisfacer el pedido
 	@Test
     public void test_VehiculoNoValidoException() {
        
 
-        cliente = new Cliente("a", "a", "a");
-        pedido = new Pedido(cliente, cantPasajeros, mascota, baul, km, zona);
-        chofer = new ChoferPermanente("a", "a", anioInicio, CantHijos);
-
+		  cliente = Empresa.getInstance().getClientes().get("facundo");
+	      pedido = Empresa.getInstance().getPedidoDeCliente(cliente);
+	      vehiculo = Empresa.getInstance().getVehiculos().get("abc123");
+	      chofer=Empresa.getInstance().getChoferesDesocupados().get(1);
         try {
-            Vehiculo vehiculoInvalido = new Auto("patente", 1, false); // El auto no cumple con los requisitos del pedido
+            Vehiculo vehiculoInvalido = new Auto("patente", 2, false); // El auto no cumple con los requisitos del pedido
 
             Empresa.getInstance().crearViaje(pedido, chofer, vehiculoInvalido);
 
             fail("Se esperaba la excepción VehiculoNoValidoException pero no fue lanzada.");
         } catch (VehiculoNoValidoException e) {
             assertEquals("El vehículo no es adecuado para este pedido", e.getMessage());
-        } catch (PedidoInexistenteException | ChoferNoDisponibleException | VehiculoNoDisponibleException | ClienteConViajePendienteException e) {
-            fail("No se esperaba ninguna otra excepción en esta prueba.");
-        }
+        }  catch (VehiculoNoDisponibleException e) {
+        	fail("No se esperaba VehiculoNoDisponibleException en esta prueba.");
+        }catch (ChoferNoDisponibleException e) {
+        	fail("No se esperaba ChoferNoDisponibleException en esta prueba.");
+        }catch (ClienteConViajePendienteException e) {
+	        fail("No se esperaba ClienteConViajePendienteException en esta prueba.");
+	    }catch (PedidoInexistenteException e) {
+	    	fail("No se esperaba PedidoInexistenteException en esta prueba.");
+	    }
     }
 	//Se lanza si el Cliente esta realizando un Viaje
 	@Test
     public void test_ClienteConViajePendienteException() {
     
-
-        cliente = new Cliente("a", "a", "a");
-        pedido = new Pedido(cliente, cantPasajeros, mascota, baul, km, zona);
-        chofer = new ChoferPermanente("a", "a", anioInicio, CantHijos);
-        vehiculo = new Auto("patente", CantPlazas, mascota);
-
-        //como marco que un cliente esta realizando un viaje????
-
+		cliente = Empresa.getInstance().getClientes().get("facundo");
+	    pedido = Empresa.getInstance().getPedidoDeCliente(cliente);
+	    vehiculo = Empresa.getInstance().getVehiculos().get("abc123");
+        chofer=Empresa.getInstance().getChoferesDesocupados().get(1);
         try {
-        	Empresa.getInstance().crearViaje(pedido, chofer, vehiculo);
-
+        	//Empresa.getInstance().crearViaje(pedido, chofer, vehiculo);
+        	Empresa.getInstance().crearViaje(pedido,chofer,vehiculo);
             fail("Se esperaba la excepción ClienteConViajePendienteException pero no fue lanzada.");
         } catch (ClienteConViajePendienteException e) {
             assertEquals("El cliente ya tiene un viaje pendiente", e.getMessage());
-        } catch (PedidoInexistenteException | ChoferNoDisponibleException | VehiculoNoDisponibleException | VehiculoNoValidoException e) {
-            fail("No se esperaba ninguna otra excepción en esta prueba.");
-        }
+        }  catch (VehiculoNoValidoException e) {
+        	fail("No se esperaba VehiculoNoValidoException en esta prueba.");
+        }  catch (VehiculoNoDisponibleException e) {
+        	fail("No se esperaba VehiculoNoDisponibleException en esta prueba.");
+        }catch (ChoferNoDisponibleException e) {
+        	fail("No se esperaba ChoferNoDisponibleException en esta prueba.");
+	    }catch (PedidoInexistenteException e) {
+	    	fail("No se esperaba PedidoInexistenteException en esta prueba.");
+	    }
     }
 	
 }
