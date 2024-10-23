@@ -13,18 +13,18 @@ import util.Mensajes;
 
 public class CalificacionDeChoferEscenario3Test {
 	
-	Escenario3 escenario = new Escenario3();
+	Escenario3 escenario3 = new Escenario3();
 
 	@Before
 	public void setUp() throws Exception {
-		escenario.setup();
+		escenario3.setup();
 		Empresa.getInstance().login("facundo", "123");
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		Empresa.getInstance().logout();
-		escenario.tearDown();
+		escenario3.tearDown();
 	}
 
 	@Test
@@ -55,7 +55,7 @@ public class CalificacionDeChoferEscenario3Test {
 			double calificacion = Empresa.getInstance().calificacionDeChofer(chofer);
 			fail("Se esperaba excepcion SinViajeException");
 		} catch (SinViajesException ex) {
-			assertEquals(Mensajes.CHOFER_SIN_VIAJES, ex.getMessage());
+			assertEquals(Mensajes.CHOFER_SIN_VIAJES.getValor(), ex.getMessage());
 		} catch (Exception ex) {
 			fail("Se lanzo una excepción que no es la esperada: " + ex.getMessage());
 		}
