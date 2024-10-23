@@ -16,23 +16,19 @@ import excepciones.VehiculoNoDisponibleException;
 import excepciones.VehiculoNoValidoException;
 import modeloDatos.Auto;
 import modeloDatos.Chofer;
-import modeloDatos.ChoferPermanente;
 import modeloDatos.Cliente;
 import modeloDatos.Pedido;
 import modeloDatos.Vehiculo;
 import modeloNegocio.Empresa;
 import util.Constantes;
 
-public class TestEmpresa_CrearViaje {
-	private Escenario2 Escenario0=new Escenario2();
+public class TestEmpresa_CrearViaje_escenario4 {
+	private Escenario4 Escenario0=new Escenario4();
 	 Pedido pedido;
 	 Chofer chofer;
 	 Vehiculo vehiculo;
 	 Cliente cliente;
 	
-    //chofer
-    private static final int anioInicio=2015;
-    private static final int CantHijos=0;
     //vehiculo
     private static final int CantPlazas=2;
     
@@ -61,7 +57,7 @@ public class TestEmpresa_CrearViaje {
 		cliente = Empresa.getInstance().getClientes().get("facundo");
 	    pedido = Empresa.getInstance().getPedidoDeCliente(cliente);
 	    vehiculo = Empresa.getInstance().getVehiculos().get("abc123");
-        chofer=Empresa.getInstance().getChoferesDesocupados().get(1);
+        chofer=Empresa.getInstance().getChoferes().get("1234567");
 
 	    try {
 	        // Creamos un nuevo pedido que no ha sido agregado al HashMap de la empresa
@@ -90,7 +86,7 @@ public class TestEmpresa_CrearViaje {
         cliente = Empresa.getInstance().getClientes().get("facundo");
         pedido = Empresa.getInstance().getPedidoDeCliente(cliente);
         vehiculo = Empresa.getInstance().getVehiculos().get("abc123");
-        chofer=Empresa.getInstance().getChoferesDesocupados().get(1);
+        chofer=Empresa.getInstance().getChoferes().get("1234567");
         try {
             //Chofer choferInexistente = new ChoferPermanente("x", "x", anioInicio, CantHijos);
 
@@ -117,7 +113,7 @@ public class TestEmpresa_CrearViaje {
 		  cliente = Empresa.getInstance().getClientes().get("facundo");
 	      pedido = Empresa.getInstance().getPedidoDeCliente(cliente);
 	      vehiculo = Empresa.getInstance().getVehiculos().get("abc123");
-	      chofer=Empresa.getInstance().getChoferesDesocupados().get(1);
+	      chofer=Empresa.getInstance().getChoferes().get("1234567");
         try {
             Vehiculo vehiculoInexistente = new Auto("otraPatente", CantPlazas, true);
 
@@ -144,7 +140,7 @@ public class TestEmpresa_CrearViaje {
 		  cliente = Empresa.getInstance().getClientes().get("facundo");
 	      pedido = Empresa.getInstance().getPedidoDeCliente(cliente);
 	      vehiculo = Empresa.getInstance().getVehiculos().get("abc123");
-	      chofer=Empresa.getInstance().getChoferesDesocupados().get(1);
+	      chofer=Empresa.getInstance().getChoferes().get("1234567");
         try {
             Vehiculo vehiculoInvalido = new Auto("patente", 2, false); // El auto no cumple con los requisitos del pedido
 
@@ -170,7 +166,7 @@ public class TestEmpresa_CrearViaje {
 		cliente = Empresa.getInstance().getClientes().get("facundo");
 	    pedido = Empresa.getInstance().getPedidoDeCliente(cliente);
 	    vehiculo = Empresa.getInstance().getVehiculos().get("abc123");
-        chofer=Empresa.getInstance().getChoferesDesocupados().get(1);
+        chofer=Empresa.getInstance().getChoferes().get("1234567");
         try {
         	//Empresa.getInstance().crearViaje(pedido, chofer, vehiculo);
         	Empresa.getInstance().crearViaje(pedido,chofer,vehiculo);
@@ -187,5 +183,4 @@ public class TestEmpresa_CrearViaje {
 	    	fail("No se esperaba PedidoInexistenteException en esta prueba.");
 	    }
     }
-	
 }
