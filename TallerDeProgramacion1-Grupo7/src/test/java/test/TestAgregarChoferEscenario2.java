@@ -11,7 +11,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-public class TestAgregarChoferEscenario1 {
+public class TestAgregarChoferEscenario2 {
     private Escenario2 escenario2 = new Escenario2();
 
     @Before
@@ -26,7 +26,7 @@ public class TestAgregarChoferEscenario1 {
 
     @Test
     public void testAgregarChoferExitoso() {
-        Chofer nuevoChofer = new ChoferTemporario("7777777", "Nuevo Chofer");
+        Chofer nuevoChofer = new ChoferTemporario("7777777", "Constantino");
         try {
             Empresa.getInstance().agregarChofer(nuevoChofer);
             assertEquals("El DNI del chofer agregado no es el esperado", "7777777", Empresa.getInstance().getChoferes().get("7777777").getDni());

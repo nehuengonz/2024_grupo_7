@@ -9,7 +9,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
-public class TestAgregarClienteEscenario2 {
+public class TestAgregarClienteEscenario1 {
     private Escenario1 escenario1 = new Escenario1();
 
     @Before
@@ -25,7 +25,7 @@ public class TestAgregarClienteEscenario2 {
     @Test
     public void testAgregarClienteExitoso() {
         try {
-            Empresa.getInstance().agregarCliente("ClienteNuevo","123456","Cliente Nuevo");
+            Empresa.getInstance().agregarCliente("Ignacio","123456","Ignacio Florezz");
         } catch (UsuarioYaExisteException e) {
             fail("Segun el escenario planteado el usuario ClienteNuevo existe en el sistema");
         }
