@@ -1,6 +1,8 @@
 package test;
 
 import static org.junit.Assert.*;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import persistencia.EmpresaDTO;
@@ -17,6 +19,11 @@ public class TestEmpresaDTO {
     @Before
     public void setUp() {
         empresa = new EmpresaDTO();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        empresa = null;
     }
 
     @Test
