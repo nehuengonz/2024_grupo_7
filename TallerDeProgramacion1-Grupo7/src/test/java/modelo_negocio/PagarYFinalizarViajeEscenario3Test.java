@@ -42,7 +42,6 @@ public class PagarYFinalizarViajeEscenario3Test {
 
 
             Assert.assertEquals("No se guardo bien la calificacion del viaje",v.getCalificacion(),5);
-
         } catch (ClienteSinViajePendienteException e) {
             fail("El cliente tiene un viaje pendiente de terminar");
         }

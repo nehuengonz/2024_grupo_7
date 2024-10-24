@@ -11,10 +11,9 @@ import org.mockito.Mockito.*;
 import persistencia.IPersistencia;
 import persistencia.PersistenciaBIN;
 import util.Constantes;
-import vista.IVista;
-import vista.PanelLogin;
-import vista.Ventana;
+import vista.*;
 
+import javax.swing.*;
 import java.io.File;
 import java.util.EnumMap;
 
@@ -24,7 +23,7 @@ import static org.mockito.Mockito.when;
 public class IntegracionTest {
 
     private IVista vista;
-    private IPersistencia persistencia;
+    private PersistenciaBIN persistencia;
     private Controlador controlador;
     public IntegracionTest() {
     }
@@ -32,11 +31,15 @@ public class IntegracionTest {
     @Before
     public void setUp() throws Exception {
         vista = mock(Ventana.class);
-        persistencia = mock(PersistenciaBIN.class);
+        persistencia = new PersistenciaBIN();
+        IOptionPane ventanaErrores = new DefaultOptionPane();
+
         controlador = new Controlador();
+        controlador.setPersistencia(persistencia);
+
+        when(vista.getOptionPane()).thenReturn(ventanaErrores);
         when(vista.getPassword()).thenReturn("admin");
         when(vista.getUsserName()).thenReturn("admin");
-
 
     }
 
@@ -48,6 +51,18 @@ public class IntegracionTest {
         if(archivo.exists()){
             archivo.delete();
         }
+
+        Empresa.getInstance().getHistorialViajeCliente(Empresa.getInstance().getClientes().get("facundo")).clear();
+        Empresa.getInstance().getHistorialViajeCliente(Empresa.getInstance().getClientes().get("thiago")).clear();
+        Empresa.getInstance().getHistorialViajeCliente(Empresa.getInstance().getClientes().get("nehuen")).clear();
+        Empresa.getInstance().getChoferes().clear();
+        Empresa.getInstance().getVehiculos().clear();
+        Empresa.getInstance().getVehiculosDesocupados().clear();
+        Empresa.getInstance().getChoferesDesocupados().clear();
+        Empresa.getInstance().getClientes().clear();
+        Empresa.getInstance().getPedidos().clear();
+        Empresa.getInstance().getViajesIniciados().clear();
+        Empresa.getInstance().getViajesTerminados().clear();
 
     }
 
@@ -73,6 +88,7 @@ public class IntegracionTest {
 
         Assert.assertTrue("El chofer no fue agregado correctamente", Empresa.getInstance().getChoferes().containsKey("123456789"));
     }
+
 
 
 }
