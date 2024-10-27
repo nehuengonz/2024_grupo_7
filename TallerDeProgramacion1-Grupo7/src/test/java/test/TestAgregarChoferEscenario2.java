@@ -25,16 +25,6 @@ public class TestAgregarChoferEscenario2 {
         escenario2.teardown();
     }
 
-    @Test
-    public void testAgregarChoferTemporarioExitoso() {
-        Chofer nuevoChofer = new ChoferTemporario("7777777", "Constantino");
-        try {
-            Empresa.getInstance().agregarChofer(nuevoChofer);
-            assertEquals("El DNI del chofer agregado no es el esperado", "7777777", Empresa.getInstance().getChoferes().get("7777777").getDni());
-        } catch (ChoferRepetidoException e) {
-            fail("Se esperaba que el chofer se agregara exitosamente, pero ocurrió una excepción: " + e.getMessage());
-        }
-    }
 
     @Test
     public void testAgregarChoferPermanenteExitoso() {
@@ -48,14 +38,33 @@ public class TestAgregarChoferEscenario2 {
     }
 
     @Test
-    public void testAgregarChoferDuplicado() {
+    public void testAgregarChoferPermanenteDuplicado() {
         try {
             Empresa.getInstance().agregarChofer(escenario2.getChofer1()); // Ya fue agregado en el escenario
             fail("Se esperaba una excepción ChoferRepetidoException");
         } catch (ChoferRepetidoException e) {
-            fail("El chofer con DNI 111111 ya está registrado");
+            fail("El chofer con DNI 1234567 ya está registrado");
         }
     }
 
+    @Test
+    public void testAgregarChoferTemporarioExitoso() {
+        Chofer nuevoChofer = new ChoferTemporario("7777777", "Constantino");
+        try {
+            Empresa.getInstance().agregarChofer(nuevoChofer);
+            assertEquals("El DNI del chofer agregado no es el esperado", "7777777", Empresa.getInstance().getChoferes().get("7777777").getDni());
+        } catch (ChoferRepetidoException e) {
+            fail("Se esperaba que el chofer se agregara exitosamente, pero ocurrió una excepción: " + e.getMessage());
+        }
+    }
 
+    @Test
+    public void testAgregarChoferTemporarioDuplicado() {
+        try {
+            Empresa.getInstance().agregarChofer(escenario2.getChofer3()); // Ya fue agregado en el escenario
+            fail("Se esperaba una excepción ChoferRepetidoException");
+        } catch (ChoferRepetidoException e) {
+            fail("El chofer con DNI 11111111 ya está registrado");
+        }
+    }
 }

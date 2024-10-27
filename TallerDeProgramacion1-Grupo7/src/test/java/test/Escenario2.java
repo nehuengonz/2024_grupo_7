@@ -21,7 +21,8 @@ public class Escenario2 {
     private ChoferTemporario chofer4;
 
     private Vehiculo auto1;
-
+    private Vehiculo moto1;
+    private Vehiculo combi1;
 
     public Escenario2() {
 
@@ -37,8 +38,8 @@ public class Escenario2 {
 
         auto1=new Auto("abc123",4,true);
         Vehiculo auto2=new Auto("dfg456",3,false);
-        Vehiculo moto1=new Moto("pat333");
-        Vehiculo combi1=new Combi("combi222",10,false);
+        moto1=new Moto("pat333");
+        combi1=new Combi("combi222",10,false);
         Vehiculo combi2=new Combi("combi111",10,true);
 
         Empresa.getInstance().agregarCliente("facundo","123","Facundo");
@@ -107,5 +108,16 @@ public class Escenario2 {
         return auto1;
     }
 
-    
+
+    public Chofer getChofer3() {
+        return chofer3;
+    }
+
+    public Vehiculo getMoto1() {
+        return moto1;
+    }
+
+    public Vehiculo getCombi1() {
+        return combi1;
+    }
 }

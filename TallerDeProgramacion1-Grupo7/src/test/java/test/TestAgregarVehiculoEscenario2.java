@@ -38,6 +38,16 @@ public class TestAgregarVehiculoEscenario2 {
     }
 
     @Test
+    public void testAgregarVehiculoMotoDuplicado() {
+        try {
+            Empresa.getInstance().agregarVehiculo(escenario2.getMoto1()); // Ya fue agregado en el escenario
+            fail("Se esperaba una excepción VehiculoRepetidoException");
+        } catch (VehiculoRepetidoException e) {
+            fail("El vehiculo Moto con patente pat333 ya está registrado");
+        }
+    }
+
+    @Test
     public void testAgregarVehiculoAutoExitoso() {
         Vehiculo nuevoVehiculo = new Auto("ASD789",4,true);
         try {
@@ -45,6 +55,16 @@ public class TestAgregarVehiculoEscenario2 {
             assertEquals("La patente del vehículo agregado no es la esperada", "ASD789", Empresa.getInstance().getVehiculos().get("ASD789").getPatente());
         } catch (VehiculoRepetidoException e) {
             fail("Se esperaba que el vehículo se agregara exitosamente, pero ocurrió una excepción: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testAgregarVehiculoAutoDuplicado() {
+        try {
+            Empresa.getInstance().agregarVehiculo(escenario2.getAuto1()); // Ya fue agregado en el escenario
+            fail("Se esperaba una excepción VehiculoRepetidoException");
+        } catch (VehiculoRepetidoException e) {
+            fail("El vehiculo con patente abc123 ya está registrado");
         }
     }
 
@@ -60,12 +80,13 @@ public class TestAgregarVehiculoEscenario2 {
     }
 
     @Test
-    public void testAgregarVehiculoDuplicado() {
+    public void testAgregarVehiculoCombiDuplicado() {
         try {
-            Empresa.getInstance().agregarVehiculo(escenario2.getAuto1()); // Ya fue agregado en el escenario
+            Empresa.getInstance().agregarVehiculo(escenario2.getCombi1()); // Ya fue agregado en el escenario
             fail("Se esperaba una excepción VehiculoRepetidoException");
         } catch (VehiculoRepetidoException e) {
-            fail("El vehiculo con patente abc123 ya está registrado");
+            fail("El vehiculo con patente combi222 ya está registrado");
         }
     }
+
 }
