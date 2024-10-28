@@ -45,7 +45,7 @@ public class GuiTestEnabledDisabled {
 	    {
 	        robot.delay(guiTestUtils.getDelay());
 	        //obtengo las referencias a los componentes necesarios
-	        JButton aceptarReg = (JButton) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.REG_BUTTON_REGISTRAR);
+	        JButton aceptarReg = (JButton) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.REGISTRAR);
 	        JButton aceptarLog = (JButton) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LOGIN);
 	        guiTestUtils.clickComponent(aceptarReg, robot);
 	        //verifico los resultados
@@ -57,11 +57,11 @@ public class GuiTestEnabledDisabled {
 		  robot.delay(guiTestUtils.getDelay());
 		  //
 		  JTextField nombre = (JTextField) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NOMBRE_USUARIO);
-		  JButton aceptarReg = (JButton) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.REG_BUTTON_REGISTRAR);
+		  JButton aceptarReg = (JButton) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.REGISTRAR);
 	      JButton aceptarLog = (JButton) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LOGIN);
 	      //completo los textfields
 	      guiTestUtils.clickComponent(nombre, robot);
-	      guiTestUtils.tipeaTexto("contrasenia", robot);
+	      guiTestUtils.tipeaTexto("nombre", robot);
 	      //
 	      Assert.assertTrue("El boton de registro deberia estar habilitado", aceptarReg.isEnabled());
 	      Assert.assertFalse("El boton de login deberia estar deshablitado", aceptarLog.isEnabled());   
@@ -71,11 +71,11 @@ public class GuiTestEnabledDisabled {
 		  robot.delay(guiTestUtils.getDelay());
 		  //
 		  JTextField contrasenia = (JTextField) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PASSWORD);
-		  JButton aceptarReg = (JButton) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.REG_BUTTON_REGISTRAR);
+		  JButton aceptarReg = (JButton) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.REGISTRAR);
 	      JButton aceptarLog = (JButton) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LOGIN);
 	      //completo los textfields
 	      guiTestUtils.clickComponent(contrasenia, robot);
-	      guiTestUtils.tipeaTexto("nombre", robot);
+	      guiTestUtils.tipeaTexto("contrasenia", robot);
 	      //
 	      Assert.assertTrue("El boton de registro deberia estar habilitado", aceptarReg.isEnabled());
 	      Assert.assertFalse("El boton de login deberia estar deshablitado", aceptarLog.isEnabled());   
@@ -86,15 +86,83 @@ public class GuiTestEnabledDisabled {
 		  //
 		  JTextField nombre = (JTextField) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NOMBRE_USUARIO);
 		  JTextField contrasenia = (JTextField) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PASSWORD);
-		  JButton aceptarReg = (JButton) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.REG_BUTTON_REGISTRAR);
+		  JButton aceptarReg = (JButton) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.REGISTRAR);
 	      JButton aceptarLog = (JButton) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LOGIN);
 	      //completo los textfields
 	      guiTestUtils.clickComponent(nombre, robot);
-	      guiTestUtils.tipeaTexto("contrasenia", robot);
-	      guiTestUtils.clickComponent(contrasenia, robot);
 	      guiTestUtils.tipeaTexto("nombre", robot);
+	      guiTestUtils.clickComponent(contrasenia, robot);
+	      guiTestUtils.tipeaTexto("contrasenia", robot);
 	      //
 	      Assert.assertTrue("El boton de registro deberia estar habilitado", aceptarReg.isEnabled());
 	      Assert.assertTrue("El boton de login deberia estar hablitado", aceptarLog.isEnabled());   
 	  } 
-}
+	  @Test
+	  public void testLogCompletoYquitoUsuario() {
+		  robot.delay(guiTestUtils.getDelay());
+		  //
+		  JTextField nombre = (JTextField) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NOMBRE_USUARIO);
+		  JTextField contrasenia = (JTextField) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PASSWORD);
+		  JButton aceptarReg = (JButton) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.REGISTRAR);
+	      JButton aceptarLog = (JButton) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LOGIN);
+	      //completo los textfields
+	      guiTestUtils.clickComponent(nombre, robot);
+	      guiTestUtils.tipeaTexto("nombre", robot);
+	      guiTestUtils.clickComponent(contrasenia, robot);
+	      guiTestUtils.tipeaTexto("contrasenia", robot);
+	      guiTestUtils.clickComponent(nombre, robot);
+	      guiTestUtils.borraJTextfield(nombre, robot);
+	      //
+	      Assert.assertTrue("El boton de registro deberia estar habilitado", aceptarReg.isEnabled());
+	      Assert.assertFalse("El boton de login deberia estar deshablitado", aceptarLog.isEnabled()); 
+	  }
+	  @Test
+	  public void testLogCompletoYquitoContrasenia() {
+		  robot.delay(guiTestUtils.getDelay());
+		  //
+		  JTextField nombre = (JTextField) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NOMBRE_USUARIO);
+		  JTextField contrasenia = (JTextField) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PASSWORD);
+		  JButton aceptarReg = (JButton) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.REGISTRAR);
+	      JButton aceptarLog = (JButton) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LOGIN);
+	      //completo los textfields
+	      guiTestUtils.clickComponent(nombre, robot);
+	      guiTestUtils.tipeaTexto("nombre", robot);
+	      guiTestUtils.clickComponent(contrasenia, robot);
+	      guiTestUtils.tipeaTexto("contrasenia", robot);
+	      guiTestUtils.clickComponent(contrasenia, robot);
+	      guiTestUtils.borraJTextfield(contrasenia, robot);
+	      //
+	      Assert.assertTrue("El boton de registro deberia estar habilitado", aceptarReg.isEnabled());
+	      Assert.assertFalse("El boton de login deberia estar deshablitado", aceptarLog.isEnabled()); 
+	  }
+	  @Test
+	  public void testLogCompletoYquitoUsuarioycontrasenia() {
+		  robot.delay(guiTestUtils.getDelay());
+		  //
+		  JTextField nombre = (JTextField) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NOMBRE_USUARIO);
+		  JTextField contrasenia = (JTextField) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PASSWORD);
+		  JButton aceptarReg = (JButton) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.REGISTRAR);
+	      JButton aceptarLog = (JButton) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LOGIN);
+	      //completo los textfields
+	      guiTestUtils.clickComponent(nombre, robot);
+	      guiTestUtils.tipeaTexto("nombre", robot);
+	      guiTestUtils.clickComponent(contrasenia, robot);
+	      guiTestUtils.tipeaTexto("contrasenia", robot);
+	      guiTestUtils.clickComponent(nombre, robot);
+	      guiTestUtils.borraJTextfield(nombre, robot);
+	      guiTestUtils.clickComponent(contrasenia, robot);
+	      guiTestUtils.borraJTextfield(contrasenia, robot);
+	      //
+	      Assert.assertTrue("El boton de registro deberia estar habilitado", aceptarReg.isEnabled());
+	      Assert.assertFalse("El boton de login deberia estar deshablitado", aceptarLog.isEnabled()); 
+	  }
+	  @Test
+	  public void testRegVacio() {
+		  robot.delay(guiTestUtils.getDelay());
+		  //
+		  JButton aceptarReg = (JButton) guiTestUtils.getComponentForName((Component) controlador.getVista(), Constantes.REGISTRAR);
+		  
+		  
+	  }
+	  
+} 
