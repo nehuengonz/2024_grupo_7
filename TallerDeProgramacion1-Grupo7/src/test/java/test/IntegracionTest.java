@@ -43,6 +43,8 @@ public class IntegracionTest {
         controlador.setPersistencia(persistencia);
         controlador.setVista(vista);
 
+
+        //esto es para los mensajes de error
         when(vista.getOptionPane()).thenReturn(ventanaErrores);
 
     }
