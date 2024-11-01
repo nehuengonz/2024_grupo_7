@@ -147,13 +147,22 @@ public class testGUIMensajes {
     @Test
     public void testClienteRealizaPedidoSinVehiculoDisp() {
         robot.delay(TestUtils.getDelay());
+
+        JTextField password= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
+        JTextField user= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_USUARIO);
+        JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.LOGIN);
+
+        TestUtils.clickComponent(user, robot);
+        TestUtils.tipeaTexto(userCliente, robot);
+        TestUtils.clickComponent(password, robot);
+        TestUtils.tipeaTexto(passCliente, robot);
+
+        TestUtils.clickComponent(aceptarLog, robot);
+
         JTextField cantPax= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.CANT_PAX);
         JTextField cantKm= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.CANT_KM);
-        JRadioButton zonaStandard= (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.ZONA_STANDARD);
-        JRadioButton zonaSinAsfaltar= (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.ZONA_SIN_ASFALTAR);
         JRadioButton zonaPeligrosa= (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.ZONA_PELIGROSA);
         JCheckBox mascota= (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.CHECK_MASCOTA);
-        JCheckBox baul= (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.CHECK_BAUL);
         JButton nuevoPedido=(JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NUEVO_PEDIDO);
 
         TestUtils.clickComponent(cantPax, robot);
@@ -172,10 +181,21 @@ public class testGUIMensajes {
     @Test
     public void testRegistroChoferRepetido() {
         robot.delay(TestUtils.getDelay());
+
+        JTextField password= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
+        JTextField user= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_USUARIO);
+        JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.LOGIN);
+
+        TestUtils.clickComponent(user, robot);
+        TestUtils.tipeaTexto("admin", robot);
+        TestUtils.clickComponent(password, robot);
+        TestUtils.tipeaTexto("admin", robot);
+
+        TestUtils.clickComponent(aceptarLog, robot);
+
         JTextField dni= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.DNI_CHOFER);
         JTextField nombre= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_CHOFER);
-        JCheckBox permanente= (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PERMANENTE);
-        JCheckBox temporario= (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.TEMPORARIO);
+        JRadioButton permanente= (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PERMANENTE);
         JTextField cantHijos= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.CH_CANT_HIJOS);
         JTextField anioIngreso= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.CH_ANIO);
         JButton aceptarChofer=(JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NUEVO_CHOFER);
@@ -184,7 +204,7 @@ public class testGUIMensajes {
         TestUtils.tipeaTexto(dniChofer, robot);
         TestUtils.clickComponent(nombre, robot);
         TestUtils.tipeaTexto("Paul", robot);
-        TestUtils.clickComponent(temporario, robot);
+        TestUtils.clickComponent(permanente, robot);
         TestUtils.clickComponent(cantHijos, robot);
         TestUtils.tipeaTexto("2", robot);
         TestUtils.clickComponent(anioIngreso,robot);
@@ -199,12 +219,25 @@ public class testGUIMensajes {
     @Test
     public void testRegistroVehiculoRepetido(){
         robot.delay(TestUtils.getDelay());
-        JTextField patente= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.DNI_CHOFER);
-        JCheckBox auto= (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.AUTO);
-        JCheckBox combi= (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.COMBI);
-        JCheckBox moto= (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.MOTO);
+
+        JTextField password= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
+        JTextField user= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_USUARIO);
+        JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.LOGIN);
+
+        TestUtils.clickComponent(user, robot);
+        TestUtils.tipeaTexto("admin", robot);
+        TestUtils.clickComponent(password, robot);
+        TestUtils.tipeaTexto("admin", robot);
+
+        TestUtils.clickComponent(aceptarLog, robot);
+
+        JTextField patente= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PATENTE);
+        JRadioButton auto= (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.AUTO);
         JCheckBox mascota= (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.CHECK_VEHICULO_ACEPTA_MASCOTA);
         JTextField cantPlazas=(JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.CANTIDAD_PLAZAS);
+
+        robot.delay(6000);
+
         JButton aceptarVehiculo=(JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NUEVO_VEHICULO);
 
         TestUtils.clickComponent(patente, robot);
