@@ -90,6 +90,10 @@ public class CrearViajesIntegracionTest {
 
         controlador.actionPerformed(new ActionEvent(this,1,Constantes.NUEVO_VIAJE));
 
+        Viaje viajeEmpezado = Empresa.getInstance().getViajesIniciados().get(Empresa.getInstance().getClientes().get("facundo"));
+
+        Assert.assertNotNull("El viaje no se inicio",viajeEmpezado);
+
         controlador.actionPerformed(new ActionEvent(this,3,Constantes.CERRAR_SESION_ADMIN)); //logout
 
         Assert.assertNull("No se deslogueo al usuario", Empresa.getInstance().getUsuarioLogeado());
