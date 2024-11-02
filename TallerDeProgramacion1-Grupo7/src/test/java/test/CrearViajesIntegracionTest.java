@@ -27,7 +27,7 @@ import java.util.Iterator;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class CreacionDeViajesTest {
+public class CrearViajesIntegracionTest {
     private IVista vista;
     private PersistenciaBIN persistencia;
     private Controlador controlador;
@@ -35,7 +35,7 @@ public class CreacionDeViajesTest {
 
     private Escenario2 escenario2;
 
-    public CreacionDeViajesTest() {
+    public CrearViajesIntegracionTest() {
     }
 
     @Before
@@ -147,7 +147,7 @@ public class CreacionDeViajesTest {
     }
 
     @Test
-    public void crearViajeChoferNoDisponibleTest() throws ClienteNoExisteException, ClienteConViajePendienteException, SinVehiculoParaPedidoException, ClienteConPedidoPendienteException {
+    public void crearViajeClienteConVIajeTest() throws ClienteNoExisteException, ClienteConViajePendienteException, SinVehiculoParaPedidoException, ClienteConPedidoPendienteException {
         when(vista.getPassword()).thenReturn("admin");
         when(vista.getUsserName()).thenReturn("admin");
 
@@ -183,7 +183,7 @@ public class CreacionDeViajesTest {
     }
 
     @Test
-    public void crearViajeVehiculoNoValidoTest() throws ClienteNoExisteException, ClienteConViajePendienteException, SinVehiculoParaPedidoException, ClienteConPedidoPendienteException {
+    public void crearViajeVehiculoNoValidoTest(){
         when(vista.getPassword()).thenReturn("admin");
         when(vista.getUsserName()).thenReturn("admin");
 
@@ -204,6 +204,6 @@ public class CreacionDeViajesTest {
 
     }
 
-    
+
 
 }
