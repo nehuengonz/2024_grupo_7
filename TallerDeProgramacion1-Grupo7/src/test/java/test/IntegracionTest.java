@@ -72,15 +72,24 @@ public class IntegracionTest {
 
     }
 
+    @Test
+    public void testDelConstructor() {
+        Controlador c = new Controlador();
+
+        Assert.assertNotNull("No se creo bien la vista",c.getVista());
+        Assert.assertNotNull("No se creo bien la persistencia",c.getPersistencia());
+        Assert.assertEquals("El archivo no se nombro como en el contrato", c.getFileName(), "empresa.bin");
+    }
+
     /*
-            String tipo = this.vista.getTipoChofer()
-            String nombre = this.vista.getNombreChofer()
-            String dni = this.vista.getDNIChofer();
-            Si tipo== Constantes.TEMPORARIO se agrega un chofer temporario con los parametros "dni" y "nombre"
-            Si tipo== Constantes.PERMANENTE
-            int anio = this.vista.getAnioChofer()
-            int hijos = this.vista.getHijosChofer()
-             */
+                String tipo = this.vista.getTipoChofer()
+                String nombre = this.vista.getNombreChofer()
+                String dni = this.vista.getDNIChofer();
+                Si tipo== Constantes.TEMPORARIO se agrega un chofer temporario con los parametros "dni" y "nombre"
+                Si tipo== Constantes.PERMANENTE
+                int anio = this.vista.getAnioChofer()
+                int hijos = this.vista.getHijosChofer()
+                 */
     @Test
     public void loginAdmin_y_nuevoChoferTemporario() throws IOException, ClassNotFoundException {
         when(vista.getPassword()).thenReturn("admin");
