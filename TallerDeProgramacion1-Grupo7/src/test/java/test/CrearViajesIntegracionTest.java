@@ -171,7 +171,7 @@ public class CrearViajesIntegracionTest {
         //creo otro viaje
         Empresa.getInstance().agregarPedido(new Pedido(Empresa.getInstance().getClientes().get("facundo"),1,false,false,2, Constantes.ZONA_STANDARD));
         when(vista.getChoferDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getChoferesDesocupados().get(1));
-        when(vista.getVehiculoDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getVehiculosDesocupados().get(3));
+        when(vista.getVehiculoDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getVehiculosDesocupados().get(2));
         Pedido p = Empresa.getInstance().getPedidoDeCliente(
                 Empresa.getInstance().getClientes().get("facundo")
         );
