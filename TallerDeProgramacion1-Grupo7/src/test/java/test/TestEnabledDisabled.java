@@ -494,7 +494,7 @@ public class TestEnabledDisabled {
     }
 
     @Test
-    public void testContienePedido() {
+    public void testContienePedidoActual() {
         robot.delay(TestUtils.getDelay());
 
         JTextField contrasenia= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
@@ -586,7 +586,338 @@ public class TestEnabledDisabled {
         Assert.assertFalse("El campo de valor del viaje no debería estar vacio", text.isEmpty());
     }
 
-    
+    @Test
+    public void testAdminAgregaChoferTemporario(){
+        robot.delay(TestUtils.getDelay());
+
+        JTextField contrasenia= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
+        JTextField usuario= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_USUARIO);
+        JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.LOGIN);
+
+        TestUtils.clickComponent(usuario, robot);
+        TestUtils.tipeaTexto("admin", robot);
+        TestUtils.clickComponent(contrasenia, robot);
+        TestUtils.tipeaTexto("admin", robot);
+
+        TestUtils.clickComponent(aceptarLog, robot);
+
+        JTextField dni = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.DNI_CHOFER);
+        JTextField nombre = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NOMBRE_CHOFER);
+        JRadioButton permanente = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PERMANENTE);
+        JRadioButton temporario = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.TEMPORARIO);
+        JTextField cantHijos = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CH_CANT_HIJOS);
+        JTextField anioIngreso = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CH_ANIO);
+        JButton aceptarChofer = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_CHOFER);
+        JButton cerrarSesion = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CERRAR_SESION_ADMIN);
+
+        TestUtils.clickComponent(temporario, robot);
+        TestUtils.clickComponent(dni, robot);
+        TestUtils.tipeaTexto("1", robot);
+        TestUtils.clickComponent(nombre, robot);
+        TestUtils.tipeaTexto("a", robot);
+        robot.delay(2000);
+
+
+        Assert.assertTrue("El boton de cerrar sesion deberia estar habilitado", cerrarSesion.isEnabled());
+        Assert.assertTrue("El boton de aceptar chofer debería estar habilitado", aceptarChofer.isEnabled());
+        Assert.assertFalse("El campo de cantidad de hijos debería estar deshabilitado", cantHijos.isEnabled());
+        Assert.assertFalse("El campo anio ingreso debería estar deshabilitado", anioIngreso.isEnabled());
+        Assert.assertTrue("El radio button permanente debería estar habilitado", permanente.isEnabled());
+
+
+    }
+
+    @Test
+    public void testAdminAgregaChoferTemporarioSinDNI(){
+        robot.delay(TestUtils.getDelay());
+
+        JTextField contrasenia= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
+        JTextField usuario= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_USUARIO);
+        JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.LOGIN);
+
+        TestUtils.clickComponent(usuario, robot);
+        TestUtils.tipeaTexto("admin", robot);
+        TestUtils.clickComponent(contrasenia, robot);
+        TestUtils.tipeaTexto("admin", robot);
+
+        TestUtils.clickComponent(aceptarLog, robot);
+
+        JTextField dni = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.DNI_CHOFER);
+        JTextField nombre = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NOMBRE_CHOFER);
+        JRadioButton permanente = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PERMANENTE);
+        JRadioButton temporario = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.TEMPORARIO);
+        JTextField cantHijos = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CH_CANT_HIJOS);
+        JTextField anioIngreso = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CH_ANIO);
+        JButton aceptarChofer = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_CHOFER);
+        JButton cerrarSesion = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CERRAR_SESION_ADMIN);
+
+        TestUtils.clickComponent(temporario, robot);
+        TestUtils.clickComponent(dni, robot);
+        TestUtils.tipeaTexto("1", robot);
+        TestUtils.clickComponent(nombre, robot);
+        TestUtils.tipeaTexto("a", robot);
+        TestUtils.borraJTextField(dni, robot);
+        robot.delay(2000);
+
+        Assert.assertTrue("El boton de cerrar sesion deberia estar habilitado", cerrarSesion.isEnabled());
+        Assert.assertFalse("El boton de aceptar chofer debería estar deshabilitado", aceptarChofer.isEnabled());
+        Assert.assertFalse("El campo de cantidad de hijos debería estar deshabilitado", cantHijos.isEnabled());
+        Assert.assertFalse("El campo anio ingreso debería estar deshabilitado", anioIngreso.isEnabled());
+        Assert.assertTrue("El radio button permanente debería estar habilitado", permanente.isEnabled());
+
+    }
+
+    @Test
+    public void testAdminAgregaChoferTemporarioSinNombre(){
+        robot.delay(TestUtils.getDelay());
+
+        JTextField contrasenia= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
+        JTextField usuario= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_USUARIO);
+        JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.LOGIN);
+
+        TestUtils.clickComponent(usuario, robot);
+        TestUtils.tipeaTexto("admin", robot);
+        TestUtils.clickComponent(contrasenia, robot);
+        TestUtils.tipeaTexto("admin", robot);
+
+        TestUtils.clickComponent(aceptarLog, robot);
+
+        JTextField dni = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.DNI_CHOFER);
+        JTextField nombre = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NOMBRE_CHOFER);
+        JRadioButton permanente = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PERMANENTE);
+        JRadioButton temporario = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.TEMPORARIO);
+        JTextField cantHijos = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CH_CANT_HIJOS);
+        JTextField anioIngreso = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CH_ANIO);
+        JButton aceptarChofer = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_CHOFER);
+        JButton cerrarSesion = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CERRAR_SESION_ADMIN);
+
+        TestUtils.clickComponent(temporario, robot);
+        TestUtils.clickComponent(dni, robot);
+        TestUtils.tipeaTexto("1", robot);
+        TestUtils.clickComponent(nombre, robot);
+        TestUtils.tipeaTexto("a", robot);
+        TestUtils.borraJTextField(nombre, robot);
+        robot.delay(2000);
+
+        Assert.assertTrue("El boton de cerrar sesion deberia estar habilitado", cerrarSesion.isEnabled());
+        Assert.assertFalse("El boton de aceptar chofer debería estar deshabilitado", aceptarChofer.isEnabled());
+        Assert.assertFalse("El campo de cantidad de hijos debería estar deshabilitado", cantHijos.isEnabled());
+        Assert.assertFalse("El campo anio ingreso debería estar deshabilitado", anioIngreso.isEnabled());
+        Assert.assertTrue("El radio button permanente debería estar habilitado", permanente.isEnabled());
+
+    }
+
+    @Test
+    public void testAdminAgregaChoferPermanenteValido(){
+        robot.delay(TestUtils.getDelay());
+
+        JTextField contrasenia= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
+        JTextField usuario= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_USUARIO);
+        JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.LOGIN);
+
+        TestUtils.clickComponent(usuario, robot);
+        TestUtils.tipeaTexto("admin", robot);
+        TestUtils.clickComponent(contrasenia, robot);
+        TestUtils.tipeaTexto("admin", robot);
+
+        TestUtils.clickComponent(aceptarLog, robot);
+
+        JTextField dni = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.DNI_CHOFER);
+        JTextField nombre = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NOMBRE_CHOFER);
+        JRadioButton permanente = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PERMANENTE);
+        JRadioButton temporario = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.TEMPORARIO);
+        JTextField cantHijos = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CH_CANT_HIJOS);
+        JTextField anioIngreso = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CH_ANIO);
+        JButton aceptarChofer = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_CHOFER);
+        JButton cerrarSesion = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CERRAR_SESION_ADMIN);
+
+        TestUtils.clickComponent(permanente, robot);
+        TestUtils.clickComponent(dni, robot);
+        TestUtils.tipeaTexto("1", robot);
+        TestUtils.clickComponent(nombre, robot);
+        TestUtils.tipeaTexto("a", robot);
+        TestUtils.clickComponent(cantHijos, robot);
+        TestUtils.tipeaTexto("0", robot);
+        TestUtils.clickComponent(anioIngreso, robot);
+        TestUtils.tipeaTexto("1900", robot);
+
+        robot.delay(2000);
+
+        Assert.assertTrue("El boton de cerrar sesion deberia estar habilitado", cerrarSesion.isEnabled());
+        Assert.assertTrue("El boton de aceptar chofer debería estar habilitado", aceptarChofer.isEnabled());
+        Assert.assertTrue("El radio button temporario debería estar habilitado", temporario.isEnabled());
+
+    }
+
+    @Test
+    public void testAdminAgregaChoferPermanenteInvCantHijos(){
+        robot.delay(TestUtils.getDelay());
+
+        JTextField contrasenia= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
+        JTextField usuario= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_USUARIO);
+        JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.LOGIN);
+
+        TestUtils.clickComponent(usuario, robot);
+        TestUtils.tipeaTexto("admin", robot);
+        TestUtils.clickComponent(contrasenia, robot);
+        TestUtils.tipeaTexto("admin", robot);
+
+        TestUtils.clickComponent(aceptarLog, robot);
+
+        JTextField dni = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.DNI_CHOFER);
+        JTextField nombre = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NOMBRE_CHOFER);
+        JRadioButton permanente = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PERMANENTE);
+        JRadioButton temporario = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.TEMPORARIO);
+        JTextField cantHijos = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CH_CANT_HIJOS);
+        JTextField anioIngreso = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CH_ANIO);
+        JButton aceptarChofer = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_CHOFER);
+        JButton cerrarSesion = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CERRAR_SESION_ADMIN);
+
+        TestUtils.clickComponent(permanente, robot);
+        TestUtils.clickComponent(dni, robot);
+        TestUtils.tipeaTexto("1", robot);
+        TestUtils.clickComponent(nombre, robot);
+        TestUtils.tipeaTexto("a", robot);
+        TestUtils.clickComponent(cantHijos, robot);
+        TestUtils.tipeaTexto("-5", robot);
+        TestUtils.clickComponent(anioIngreso, robot);
+        TestUtils.tipeaTexto("3000", robot);
+
+        robot.delay(2000);
+
+        Assert.assertTrue("El boton de cerrar sesion deberia estar habilitado", cerrarSesion.isEnabled());
+        Assert.assertFalse("El boton de aceptar chofer debería estar deshabilitado", aceptarChofer.isEnabled());
+        Assert.assertTrue("El radio button temporario debería estar habilitado", temporario.isEnabled());
+
+    }
+
+    @Test
+    public void testAdminAgregaChoferPermanenteAniosInv(){
+        robot.delay(TestUtils.getDelay());
+
+        JTextField contrasenia= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
+        JTextField usuario= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_USUARIO);
+        JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.LOGIN);
+
+        TestUtils.clickComponent(usuario, robot);
+        TestUtils.tipeaTexto("admin", robot);
+        TestUtils.clickComponent(contrasenia, robot);
+        TestUtils.tipeaTexto("admin", robot);
+
+        TestUtils.clickComponent(aceptarLog, robot);
+
+        JTextField dni = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.DNI_CHOFER);
+        JTextField nombre = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NOMBRE_CHOFER);
+        JRadioButton permanente = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PERMANENTE);
+        JRadioButton temporario = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.TEMPORARIO);
+        JTextField cantHijos = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CH_CANT_HIJOS);
+        JTextField anioIngreso = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CH_ANIO);
+        JButton aceptarChofer = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_CHOFER);
+        JButton cerrarSesion = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CERRAR_SESION_ADMIN);
+
+        TestUtils.clickComponent(permanente, robot);
+        TestUtils.clickComponent(dni, robot);
+        TestUtils.tipeaTexto("1", robot);
+        TestUtils.clickComponent(nombre, robot);
+        TestUtils.tipeaTexto("a", robot);
+        TestUtils.clickComponent(cantHijos, robot);
+        TestUtils.tipeaTexto("5", robot);
+        TestUtils.clickComponent(anioIngreso, robot);
+        TestUtils.tipeaTexto("3001", robot);
+
+        robot.delay(2000);
+
+        Assert.assertTrue("El boton de cerrar sesion deberia estar habilitado", cerrarSesion.isEnabled());
+        Assert.assertFalse("El boton de aceptar chofer debería estar deshabilitado", aceptarChofer.isEnabled());
+        Assert.assertTrue("El radio button temporario debería estar habilitado", temporario.isEnabled());
+
+    }
+
+    @Test
+    public void testAdminAgregaChoferPermanenteBlancoHijos(){
+        robot.delay(TestUtils.getDelay());
+
+        JTextField contrasenia= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
+        JTextField usuario= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_USUARIO);
+        JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.LOGIN);
+
+        TestUtils.clickComponent(usuario, robot);
+        TestUtils.tipeaTexto("admin", robot);
+        TestUtils.clickComponent(contrasenia, robot);
+        TestUtils.tipeaTexto("admin", robot);
+
+        TestUtils.clickComponent(aceptarLog, robot);
+
+        JTextField dni = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.DNI_CHOFER);
+        JTextField nombre = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NOMBRE_CHOFER);
+        JRadioButton permanente = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PERMANENTE);
+        JRadioButton temporario = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.TEMPORARIO);
+        JTextField cantHijos = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CH_CANT_HIJOS);
+        JTextField anioIngreso = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CH_ANIO);
+        JButton aceptarChofer = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_CHOFER);
+        JButton cerrarSesion = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CERRAR_SESION_ADMIN);
+
+        TestUtils.clickComponent(permanente, robot);
+        TestUtils.clickComponent(dni, robot);
+        TestUtils.tipeaTexto("1", robot);
+        TestUtils.clickComponent(nombre, robot);
+        TestUtils.tipeaTexto("a", robot);
+        TestUtils.clickComponent(cantHijos, robot);
+        TestUtils.tipeaTexto("5", robot);
+        TestUtils.clickComponent(anioIngreso, robot);
+        TestUtils.tipeaTexto("3000", robot);
+        TestUtils.borraJTextField(cantHijos,robot);
+
+        robot.delay(2000);
+
+        Assert.assertTrue("El boton de cerrar sesion deberia estar habilitado", cerrarSesion.isEnabled());
+        Assert.assertFalse("El boton de aceptar chofer debería estar deshabilitado", aceptarChofer.isEnabled());
+        Assert.assertTrue("El radio button temporario debería estar habilitado", temporario.isEnabled());
+
+    }
+
+    @Test
+    public void testAdminAgregaChoferPermanenteBlancoAnios(){
+        robot.delay(TestUtils.getDelay());
+
+        JTextField contrasenia= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
+        JTextField usuario= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_USUARIO);
+        JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.LOGIN);
+
+        TestUtils.clickComponent(usuario, robot);
+        TestUtils.tipeaTexto("admin", robot);
+        TestUtils.clickComponent(contrasenia, robot);
+        TestUtils.tipeaTexto("admin", robot);
+
+        TestUtils.clickComponent(aceptarLog, robot);
+
+        JTextField dni = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.DNI_CHOFER);
+        JTextField nombre = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NOMBRE_CHOFER);
+        JRadioButton permanente = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PERMANENTE);
+        JRadioButton temporario = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.TEMPORARIO);
+        JTextField cantHijos = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CH_CANT_HIJOS);
+        JTextField anioIngreso = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CH_ANIO);
+        JButton aceptarChofer = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_CHOFER);
+        JButton cerrarSesion = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CERRAR_SESION_ADMIN);
+
+        TestUtils.clickComponent(permanente, robot);
+        TestUtils.clickComponent(dni, robot);
+        TestUtils.tipeaTexto("1", robot);
+        TestUtils.clickComponent(nombre, robot);
+        TestUtils.tipeaTexto("a", robot);
+        TestUtils.clickComponent(cantHijos, robot);
+        TestUtils.tipeaTexto("5", robot);
+        TestUtils.clickComponent(anioIngreso, robot);
+        TestUtils.tipeaTexto("3000", robot);
+        TestUtils.borraJTextField(anioIngreso,robot);
+
+        robot.delay(2000);
+
+        Assert.assertTrue("El boton de cerrar sesion deberia estar habilitado", cerrarSesion.isEnabled());
+        Assert.assertFalse("El boton de aceptar chofer debería estar deshabilitado", aceptarChofer.isEnabled());
+        Assert.assertTrue("El radio button temporario debería estar habilitado", temporario.isEnabled());
+    }
+
 
 
 
