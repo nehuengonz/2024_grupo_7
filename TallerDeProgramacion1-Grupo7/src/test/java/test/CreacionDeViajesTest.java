@@ -1,10 +1,13 @@
 package test;
 
 import controlador.Controlador;
+import excepciones.ClienteConPedidoPendienteException;
+import excepciones.ClienteConViajePendienteException;
+import excepciones.ClienteNoExisteException;
+import excepciones.SinVehiculoParaPedidoException;
 import modeloDatos.*;
 import modeloNegocio.Empresa;
 import modelo_negocio.Escenario2;
-import modelo_negocio.Escenario5;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,19 +15,19 @@ import org.junit.Test;
 import persistencia.EmpresaDTO;
 import persistencia.PersistenciaBIN;
 import util.Constantes;
+import util.Mensajes;
 import vista.IVista;
 import vista.Ventana;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Iterator;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class CreacionDePedidosTest {
+public class CreacionDeViajesTest {
     private IVista vista;
     private PersistenciaBIN persistencia;
     private Controlador controlador;
@@ -32,7 +35,7 @@ public class CreacionDePedidosTest {
 
     private Escenario2 escenario2;
 
-    public CreacionDePedidosTest() {
+    public CreacionDeViajesTest() {
     }
 
     @Before
@@ -76,10 +79,10 @@ public class CreacionDePedidosTest {
         when(vista.getVehiculoDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getVehiculosDesocupados().get(0));
         when(vista.getPedidoSeleccionado()).thenReturn(
                 Empresa.getInstance().getPedidoDeCliente(
-                        Empresa.getInstance().getClientes().get("123")
+                        Empresa.getInstance().getClientes().get("facundo")
                 ));
 
-        Pedido p = Empresa.getInstance().getPedidoDeCliente(Empresa.getInstance().getClientes().get("123"));
+        Pedido p = Empresa.getInstance().getPedidoDeCliente(Empresa.getInstance().getClientes().get("facundo"));
         Vehiculo v = Empresa.getInstance().getVehiculosDesocupados().get(0);
         Chofer chofer = Empresa.getInstance().getChoferesDesocupados().get(0);
 
@@ -119,5 +122,59 @@ public class CreacionDePedidosTest {
         }
     }
 
+    @Test
+    public void crearViajePedidoInexistenteTest() throws IOException, ClassNotFoundException {
+        when(vista.getPassword()).thenReturn("admin");
+        when(vista.getUsserName()).thenReturn("admin");
+
+        when(vista.getChoferDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getChoferesDesocupados().get(0));
+        when(vista.getVehiculoDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getVehiculosDesocupados().get(0));
+        when(vista.getPedidoSeleccionado()).thenReturn(
+                new Pedido(Empresa.getInstance().getClientes().get("facundo"),1,false,false,2, Constantes.ZONA_STANDARD)
+                );
+
+        Vehiculo v = Empresa.getInstance().getVehiculosDesocupados().get(0);
+        Chofer chofer = Empresa.getInstance().getChoferesDesocupados().get(0);
+
+        controlador.actionPerformed(new ActionEvent(this,1,Constantes.LOGIN)); //login
+
+        controlador.actionPerformed(new ActionEvent(this,1,Constantes.NUEVO_VIAJE));
+
+        Assert.assertEquals("El mensaje de excepcion no es correcto", ventanaErrores.getMensajeError(), Mensajes.PEDIDO_INEXISTENTE.getValor());
+
+        controlador.actionPerformed(new ActionEvent(this,3,Constantes.CERRAR_SESION_ADMIN)); //logout
+
+    }
+
+    @Test
+    public void crearViajeChoferNoDisponibleTest() throws ClienteNoExisteException, ClienteConViajePendienteException, SinVehiculoParaPedidoException, ClienteConPedidoPendienteException {
+        when(vista.getPassword()).thenReturn("admin");
+        when(vista.getUsserName()).thenReturn("admin");
+
+        when(vista.getChoferDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getChoferesDesocupados().get(0));
+        when(vista.getVehiculoDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getVehiculosDesocupados().get(0));
+        when(vista.getPedidoSeleccionado()).thenReturn(
+                Empresa.getInstance().getPedidoDeCliente(
+                        Empresa.getInstance().getClientes().get("facundo")
+                ));
+
+
+
+        controlador.actionPerformed(new ActionEvent(this,1,Constantes.LOGIN)); //login
+
+        controlador.actionPerformed(new ActionEvent(this,1,Constantes.NUEVO_VIAJE));
+
+        //creo otro viaje
+        Empresa.getInstance().agregarPedido(new Pedido(Empresa.getInstance().getClientes().get("facundo"),1,false,false,2, Constantes.ZONA_STANDARD));
+        when(vista.getChoferDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getChoferesDesocupados().get(1));
+        when(vista.getVehiculoDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getVehiculosDesocupados().get(3));
+
+        controlador.actionPerformed(new ActionEvent(this,1,Constantes.NUEVO_VIAJE));
+
+        Assert.assertEquals("El mensaje de excepcion CLIENTE_CON_VIAJE_PENDIENTE no es correcto", ventanaErrores.getMensajeError(), Mensajes.CLIENTE_CON_VIAJE_PENDIENTE.getValor());
+
+        controlador.actionPerformed(new ActionEvent(this,3,Constantes.CERRAR_SESION_ADMIN)); //logout
+
+    }
 
 }
