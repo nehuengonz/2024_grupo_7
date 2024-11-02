@@ -363,7 +363,7 @@ public class TestEnabledDisabled {
     }
 
     @Test
-    public void testViajeActualVacio() {
+    public void testNuevoPedidoValido() {
         robot.delay(TestUtils.getDelay());
 
         JTextField contrasenia= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
@@ -377,6 +377,48 @@ public class TestEnabledDisabled {
 
         TestUtils.clickComponent(aceptarLog, robot);
 
+        JTextField cantPax = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CANT_PAX);
+        JTextField cantKm = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CANT_KM);
+        JRadioButton zonaPeligrosa = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.ZONA_PELIGROSA);
+        JCheckBox mascota = (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CHECK_MASCOTA);
+        JCheckBox baul = (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CHECK_BAUL);
+        JButton nuevoPedido = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_PEDIDO);
+        JButton cerrarSesion = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CERRAR_SESION_CLIENTE);
+
+        JTextField calificacion = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CALIFICACION_DE_VIAJE);
+        JTextField valor_viaje = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.VALOR_VIAJE);
+
+        TestUtils.clickComponent(cantPax, robot);
+        TestUtils.tipeaTexto("2", robot);
+        TestUtils.clickComponent(cantKm, robot);
+        TestUtils.tipeaTexto("5", robot);
+        TestUtils.clickComponent(zonaPeligrosa, robot);
+        TestUtils.clickComponent(mascota, robot);
+        TestUtils.clickComponent(baul, robot);
+
+        String text=valor_viaje.getText();
+
+        Assert.assertFalse("El JTextField de calificación debería estar deshabilitado", calificacion.isEnabled());
+        Assert.assertTrue("El JTextField de valor viaje debería estar deshabilitado", text.isEmpty());
+        Assert.assertTrue("El boton de cerrar sesion debería estar habilitado", cerrarSesion.isEnabled());
+        Assert.assertTrue("El boton de nuevo pedido debería estar habilitado", nuevoPedido.isEnabled());
+
+    }
+
+    @Test
+    public void testNuevoPedidoMasCantMaxPas() {
+        robot.delay(TestUtils.getDelay());
+
+        JTextField contrasenia= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
+        JTextField usuario= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_USUARIO);
+        JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.LOGIN);
+
+        TestUtils.clickComponent(usuario, robot);
+        TestUtils.tipeaTexto(user, robot);
+        TestUtils.clickComponent(contrasenia, robot);
+        TestUtils.tipeaTexto(password, robot);
+
+        TestUtils.clickComponent(aceptarLog, robot);
 
         JTextField cantPax = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CANT_PAX);
         JTextField cantKm = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CANT_KM);
@@ -384,18 +426,169 @@ public class TestEnabledDisabled {
         JCheckBox mascota = (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CHECK_MASCOTA);
         JCheckBox baul = (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CHECK_BAUL);
         JButton nuevoPedido = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_PEDIDO);
+        JButton cerrarSesion = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CERRAR_SESION_CLIENTE);
+
 
         JTextField calificacion = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CALIFICACION_DE_VIAJE);
         JTextField valor_viaje = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.VALOR_VIAJE);
 
         TestUtils.clickComponent(cantPax, robot);
-        TestUtils.tipeaTexto(, robot);
+        TestUtils.tipeaTexto("14", robot);
+        TestUtils.clickComponent(cantKm, robot);
+        TestUtils.tipeaTexto("5", robot);
+        TestUtils.clickComponent(zonaPeligrosa, robot);
+        TestUtils.clickComponent(mascota, robot);
+        TestUtils.clickComponent(baul, robot);
 
-        Assert.assertTrue("El boton de registro deberia estar habilitado", cantPax.isEnabled());
+        String text=valor_viaje.getText();
 
-
-
-
+        Assert.assertFalse("El JTextField de calificación debería estar deshabilitado", calificacion.isEnabled());
+        Assert.assertTrue("El JTextField de valor viaje debería estar deshabilitado", text.isEmpty());
+        Assert.assertTrue("El boton de cerrar sesion debería estar habilitado", cerrarSesion.isEnabled());
+        Assert.assertFalse("El boton de nuevo pedido debería estar deshabilitado", nuevoPedido.isEnabled());
 
     }
+
+    @Test
+    public void testNuevoPedidoKmNeg() {
+        robot.delay(TestUtils.getDelay());
+
+        JTextField contrasenia= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
+        JTextField usuario= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_USUARIO);
+        JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.LOGIN);
+
+        TestUtils.clickComponent(usuario, robot);
+        TestUtils.tipeaTexto(user, robot);
+        TestUtils.clickComponent(contrasenia, robot);
+        TestUtils.tipeaTexto(password, robot);
+
+        TestUtils.clickComponent(aceptarLog, robot);
+
+        JTextField cantPax = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CANT_PAX);
+        JTextField cantKm = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CANT_KM);
+        JRadioButton zonaPeligrosa = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.ZONA_PELIGROSA);
+        JCheckBox mascota = (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CHECK_MASCOTA);
+        JCheckBox baul = (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CHECK_BAUL);
+        JButton nuevoPedido = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_PEDIDO);
+        JButton cerrarSesion = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CERRAR_SESION_CLIENTE);
+
+
+        JTextField calificacion = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CALIFICACION_DE_VIAJE);
+        JTextField valor_viaje = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.VALOR_VIAJE);
+
+        TestUtils.clickComponent(cantPax, robot);
+        TestUtils.tipeaTexto("5", robot);
+        TestUtils.clickComponent(cantKm, robot);
+        TestUtils.tipeaTexto("-5", robot);
+        TestUtils.clickComponent(zonaPeligrosa, robot);
+        TestUtils.clickComponent(mascota, robot);
+        TestUtils.clickComponent(baul, robot);
+
+        String text=valor_viaje.getText();
+
+        Assert.assertFalse("El JTextField de calificación debería estar deshabilitado", calificacion.isEnabled());
+        Assert.assertTrue("El JTextField de valor viaje debería estar deshabilitado", text.isEmpty());
+        Assert.assertTrue("El boton de cerrar sesion debería estar habilitado", cerrarSesion.isEnabled());
+        Assert.assertFalse("El boton de nuevo pedido debería estar deshabilitado", nuevoPedido.isEnabled());
+
+    }
+
+    @Test
+    public void testContienePedido() {
+        robot.delay(TestUtils.getDelay());
+
+        JTextField contrasenia= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
+        JTextField usuario= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_USUARIO);
+        JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.LOGIN);
+
+        TestUtils.clickComponent(usuario, robot);
+        TestUtils.tipeaTexto(user, robot);
+        TestUtils.clickComponent(contrasenia, robot);
+        TestUtils.tipeaTexto(password, robot);
+
+        TestUtils.clickComponent(aceptarLog, robot);
+
+        JTextField cantPax = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CANT_PAX);
+        JTextField cantKm = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CANT_KM);
+        JRadioButton zonaPeligrosa = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.ZONA_PELIGROSA);
+        JRadioButton zonaStandard = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.ZONA_STANDARD);
+        JRadioButton zonaSinAsfaltar = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.ZONA_SIN_ASFALTAR);
+        JCheckBox mascota = (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CHECK_MASCOTA);
+        JCheckBox baul = (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CHECK_BAUL);
+        JButton nuevoPedido = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_PEDIDO);
+        JButton cerrarSesion = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CERRAR_SESION_CLIENTE);
+
+        JTextField pedido_o_viaje_actual = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PEDIDO_O_VIAJE_ACTUAL);
+        JTextField calificacion = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CALIFICACION_DE_VIAJE);
+        JTextField valor_viaje = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.VALOR_VIAJE);
+
+        String text=valor_viaje.getText();
+
+        Assert.assertFalse("El campo de cantidad de pasajeros debería estar deshabilitado", cantPax.isEnabled());
+        Assert.assertFalse("El campo de cantidad de kilómetros debería estar deshabilitado", cantKm.isEnabled());
+        Assert.assertFalse("El botón de zona peligrosa debería estar deshabilitado", zonaPeligrosa.isEnabled());
+        Assert.assertFalse("El botón de zona standard debería estar deshabilitado", zonaStandard.isEnabled());
+        Assert.assertFalse("El botón de zona no asfaltada debería estar deshabilitado", zonaSinAsfaltar.isEnabled());
+
+        Assert.assertFalse("El checkbox de mascota debería estar deshabilitado", mascota.isEnabled());
+        Assert.assertFalse("El checkbox de baúl debería estar deshabilitado", baul.isEnabled());
+        Assert.assertFalse("El botón de nuevo pedido debería estar deshabilitado", nuevoPedido.isEnabled());
+        Assert.assertTrue("El botón de cerrar sesión debería estar habilitado", cerrarSesion.isEnabled());
+        Assert.assertFalse("El campo de pedido o viaje actual debería estar deshabilitado", pedido_o_viaje_actual.isEnabled());
+        Assert.assertFalse("El campo de calificación debería estar deshabilitado", calificacion.isEnabled());
+        Assert.assertTrue("El campo de valor del viaje debería estar vacio", text.isEmpty());
+
+    }
+
+    @Test
+    public void testContieneViajeActual() {
+        robot.delay(TestUtils.getDelay());
+
+        JTextField contrasenia= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
+        JTextField usuario= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_USUARIO);
+        JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.LOGIN);
+
+        TestUtils.clickComponent(usuario, robot);
+        TestUtils.tipeaTexto(user, robot);
+        TestUtils.clickComponent(contrasenia, robot);
+        TestUtils.tipeaTexto(password, robot);
+
+        TestUtils.clickComponent(aceptarLog, robot);
+
+        JTextField cantPax = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CANT_PAX);
+        JTextField cantKm = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CANT_KM);
+        JRadioButton zonaPeligrosa = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.ZONA_PELIGROSA);
+        JRadioButton zonaStandard = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.ZONA_STANDARD);
+        JRadioButton zonaSinAsfaltar = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.ZONA_SIN_ASFALTAR);
+        JCheckBox mascota = (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CHECK_MASCOTA);
+        JCheckBox baul = (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CHECK_BAUL);
+        JButton nuevoPedido = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_PEDIDO);
+        JButton cerrarSesion = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CERRAR_SESION_CLIENTE);
+
+        JTextField pedido_o_viaje_actual = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PEDIDO_O_VIAJE_ACTUAL);
+        JTextField calificacion = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CALIFICACION_DE_VIAJE);
+        JTextField valor_viaje = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.VALOR_VIAJE);
+
+        String text=valor_viaje.getText();
+
+        Assert.assertFalse("El campo de cantidad de pasajeros debería estar deshabilitado", cantPax.isEnabled());
+        Assert.assertFalse("El campo de cantidad de kilómetros debería estar deshabilitado", cantKm.isEnabled());
+        Assert.assertFalse("El botón de zona peligrosa debería estar deshabilitado", zonaPeligrosa.isEnabled());
+        Assert.assertFalse("El botón de zona standard debería estar deshabilitado", zonaStandard.isEnabled());
+        Assert.assertFalse("El botón de zona no asfaltada debería estar deshabilitado", zonaSinAsfaltar.isEnabled());
+
+        Assert.assertFalse("El checkbox de mascota debería estar deshabilitado", mascota.isEnabled());
+        Assert.assertFalse("El checkbox de baúl debería estar deshabilitado", baul.isEnabled());
+        Assert.assertFalse("El botón de nuevo pedido debería estar deshabilitado", nuevoPedido.isEnabled());
+        Assert.assertTrue("El botón de cerrar sesión debería estar habilitado", cerrarSesion.isEnabled());
+        Assert.assertFalse("El campo de pedido o viaje actual debería estar deshabilitado", pedido_o_viaje_actual.isEnabled());
+        Assert.assertTrue("El campo de calificación debería estar habilitado", calificacion.isEnabled());
+        Assert.assertFalse("El campo de valor del viaje no debería estar vacio", text.isEmpty());
+    }
+
+    
+
+
+
+
 }
