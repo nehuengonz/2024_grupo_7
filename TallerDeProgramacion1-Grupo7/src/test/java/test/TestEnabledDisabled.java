@@ -918,6 +918,315 @@ public class TestEnabledDisabled {
         Assert.assertTrue("El radio button temporario debería estar habilitado", temporario.isEnabled());
     }
 
+    @Test
+    public void testAdminAgregaVehiculoMotoValido(){
+        robot.delay(TestUtils.getDelay());
+
+        JTextField contrasenia= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
+        JTextField usuario= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_USUARIO);
+        JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.LOGIN);
+
+        TestUtils.clickComponent(usuario, robot);
+        TestUtils.tipeaTexto("admin", robot);
+        TestUtils.clickComponent(contrasenia, robot);
+        TestUtils.tipeaTexto("admin", robot);
+
+        TestUtils.clickComponent(aceptarLog, robot);
+
+        JTextField patente = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PATENTE);
+        JRadioButton moto = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.MOTO);
+        JCheckBox mascota = (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CHECK_VEHICULO_ACEPTA_MASCOTA);
+        JTextField cantPlazas = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CANTIDAD_PLAZAS);
+        JButton aceptarVehiculo = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_VEHICULO);
+        JButton cerrarSesion = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CERRAR_SESION_ADMIN);
+
+        TestUtils.clickComponent(moto, robot);
+        TestUtils.clickComponent(patente, robot);
+        TestUtils.tipeaTexto("1", robot);
+
+        robot.delay(2000);
+
+        Assert.assertTrue("El boton de cerrar sesion deberia estar habilitado", cerrarSesion.isEnabled());
+        Assert.assertTrue("El boton de aceptar chofer debería estar habilitado", aceptarVehiculo.isEnabled());
+        Assert.assertFalse("El checkbox de mascota deberia estar habilitado", mascota.isEnabled());
+        Assert.assertFalse("El Textfield de cantidad de plazas deberia estar habilitado", cantPlazas.isEnabled());
+        Assert.assertTrue("El boton de aceptar vehiculo debería estar habilitado", aceptarVehiculo.isEnabled());
+
+    }
+
+    @Test
+    public void testAdminAgregaVehiculoMotoInvalido(){
+        robot.delay(TestUtils.getDelay());
+
+        JTextField contrasenia= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
+        JTextField usuario= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_USUARIO);
+        JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.LOGIN);
+        TestUtils.clickComponent(usuario, robot);
+        TestUtils.tipeaTexto("admin", robot);
+        TestUtils.clickComponent(contrasenia, robot);
+        TestUtils.tipeaTexto("admin", robot);
+
+        TestUtils.clickComponent(aceptarLog, robot);
+
+        JTextField patente = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PATENTE);
+        JRadioButton moto = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.MOTO);
+        JCheckBox mascota = (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CHECK_VEHICULO_ACEPTA_MASCOTA);
+        JTextField cantPlazas = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CANTIDAD_PLAZAS);
+        JButton aceptarVehiculo = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_VEHICULO);
+        JButton cerrarSesion = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CERRAR_SESION_ADMIN);
+
+        TestUtils.clickComponent(moto, robot);
+        TestUtils.clickComponent(patente, robot);
+        TestUtils.tipeaTexto("1", robot);
+        TestUtils.borraJTextField(patente,robot);
+
+        robot.delay(2000);
+
+        Assert.assertTrue("El boton de cerrar sesion deberia estar habilitado", cerrarSesion.isEnabled());
+        Assert.assertFalse("El boton de aceptar chofer debería estar deshabilitado", aceptarVehiculo.isEnabled());
+        Assert.assertFalse("El Textfield de cantidad de plazas deberia estar habilitado", cantPlazas.isEnabled());
+        Assert.assertFalse("El boton de aceptar chofer debería estar deshabilitado", aceptarVehiculo.isEnabled());
+        Assert.assertFalse("El checkbox de mascota deberia estar habilitado", mascota.isEnabled());
+
+    }
+
+    @Test
+    public void testAdminAgregaVehiculoAutoValido(){
+        robot.delay(TestUtils.getDelay());
+
+        JTextField contrasenia= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
+        JTextField usuario= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_USUARIO);
+        JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.LOGIN);
+
+        TestUtils.clickComponent(usuario, robot);
+        TestUtils.tipeaTexto("admin", robot);
+        TestUtils.clickComponent(contrasenia, robot);
+        TestUtils.tipeaTexto("admin", robot);
+
+        TestUtils.clickComponent(aceptarLog, robot);
+
+        JTextField patente = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PATENTE);
+        JRadioButton auto = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.AUTO);
+        JCheckBox mascota = (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CHECK_VEHICULO_ACEPTA_MASCOTA);
+        JTextField cantPlazas = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CANTIDAD_PLAZAS);
+        JButton aceptarVehiculo = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_VEHICULO);
+        JButton cerrarSesion = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CERRAR_SESION_ADMIN);
+
+        robot.delay(2000);
+
+        TestUtils.clickComponent(auto, robot);
+        TestUtils.clickComponent(mascota, robot);
+        TestUtils.clickComponent(patente,robot);
+        TestUtils.tipeaTexto("a",robot);
+        TestUtils.clickComponent(cantPlazas,robot);
+        TestUtils.tipeaTexto("3",robot);
+
+        robot.delay(2000);
+
+        Assert.assertTrue("El boton de cerrar sesion deberia estar habilitado", cerrarSesion.isEnabled());
+        Assert.assertTrue("El boton de aceptar chofer debería estar habilitado", aceptarVehiculo.isEnabled());
+    }
+
+    @Test
+    public void testAdminAgregaVehiculoAutoPatenteInvalido(){
+        robot.delay(TestUtils.getDelay());
+
+        JTextField contrasenia= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
+        JTextField usuario= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_USUARIO);
+        JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.LOGIN);
+
+        TestUtils.clickComponent(usuario, robot);
+        TestUtils.tipeaTexto("admin", robot);
+        TestUtils.clickComponent(contrasenia, robot);
+        TestUtils.tipeaTexto("admin", robot);
+
+        TestUtils.clickComponent(aceptarLog, robot);
+
+        JRadioButton auto = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.AUTO);
+        JCheckBox mascota = (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CHECK_VEHICULO_ACEPTA_MASCOTA);
+        JTextField cantPlazas = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CANTIDAD_PLAZAS);
+        JButton aceptarVehiculo = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_VEHICULO);
+        JButton cerrarSesion = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CERRAR_SESION_ADMIN);
+
+        robot.delay(2000);
+
+        TestUtils.clickComponent(auto, robot);
+        TestUtils.clickComponent(mascota, robot);
+        TestUtils.clickComponent(cantPlazas,robot);
+        TestUtils.tipeaTexto("4",robot);
+
+
+        Assert.assertTrue("El boton de cerrar sesion deberia estar habilitado", cerrarSesion.isEnabled());
+        Assert.assertFalse("El boton de aceptar chofer debería estar deshabilitado", aceptarVehiculo.isEnabled());
+
+    }
+
+    @Test
+    public void testAdminAgregaVehiculoAutoPlazaInvalida(){
+        robot.delay(TestUtils.getDelay());
+
+        JTextField contrasenia= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
+        JTextField usuario= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_USUARIO);
+        JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.LOGIN);
+
+        TestUtils.clickComponent(usuario, robot);
+        TestUtils.tipeaTexto("admin", robot);
+        TestUtils.clickComponent(contrasenia, robot);
+        TestUtils.tipeaTexto("admin", robot);
+
+        TestUtils.clickComponent(aceptarLog, robot);
+
+        JTextField patente = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PATENTE);
+        JRadioButton auto = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.AUTO);
+        JCheckBox mascota = (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CHECK_VEHICULO_ACEPTA_MASCOTA);
+        JTextField cantPlazas = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CANTIDAD_PLAZAS);
+        JButton aceptarVehiculo = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_VEHICULO);
+        JButton cerrarSesion = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CERRAR_SESION_ADMIN);
+
+        robot.delay(2000);
+
+        TestUtils.clickComponent(auto, robot);
+        TestUtils.clickComponent(mascota, robot);
+        TestUtils.clickComponent(patente,robot);
+        TestUtils.tipeaTexto("a",robot);
+        TestUtils.clickComponent(cantPlazas,robot);
+        TestUtils.tipeaTexto("5",robot);
+
+        Assert.assertTrue("El boton de cerrar sesion deberia estar habilitado", cerrarSesion.isEnabled());
+        Assert.assertFalse("El boton de aceptar chofer debería estar deshabilitado", aceptarVehiculo.isEnabled());
+
+    }
+
+    @Test
+    public void testAdminAgregaVehiculoCombiValido(){
+        robot.delay(TestUtils.getDelay());
+
+        JTextField contrasenia= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
+        JTextField usuario= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_USUARIO);
+        JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.LOGIN);
+
+        TestUtils.clickComponent(usuario, robot);
+        TestUtils.tipeaTexto("admin", robot);
+        TestUtils.clickComponent(contrasenia, robot);
+        TestUtils.tipeaTexto("admin", robot);
+
+        TestUtils.clickComponent(aceptarLog, robot);
+
+        JTextField patente = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PATENTE);
+        JRadioButton combi = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.COMBI);
+        JCheckBox mascota = (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CHECK_VEHICULO_ACEPTA_MASCOTA);
+        JTextField cantPlazas = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CANTIDAD_PLAZAS);
+        JButton aceptarVehiculo = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_VEHICULO);
+        JButton cerrarSesion = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CERRAR_SESION_ADMIN);
+
+        TestUtils.clickComponent(combi, robot);
+        TestUtils.clickComponent(mascota, robot);
+        TestUtils.clickComponent(patente,robot);
+        TestUtils.tipeaTexto("a",robot);
+        TestUtils.clickComponent(cantPlazas,robot);
+        TestUtils.tipeaTexto("10",robot);
+
+        robot.delay(2000);
+
+        Assert.assertTrue("El boton de cerrar sesion deberia estar habilitado", cerrarSesion.isEnabled());
+        Assert.assertTrue("El boton de aceptar chofer debería estar habilitado", aceptarVehiculo.isEnabled());
+    }
+
+    @Test
+    public void testAdminAgregaVehiculoCombiInvalidoPatente(){
+        robot.delay(TestUtils.getDelay());
+
+        JTextField contrasenia= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
+        JTextField usuario= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_USUARIO);
+        JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.LOGIN);
+
+        TestUtils.clickComponent(usuario, robot);
+        TestUtils.tipeaTexto("admin", robot);
+        TestUtils.clickComponent(contrasenia, robot);
+        TestUtils.tipeaTexto("admin", robot);
+
+        TestUtils.clickComponent(aceptarLog, robot);
+
+        JTextField patente = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PATENTE);
+        JRadioButton combi = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.COMBI);
+        JCheckBox mascota = (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CHECK_VEHICULO_ACEPTA_MASCOTA);
+        JTextField cantPlazas = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CANTIDAD_PLAZAS);
+        JButton aceptarVehiculo = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_VEHICULO);
+        JButton cerrarSesion = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CERRAR_SESION_ADMIN);
+
+        TestUtils.clickComponent(combi, robot);
+        TestUtils.clickComponent(mascota, robot);
+        TestUtils.clickComponent(patente,robot);
+        TestUtils.tipeaTexto("a",robot);
+        TestUtils.clickComponent(cantPlazas,robot);
+        TestUtils.tipeaTexto("5",robot);
+        TestUtils.borraJTextField(patente,robot);
+
+        robot.delay(2000);
+
+        Assert.assertTrue("El boton de cerrar sesion deberia estar habilitado", cerrarSesion.isEnabled());
+        Assert.assertFalse("El boton de aceptar chofer debería estar deshabilitado", aceptarVehiculo.isEnabled());
+    }
+
+    @Test
+    public void testAdminAgregaVehiculoCombiInvalidoPlazas(){
+        robot.delay(TestUtils.getDelay());
+
+        JTextField contrasenia= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
+        JTextField usuario= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_USUARIO);
+        JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.LOGIN);
+
+        TestUtils.clickComponent(usuario, robot);
+        TestUtils.tipeaTexto("admin", robot);
+        TestUtils.clickComponent(contrasenia, robot);
+        TestUtils.tipeaTexto("admin", robot);
+
+        TestUtils.clickComponent(aceptarLog, robot);
+
+        JTextField patente = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PATENTE);
+        JRadioButton combi = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.COMBI);
+        JCheckBox mascota = (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CHECK_VEHICULO_ACEPTA_MASCOTA);
+        JTextField cantPlazas = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CANTIDAD_PLAZAS);
+        JButton aceptarVehiculo = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_VEHICULO);
+        JButton cerrarSesion = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CERRAR_SESION_ADMIN);
+
+        TestUtils.clickComponent(combi, robot);
+        TestUtils.clickComponent(mascota, robot);
+        TestUtils.clickComponent(patente,robot);
+        TestUtils.tipeaTexto("a",robot);
+        TestUtils.clickComponent(cantPlazas,robot);
+        TestUtils.tipeaTexto("11",robot);
+
+        robot.delay(2000);
+
+        Assert.assertTrue("El boton de cerrar sesion deberia estar habilitado", cerrarSesion.isEnabled());
+        Assert.assertFalse("El boton de aceptar chofer debería estar deshabilitado", aceptarVehiculo.isEnabled());
+    }
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
