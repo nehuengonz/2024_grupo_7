@@ -336,6 +336,9 @@ public class IntegracionTest {
 
         controlador.actionPerformed(new ActionEvent(this,2,Constantes.NUEVO_VEHICULO)); //agregar chofer
 
+        when(vista.getTipoVehiculo()).thenReturn(Constantes.MOTO);
+        when(vista.getPatente()).thenReturn("abc123");
+
         controlador.actionPerformed(new ActionEvent(this,3,Constantes.NUEVO_VEHICULO)); //agregar chofer
 
         Assert.assertEquals("El mensaje de error no es el correcto", ventanaErrores.getMensajeError(), Mensajes.VEHICULO_YA_REGISTRADO.getValor());
