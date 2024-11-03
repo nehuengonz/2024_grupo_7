@@ -92,11 +92,9 @@ public class IntegracionEscenario2 {
         when(vista.getPassword()).thenReturn("admin");
         when(vista.getUsserName()).thenReturn("admin");
 
-        when(vista.getTipoChofer()).thenReturn(Constantes.PERMANENTE);
+        when(vista.getTipoChofer()).thenReturn(Constantes.TEMPORARIO);
         when(vista.getNombreChofer()).thenReturn("Alberto");
         when(vista.getDNIChofer()).thenReturn("1234567");
-        when(vista.getAnioChofer()).thenReturn(2020);
-        when(vista.getHijosChofer()).thenReturn(1);
 
         controlador.actionPerformed(new ActionEvent(this,1,Constantes.LOGIN)); //login
 
@@ -174,4 +172,6 @@ public class IntegracionEscenario2 {
 
         Assert.assertNull("El usuario deberia haber cerrado sesion", Empresa.getInstance().getUsuarioLogeado());
     }
+
+
 }
