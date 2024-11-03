@@ -160,4 +160,18 @@ public class IntegracionEscenario2 {
             Assert.assertEquals("La calificación del viaje no coincide", viajeOriginal.getCalificacion(), viajeLeido.getCalificacion());
         }
     }
+
+    @Test
+    public void loginUsuario() {
+        when(vista.getPassword()).thenReturn("facundo");
+        when(vista.getUsserName()).thenReturn("123");
+
+        controlador.actionPerformed(new ActionEvent(this,1,Constantes.LOGIN)); //login
+
+        Assert.assertNotNull("El usuario se deberia haber logueado", Empresa.getInstance().getUsuarioLogeado());
+
+        controlador.actionPerformed(new ActionEvent(this,1,Constantes.CERRAR_SESION_CLIENTE)); //logout
+
+        Assert.assertNull("El usuario deberia haber cerrado sesion", Empresa.getInstance().getUsuarioLogeado());
+    }
 }
