@@ -61,7 +61,7 @@ public class Escenario4 {
         Empresa.getInstance().setVehiculosDesocupados(vehdesocupados);
 
 
-        HashMap<Cliente, Viaje> viajesIniciados = new HashMap<>();
+        HashMap<Cliente,Viaje> viajesIniciados = new HashMap<>();
 
         viajesIniciados.put(
                 Empresa.getInstance().getClientes().get("facundo"),
@@ -72,10 +72,9 @@ public class Escenario4 {
                 )
         );
 
-        HashMap<Cliente, Viaje> viajesTerminados = new HashMap<>();
+        ArrayList<Viaje> viajesTerminados = new ArrayList<>();
 
-        viajesTerminados.put(
-                Empresa.getInstance().getClientes().get("thiago"),
+        viajesTerminados.add(
                 new Viaje(
                         new Pedido(Empresa.getInstance().getClientes().get("thiago"), 1, false, false, 3, Constantes.ZONA_STANDARD),
                         chofer4,
@@ -83,14 +82,8 @@ public class Escenario4 {
                 )
         );
 
-        viajesTerminados.put(
-                Empresa.getInstance().getClientes().get("nehuen"),
-                new Viaje(
-                        new Pedido(Empresa.getInstance().getClientes().get("nehuen"), 8, false, true, 1, Constantes.ZONA_PELIGROSA),
-                        chofer3,
-                        combi1
-                )
-        );
+        Empresa.getInstance().setViajesIniciados(viajesIniciados);
+        Empresa.getInstance().setViajesTerminados(viajesTerminados);
     }
 
     public void tearDown() {
