@@ -41,7 +41,7 @@ public class GetPedidoyViajeClienteTest {
 
     @Test
     public void getPedidoClienteNoExisteCLienteTest() {
-        Cliente c = Empresa.getInstance().getClientes().get("sofia");
+        Cliente c = Empresa.getInstance().getClientes().get("facundo");
         try{
             Pedido p = Empresa.getInstance().getPedidoDeCliente(c);
             Assert.assertNull("El pedido no deberia existir",p);
