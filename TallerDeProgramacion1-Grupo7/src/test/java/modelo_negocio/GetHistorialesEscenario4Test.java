@@ -1,6 +1,7 @@
 package modelo_negocio;
 
 import modeloDatos.Chofer;
+import modeloDatos.Cliente;
 import modeloDatos.Viaje;
 import modeloNegocio.Empresa;
 import org.junit.*;
@@ -48,11 +49,41 @@ public class GetHistorialesEscenario4Test {
 
         try {
             ArrayList<Viaje> viajes =  Empresa.getInstance().getHistorialViajeChofer(c);
-            Assert.assertTrue("El chofer deberia tener un viaje", viajes.isEmpty());
+            Assert.assertTrue("El chofer no deberia tener un viaje", viajes.isEmpty());
         }catch (Exception e){
             fail("Hubo un error inesperado el metodo no funciona como deberia");
         }
     }
+
+    @Test
+    public void getHistorialdeViajeCliente() {
+        Cliente c = Empresa.getInstance().getClientes().get("thiago");
+
+        try {
+            ArrayList<Viaje> viajes =  Empresa.getInstance().getHistorialViajeCliente(c);
+            Assert.assertFalse("El cliente deberia tener un viaje", viajes.isEmpty());
+            Assert.assertEquals("El cliente devuelto no es el mismo de la prueba",
+                                                                viajes.get(0).getPedido().getCliente().getNombreUsuario(),
+                                                                            c.getNombreUsuario());
+        }catch (Exception e){
+            fail("Hubo un error inesperado el metodo no funciona como deberia");
+        }
+    }
+
+    @Test
+    public void getHistorialdeViajeClienteNoTieneHistorial() {
+        Cliente c = Empresa.getInstance().getClientes().get("facundo");
+
+        try {
+            ArrayList<Viaje> viajes =  Empresa.getInstance().getHistorialViajeCliente(c);
+            Assert.assertTrue("El cliente no deberia tener un viaje en el historial", viajes.isEmpty());
+        }catch (Exception e){
+            fail("Hubo un error inesperado el metodo no funciona como deberia");
+        }
+    }
+
+
+
 
 
 }
