@@ -15,7 +15,7 @@ import controlador.Controlador;
 import modeloDatos.Cliente;
 import modeloDatos.Viaje;
 import modeloNegocio.Empresa;
-import modelo_negocio.Escenario6;
+import persistencia.PersistenciaBIN;
 import util.Constantes;
 import util.Mensajes;
 import vista.DefaultOptionPane;
@@ -23,15 +23,13 @@ import vista.IOptionPane;
 import vista.IVista;
 import vista.Ventana;
 
-public class IntegracionTest {
+public class IntegracionEscenario6 {
 	
+	private ArchivoEscenario6 archivoEscenario6;
+	private PersistenciaBIN persistencia;
 	private IVista vista;
     private Controlador controlador;
     private IOptionPane ventanaErrores;
-    Escenario6 escenario6;
-    
-    public IntegracionTest() {
-    }
 
 	@Before
 	public void setUp() throws Exception {
@@ -39,17 +37,21 @@ public class IntegracionTest {
 		ventanaErrores = mock(DefaultOptionPane.class);
 		when(vista.getOptionPane()).thenReturn(ventanaErrores);
 		
-        controlador = new Controlador();
+        persistencia = new PersistenciaBIN();
+		
+		controlador = new Controlador();
         controlador.setVista(vista);
+        controlador.setPersistencia(persistencia);
+        controlador.setFileName("empresaIntegracion.bin");
         
-        escenario6 = new Escenario6();
-        escenario6.setup();
+        archivoEscenario6 = new ArchivoEscenario6();
+        archivoEscenario6.setUp();
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		controlador = null;
-        escenario6.teardown();
+		archivoEscenario6.tearDown();
 	}
 
 	@Test
@@ -179,4 +181,5 @@ public class IntegracionTest {
 	        Assert.fail("Excepción inesperada: " + e.getMessage());
 	    }
 	}
+
 }
