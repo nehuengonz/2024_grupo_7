@@ -15,11 +15,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class guiTestUtils {
+public class TestUtils {
 
 	private static int delay = 20;
 	public static void setDelay(int delay) {
-		  guiTestUtils.delay = delay;
+		  TestUtils.delay = delay;
 	}
 	public static int getDelay() {
 		return delay;
@@ -54,7 +54,7 @@ public class guiTestUtils {
 	}
 	@SuppressWarnings("deprecation")
 	public static void clickComponent(Component component, Robot robot) {
-        Point punto = guiTestUtils.getCentro(component);
+        Point punto = TestUtils.getCentro(component);
         robot.mouseMove(punto.x, punto.y);
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         robot.delay(getDelay());
