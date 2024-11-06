@@ -32,7 +32,9 @@ public class IntegracionEscenario2 {
     @Before
     public void setUp() throws Exception {
         vista = mock(Ventana.class);
+        archivoEscenario2 = new ArchivoEscenario2();
 
+        archivoEscenario2.setUp();
         persistencia = new PersistenciaBIN();
         ventanaErrores = new VentanaErrores();
 
@@ -43,10 +45,8 @@ public class IntegracionEscenario2 {
 
         //esto es para los mensajes de error
         when(vista.getOptionPane()).thenReturn(ventanaErrores);
-        archivoEscenario2 = new ArchivoEscenario2();
-
-        archivoEscenario2.setUp();
-
+        
+controlador.leer();
     }
 
     @After
