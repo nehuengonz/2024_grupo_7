@@ -49,18 +49,27 @@ public class GuiTestEnabledDisabled {
 	        Auto auto1=new Auto(this.vehiculoPatente,4,false);
 	        ChoferTemporario chofer1=new ChoferTemporario(this.dniChofer,"pablo");
 	        ChoferPermanente chofer2=new ChoferPermanente("11111111","paul",2000,1);
+	        Empresa.getInstance().agregarChofer(chofer2);
+	        Empresa.getInstance().agregarVehiculo(auto1);
 	        Empresa.getInstance().agregarCliente(userCliente, passCliente, dniChofer);
 	        Cliente cliente = Empresa.getInstance().getClientes().get(this.userCliente);
 	        Pedido pedido= new Pedido(cliente,3,false,false,14,Constantes.ZONA_STANDARD);
-	        Empresa.getInstance().agregarPedido(null);
-	        Empresa.getInstance().crearViaje(null, chofer2, auto1);
-	         //Empresa.getInstance().setViajesIniciados();
+	        Empresa.getInstance().agregarPedido(pedido);
+	        Empresa.getInstance().crearViaje(pedido, chofer2, auto1);
+	        Empresa.getInstance().setViajesIniciados(Empresa.getInstance().getViajesIniciados());
+	    
 	    }
 	  @After
 	    public void tearDown() throws Exception
 	    {
 		  Ventana ventana=(Ventana) controlador.getVista();
 		  ventana.setVisible(false);
+		  Empresa.getInstance().getChoferes().clear();
+		  Empresa.getInstance().getClientes().clear();
+		  Empresa.getInstance().getViajesIniciados().clear();
+		  Empresa.getInstance().getVehiculos().clear();
+		  Empresa.getInstance().getPedidos().clear();
+		  
 	    }
 	  //no me encuentra el boton registrar
 	  @Test
