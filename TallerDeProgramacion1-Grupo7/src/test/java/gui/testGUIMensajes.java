@@ -58,14 +58,15 @@ public class testGUIMensajes {
         Auto auto1=new Auto(this.vehiculoPatente,4,false);
         ChoferTemporario chofer1=new ChoferTemporario(this.dniChofer,"pablo");
         ChoferPermanente chofer2=new ChoferPermanente("11111111","paul",2000,1);
-        // Empresa.getInstance().agregarCliente("usuario1","1234","juan");
+
         // Empresa.getInstance().agregarChofer(chofer1);
         // Empresa.getInstance().agregarChofer(chofer2);
         //Empresa.getInstance().agregarVehiculo(auto1);
     }
 
 
-    @Test //este metodo lo hice para los usuarios clientes, no lo testee para admin porque es la misma ventana tanto para uno como para otro
+    @SuppressWarnings("deprecation")
+	@Test //este metodo lo hice para los usuarios clientes, no lo testee para admin porque es la misma ventana tanto para uno como para otro
     public void testContraIncorrecta() {
     	 robot.delay(TestUtils.getDelay());
 		 //
@@ -122,7 +123,8 @@ public class testGUIMensajes {
         Assert.assertEquals("Mensaje incorrecto, deberia decir "+Mensajes.USUARIO_DESCONOCIDO.getValor(),Mensajes.USUARIO_DESCONOCIDO.getValor(),op.getMensaje());
     }
 
-    @Test
+    @SuppressWarnings("deprecation")
+	@Test
     public void testRegClienteRepetido()
     {
         robot.delay(TestUtils.getDelay());
@@ -158,7 +160,8 @@ public class testGUIMensajes {
         Assert.assertEquals("Mensaje incorrecto, deberia decir "+Mensajes.USUARIO_REPETIDO.getValor(),Mensajes.USUARIO_REPETIDO.getValor(),op.getMensaje());
     }
 
-    @Test
+    @SuppressWarnings("deprecation")
+	@Test
     public void testRegClienteConfirmacionContraInvalida()
     {
     	robot.delay(TestUtils.getDelay());

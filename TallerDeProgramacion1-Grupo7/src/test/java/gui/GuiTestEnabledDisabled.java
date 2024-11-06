@@ -13,13 +13,21 @@ import org.junit.Before;
 import org.junit.Test;
 
 import controlador.Controlador;
+import modeloDatos.Auto;
+import modeloDatos.ChoferPermanente;
+import modeloDatos.ChoferTemporario;
+import modeloDatos.Cliente;
+import modeloDatos.Pedido;
+import modeloNegocio.Empresa;
 import util.Constantes;
 import vista.Ventana;
 
 public class GuiTestEnabledDisabled {
 	Robot robot;
 	Controlador controlador;
-	
+	Ventana ventana;
+	String userCliente,passCliente,dniChofer,vehiculoPatente;
+	Cliente cliente1;
 	public GuiTestEnabledDisabled() {
 		try
 		{
@@ -32,6 +40,21 @@ public class GuiTestEnabledDisabled {
 	    public void setUp() throws Exception
 	    {
 	        controlador = new Controlador();
+	        ventana=(Ventana) controlador.getVista();
+	        this.userCliente="usuario1";
+	        this.passCliente="1234";
+	        this.dniChofer="14007890";
+	        this.vehiculoPatente="ASD123";
+
+	        Auto auto1=new Auto(this.vehiculoPatente,4,false);
+	        ChoferTemporario chofer1=new ChoferTemporario(this.dniChofer,"pablo");
+	        ChoferPermanente chofer2=new ChoferPermanente("11111111","paul",2000,1);
+	        Empresa.getInstance().agregarCliente(userCliente, passCliente, dniChofer);
+	        Cliente cliente = Empresa.getInstance().getClientes().get(this.userCliente);
+	        Pedido pedido= new Pedido(cliente,3,false,false,14,Constantes.ZONA_STANDARD);
+	        Empresa.getInstance().agregarPedido(null);
+	        Empresa.getInstance().crearViaje(null, chofer2, auto1);
+	         //Empresa.getInstance().setViajesIniciados();
 	    }
 	  @After
 	    public void tearDown() throws Exception
