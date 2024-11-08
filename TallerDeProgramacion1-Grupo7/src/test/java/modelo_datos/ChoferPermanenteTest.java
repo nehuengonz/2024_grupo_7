@@ -101,13 +101,13 @@ public class ChoferPermanenteTest {
         assertEquals("El sueldo bruto sin antiguedad con hijos esta mal calculado",2420.0,choferPermanente.getSueldoBruto(),0.0001);
     }
 
-//    @Test
-//    public void getSueldoBrutoAntiguedadAbsurdaTest() {
-//        ChoferPermanente.setSueldoBasico(2000.0);
-//        ChoferPermanente choferPermanente = new ChoferPermanente("1234567","Facundo",3000,0);
-//
-//        assertEquals("El sueldo bruto sin antiguedad con hijos esta mal calculado",2420.0,choferPermanente.getSueldoBruto(),0.0001);
-//    }
+    @Test
+    public void getSueldoBrutoAntiguedadAbsurdaTest() {
+        ChoferPermanente.setSueldoBasico(2000.0);
+        ChoferPermanente choferPermanente = new ChoferPermanente("1234567","Facundo",3000,0);
+
+        assertEquals("El sueldo bruto sin antiguedad con hijos esta mal calculado",2420.0,choferPermanente.getSueldoBruto(),0.0001);
+    }
 
     //TEST DE SUELDOS NETO
     @Test
