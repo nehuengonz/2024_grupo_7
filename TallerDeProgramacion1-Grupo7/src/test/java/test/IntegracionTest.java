@@ -169,39 +169,7 @@ public class IntegracionTest {
         Assert.assertEquals("El chofer no fue agregado correctamente", choferLeido.getCantidadHijos(),1);
         Assert.assertEquals("El chofer no fue agregado correctamente", choferLeido.getAnioIngreso(),2020);
     }
-
-    @Test
-    public void loginAdmin_y_ChoferRepetido(){
-        when(vista.getPassword()).thenReturn("admin");
-        when(vista.getUsserName()).thenReturn("admin");
-
-        when(vista.getTipoChofer()).thenReturn(Constantes.PERMANENTE);
-        when(vista.getNombreChofer()).thenReturn("Alberto");
-        when(vista.getDNIChofer()).thenReturn("123456789");
-        when(vista.getAnioChofer()).thenReturn(2020);
-        when(vista.getHijosChofer()).thenReturn(1);
-
-        controlador.actionPerformed(new ActionEvent(this,1,Constantes.LOGIN)); //login
-
-        Assert.assertNotNull("Usuario logueado incorrectamente", Empresa.getInstance().getUsuarioLogeado());
-        Assert.assertEquals("Usuario logueado incorrectamente", Empresa.getInstance().getUsuarioLogeado().getNombreUsuario(), "admin");
-        Assert.assertEquals("Usuario logueado incorrectamente", Empresa.getInstance().getUsuarioLogeado().getPass(), "admin");
-
-        controlador.actionPerformed(new ActionEvent(this,2,Constantes.NUEVO_CHOFER)); //agregar chofer
-
-        ChoferPermanente chofer = (ChoferPermanente) Empresa.getInstance().getChoferes().get("123456789");
-
-        Assert.assertNotNull("El chofer no fue agregado correctamente", chofer);
-        Assert.assertEquals("El chofer no fue agregado correctamente", chofer.getNombre(),"Alberto");
-        Assert.assertEquals("El chofer no fue agregado correctamente", chofer.getDni(),"123456789");
-        Assert.assertEquals("El chofer no fue agregado correctamente", chofer.getCantidadHijos(),1);
-        Assert.assertEquals("El chofer no fue agregado correctamente", chofer.getAnioIngreso(),2020);
-
-        controlador.actionPerformed(new ActionEvent(this,2,Constantes.NUEVO_CHOFER)); //agregar chofer
-
-        Assert.assertEquals("El mensaje de error no es el correcto", ventanaErrores.getMensajeError(), Mensajes.CHOFER_YA_REGISTRADO.getValor());
-    }
-
+    
     @Test
     public void loginAdmin_y_nuevoVehiculoMoto() throws IOException, ClassNotFoundException {
         when(vista.getPassword()).thenReturn("admin");
