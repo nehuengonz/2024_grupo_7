@@ -26,7 +26,7 @@ import java.util.Iterator;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class IntegracionEscenario2 {
+public class IntegracionEscenario2Test {
 
     private ArchivoEscenario2 archivoEscenario2;
     private IVista vista;

@@ -17,7 +17,7 @@ import java.awt.event.ActionEvent;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class IntegracionEscenario3 {
+public class IntegracionEscenario3Test {
 
     private ArchivoEscenario3 archivoEscenario3;
     private IVista vista;
