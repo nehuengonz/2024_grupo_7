@@ -1,6 +1,10 @@
 package test;
 
 import controlador.Controlador;
+import excepciones.ClienteConPedidoPendienteException;
+import excepciones.ClienteConViajePendienteException;
+import excepciones.ClienteNoExisteException;
+import excepciones.SinVehiculoParaPedidoException;
 import modeloDatos.*;
 import modeloNegocio.Empresa;
 import org.junit.After;
@@ -172,5 +176,87 @@ public class IntegracionEscenario2 {
         Assert.assertNull("El usuario deberia haber cerrado sesion", Empresa.getInstance().getUsuarioLogeado());
     }
 
+
+    @Test
+    public void crearViajePedidoInexistenteTest() throws IOException, ClassNotFoundException {
+        when(vista.getPassword()).thenReturn("admin");
+        when(vista.getUsserName()).thenReturn("admin");
+
+        when(vista.getChoferDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getChoferesDesocupados().get(0));
+        when(vista.getVehiculoDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getVehiculosDesocupados().get(0));
+        when(vista.getPedidoSeleccionado()).thenReturn(
+                new Pedido(Empresa.getInstance().getClientes().get("facundo"),1,false,false,2, Constantes.ZONA_STANDARD)
+        );
+
+        Vehiculo v = Empresa.getInstance().getVehiculosDesocupados().get(0);
+        Chofer chofer = Empresa.getInstance().getChoferesDesocupados().get(0);
+
+        controlador.actionPerformed(new ActionEvent(this,1,Constantes.LOGIN)); //login
+
+        controlador.actionPerformed(new ActionEvent(this,1,Constantes.NUEVO_VIAJE));
+
+        Assert.assertEquals("El mensaje de excepcion no es correcto", ventanaErrores.getMensajeError(), Mensajes.PEDIDO_INEXISTENTE.getValor());
+
+        controlador.actionPerformed(new ActionEvent(this,3,Constantes.CERRAR_SESION_ADMIN)); //logout
+
+    }
+
+    @Test
+    public void crearViajeClienteConVIajeTest() throws ClienteNoExisteException, ClienteConViajePendienteException, SinVehiculoParaPedidoException, ClienteConPedidoPendienteException {
+        when(vista.getPassword()).thenReturn("admin");
+        when(vista.getUsserName()).thenReturn("admin");
+
+        when(vista.getChoferDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getChoferesDesocupados().get(0));
+        when(vista.getVehiculoDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getVehiculosDesocupados().get(0));
+        when(vista.getPedidoSeleccionado()).thenReturn(
+                Empresa.getInstance().getPedidoDeCliente(
+                        Empresa.getInstance().getClientes().get("facundo")
+                ));
+
+
+
+        controlador.actionPerformed(new ActionEvent(this,1,Constantes.LOGIN)); //login
+
+        controlador.actionPerformed(new ActionEvent(this,2,Constantes.NUEVO_VIAJE));
+
+        //creo otro viaje
+        Empresa.getInstance().agregarPedido(new Pedido(Empresa.getInstance().getClientes().get("facundo"),1,false,false,2, Constantes.ZONA_STANDARD));
+        when(vista.getChoferDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getChoferesDesocupados().get(1));
+        when(vista.getVehiculoDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getVehiculosDesocupados().get(2));
+        Pedido p = Empresa.getInstance().getPedidoDeCliente(
+                Empresa.getInstance().getClientes().get("facundo")
+        );
+
+        System.out.println(p);
+
+        controlador.actionPerformed(new ActionEvent(this,3,Constantes.NUEVO_VIAJE));
+
+        Assert.assertEquals("El mensaje de excepcion CLIENTE_CON_VIAJE_PENDIENTE no es correcto", ventanaErrores.getMensajeError(), Mensajes.CLIENTE_CON_VIAJE_PENDIENTE.getValor());
+
+        controlador.actionPerformed(new ActionEvent(this,4,Constantes.CERRAR_SESION_ADMIN)); //logout
+
+    }
+
+    @Test
+    public void crearViajeVehiculoNoValidoTest(){
+        when(vista.getPassword()).thenReturn("admin");
+        when(vista.getUsserName()).thenReturn("admin");
+
+        when(vista.getChoferDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getChoferesDesocupados().get(0));
+        when(vista.getVehiculoDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getVehiculosDesocupados().get(2));
+        when(vista.getPedidoSeleccionado()).thenReturn(
+                Empresa.getInstance().getPedidoDeCliente(
+                        Empresa.getInstance().getClientes().get("facundo")
+                ));
+
+        controlador.actionPerformed(new ActionEvent(this,1,Constantes.LOGIN)); //login
+
+        controlador.actionPerformed(new ActionEvent(this,2,Constantes.NUEVO_VIAJE));
+
+        Assert.assertEquals("El mensaje de excepcion VEHICULO_NO_VALIDO no es correcto", ventanaErrores.getMensajeError(), Mensajes.VEHICULO_NO_VALIDO.getValor());
+
+        controlador.actionPerformed(new ActionEvent(this,4,Constantes.CERRAR_SESION_ADMIN)); //logout
+
+    }
 
 }
