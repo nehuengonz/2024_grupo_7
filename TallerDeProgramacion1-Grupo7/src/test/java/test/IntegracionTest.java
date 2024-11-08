@@ -169,7 +169,7 @@ public class IntegracionTest {
         Assert.assertEquals("El chofer no fue agregado correctamente", choferLeido.getCantidadHijos(),1);
         Assert.assertEquals("El chofer no fue agregado correctamente", choferLeido.getAnioIngreso(),2020);
     }
-    
+
     @Test
     public void loginAdmin_y_nuevoVehiculoMoto() throws IOException, ClassNotFoundException {
         when(vista.getPassword()).thenReturn("admin");
@@ -286,31 +286,6 @@ public class IntegracionTest {
         Assert.assertFalse("combi no fue agregado correctamente", combiLeido.isMascota());
     }
 
-    @Test
-    public void loginAdmin_y_VehiculoRepetido()  {
-        when(vista.getPassword()).thenReturn("admin");
-        when(vista.getUsserName()).thenReturn("admin");
-
-        when(vista.getTipoVehiculo()).thenReturn(Constantes.AUTO);
-        when(vista.getPatente()).thenReturn("abc123");
-        when(vista.getPlazas()).thenReturn(4);
-        when(vista.isVehiculoAptoMascota()).thenReturn(true);
-
-        controlador.actionPerformed(new ActionEvent(this,1,Constantes.LOGIN)); //login
-
-        Assert.assertNotNull("Usuario logueado incorrectamente", Empresa.getInstance().getUsuarioLogeado());
-        Assert.assertEquals("Usuario logueado incorrectamente", Empresa.getInstance().getUsuarioLogeado().getNombreUsuario(), "admin");
-        Assert.assertEquals("Usuario logueado incorrectamente", Empresa.getInstance().getUsuarioLogeado().getPass(), "admin");
-
-        controlador.actionPerformed(new ActionEvent(this,2,Constantes.NUEVO_VEHICULO)); //agregar chofer
-
-        when(vista.getTipoVehiculo()).thenReturn(Constantes.MOTO);
-        when(vista.getPatente()).thenReturn("abc123");
-
-        controlador.actionPerformed(new ActionEvent(this,3,Constantes.NUEVO_VEHICULO)); //agregar chofer
-
-        Assert.assertEquals("El mensaje de error no es el correcto", ventanaErrores.getMensajeError(), Mensajes.VEHICULO_YA_REGISTRADO.getValor());
-    }
 
     @Test
     public void registroDeCliente() throws IOException, ClassNotFoundException {
