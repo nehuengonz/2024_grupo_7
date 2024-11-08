@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 
 public class IntegracionEscenario2 {
 
-    ArchivoEscenario2 archivoEscenario2;
+    private ArchivoEscenario2 archivoEscenario2;
     private IVista vista;
     private PersistenciaBIN persistencia;
     private Controlador controlador;
@@ -33,7 +33,6 @@ public class IntegracionEscenario2 {
     public void setUp() throws Exception {
         vista = mock(Ventana.class);
         archivoEscenario2 = new ArchivoEscenario2();
-
         archivoEscenario2.setUp();
         persistencia = new PersistenciaBIN();
         ventanaErrores = new VentanaErrores();
@@ -42,11 +41,11 @@ public class IntegracionEscenario2 {
         controlador.setPersistencia(persistencia);
         controlador.setVista(vista);
         controlador.setFileName("empresaIntegracion.bin");
-
+        controlador.leer();
         //esto es para los mensajes de error
         when(vista.getOptionPane()).thenReturn(ventanaErrores);
         
-controlador.leer();
+
     }
 
     @After
@@ -111,17 +110,16 @@ controlador.leer();
     public void crearViajeConPedido() throws IOException, ClassNotFoundException {
         when(vista.getPassword()).thenReturn("admin");
         when(vista.getUsserName()).thenReturn("admin");
-
-        controlador.actionPerformed(new ActionEvent(this,1,Constantes.LOGIN)); //login
-
-        controlador.actionPerformed(new ActionEvent(this,1,Constantes.NUEVO_VIAJE));
-
         when(vista.getChoferDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getChoferesDesocupados().get(0));
         when(vista.getVehiculoDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getVehiculosDesocupados().get(0));
         when(vista.getPedidoSeleccionado()).thenReturn(
                 Empresa.getInstance().getPedidoDeCliente(
                         Empresa.getInstance().getClientes().get("facundo")
                 ));
+
+        controlador.actionPerformed(new ActionEvent(this,1,Constantes.LOGIN)); //login
+
+        controlador.actionPerformed(new ActionEvent(this,1,Constantes.NUEVO_VIAJE));
 
         Viaje viajeEmpezado = Empresa.getInstance().getViajesIniciados().get(Empresa.getInstance().getClientes().get("facundo"));
 
@@ -131,7 +129,7 @@ controlador.leer();
 
         Assert.assertNull("No se deslogueo al usuario", Empresa.getInstance().getUsuarioLogeado());
 
-        persistencia.abrirInput("empresa.bin");
+        persistencia.abrirInput(controlador.getFileName());
         EmpresaDTO empresaLeida = (EmpresaDTO) persistencia.leer();
         persistencia.cerrarInput();
 

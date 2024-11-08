@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 
 public class IntegracionEscenario3 {
 
-    ArchivoEscenario3 archivoEscenario3;
+    private ArchivoEscenario3 archivoEscenario3;
     private IVista vista;
     private PersistenciaBIN persistencia;
     private Controlador controlador;
@@ -29,6 +29,9 @@ public class IntegracionEscenario3 {
     public void setUp() throws Exception {
         vista = mock(Ventana.class);
 
+        archivoEscenario3 = new ArchivoEscenario3();
+        archivoEscenario3.setUp();
+
         persistencia = new PersistenciaBIN();
         ventanaErrores = new VentanaErrores();
 
@@ -36,12 +39,10 @@ public class IntegracionEscenario3 {
         controlador.setPersistencia(persistencia);
         controlador.setVista(vista);
         controlador.setFileName("empresaIntegracion.bin");
+        controlador.leer();
 
         //esto es para los mensajes de error
         when(vista.getOptionPane()).thenReturn(ventanaErrores);
-        archivoEscenario3 = new ArchivoEscenario3();
-
-        archivoEscenario3.setUp();
 
     }
 
