@@ -18,6 +18,9 @@ import vista.IOptionPane;
 import vista.IVista;
 import vista.Ventana;
 
+
+
+//FIJARSE SI SE PUEDE HACER DE TAL MANERA DE USAR CONSTANTE.PANEL... 
 public class testGUIPaneles {
     Robot robot;
     Controlador controlador;
