@@ -88,7 +88,9 @@ public class IntegracionEscenario3 {
         controlador.actionPerformed(new ActionEvent(this,1, Constantes.LOGIN)); //login
 
         controlador.actionPerformed(new ActionEvent(this,2,Constantes.NUEVO_VIAJE));
-
+        System.out.println(Empresa.getInstance().getPedidoDeCliente(
+                Empresa.getInstance().getClientes().get("thiago")
+        ));
         Assert.assertEquals("El mensaje de excepcion CHOFER_NO_DISPONIBLE no es correcto", ventanaErrores.getMensajeError(), Mensajes.CHOFER_NO_DISPONIBLE.getValor());
 
         controlador.actionPerformed(new ActionEvent(this,4,Constantes.CERRAR_SESION_ADMIN)); //logout

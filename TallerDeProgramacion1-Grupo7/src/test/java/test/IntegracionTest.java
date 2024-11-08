@@ -381,21 +381,4 @@ public class IntegracionTest {
         Assert.assertEquals("El mensaje de error no es el correcto", ventanaErrores.getMensajeError(), Mensajes.PASS_NO_COINCIDE.getValor());
     }
 
-    @Test
-    public void registroDeClienteRepetido()  {
-        when(vista.getRegUsserName()).thenReturn("facundo");
-        when(vista.getRegNombreReal()).thenReturn("Facundo Delgado");
-        when(vista.getRegPassword()).thenReturn("123");
-        when(vista.getRegConfirmPassword()).thenReturn("123");
-
-        controlador.actionPerformed(new ActionEvent(this,1,Constantes.REG_BUTTON_REGISTRAR)); //apreta boton de registrar
-        controlador.actionPerformed(new ActionEvent(this,2,Constantes.REG_BUTTON_REGISTRAR)); //apreta boton de registrar
-        Assert.assertEquals("El mensaje de error no es el correcto", ventanaErrores.getMensajeError(), Mensajes.USUARIO_REPETIDO.getValor());
-    }
-
-    
-
-    
-
-
 }

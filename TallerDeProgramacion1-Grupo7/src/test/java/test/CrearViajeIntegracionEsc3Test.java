@@ -27,7 +27,7 @@ public class CrearViajeIntegracionEsc3Test {
     private Controlador controlador;
     private VentanaErrores ventanaErrores;
 
-    private Escenario3 escenario3;
+    private ArchivoEscenario3 archivoEscenario3;
 
     public CrearViajeIntegracionEsc3Test() {
     }
@@ -35,16 +35,18 @@ public class CrearViajeIntegracionEsc3Test {
     @Before
     public void setUp() throws Exception {
         vista = mock(Ventana.class);
+
+        archivoEscenario3 = new ArchivoEscenario3();
+        archivoEscenario3.setUp();
+
         persistencia = new PersistenciaBIN();
         ventanaErrores = new VentanaErrores();
-        escenario3 = new Escenario3();
-        escenario3.setup();
+
         controlador = new Controlador();
         controlador.setPersistencia(persistencia);
         controlador.setVista(vista);
-
-        when(vista.getPassword()).thenReturn("admin");
-        when(vista.getUsserName()).thenReturn("admin");
+        controlador.setFileName("empresaIntegracion.bin");
+        controlador.leer();
 
         //esto es para los mensajes de error
         when(vista.getOptionPane()).thenReturn(ventanaErrores);
@@ -53,15 +55,8 @@ public class CrearViajeIntegracionEsc3Test {
 
     @After
     public void tearDown() throws Exception {
-
         controlador = null;
-        File archivo = new File("empresa.bin");
-        if(archivo.exists()){
-            archivo.delete();
-        }
-
-        escenario3.tearDown();
-
+        archivoEscenario3.tearDown();
     }
 
     @Test

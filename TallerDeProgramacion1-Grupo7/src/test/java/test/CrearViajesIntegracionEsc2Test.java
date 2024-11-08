@@ -27,7 +27,7 @@ import java.util.Iterator;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class CrearViajesIntegracionTest {
+public class CrearViajesIntegracionEsc2Test {
     private IVista vista;
     private PersistenciaBIN persistencia;
     private Controlador controlador;
@@ -35,7 +35,7 @@ public class CrearViajesIntegracionTest {
 
     private Escenario2 escenario2;
 
-    public CrearViajesIntegracionTest() {
+    public CrearViajesIntegracionEsc2Test() {
     }
 
     @Before
@@ -48,9 +48,6 @@ public class CrearViajesIntegracionTest {
         controlador = new Controlador();
         controlador.setPersistencia(persistencia);
         controlador.setVista(vista);
-
-        when(vista.getPassword()).thenReturn("admin");
-        when(vista.getUsserName()).thenReturn("admin");
 
         //esto es para los mensajes de error
         when(vista.getOptionPane()).thenReturn(ventanaErrores);
