@@ -202,7 +202,7 @@ public class IntegracionEscenario2Test {
     }
 
     @Test
-    public void crearViajeClienteConVIajeTest() throws ClienteNoExisteException, ClienteConViajePendienteException, SinVehiculoParaPedidoException, ClienteConPedidoPendienteException {
+    public void crearViajeClienteConVIajeTest() throws ClienteNoExisteException, SinVehiculoParaPedidoException, ClienteConPedidoPendienteException, ClienteConViajePendienteException {
         when(vista.getPassword()).thenReturn("admin");
         when(vista.getUsserName()).thenReturn("admin");
 
@@ -220,7 +220,11 @@ public class IntegracionEscenario2Test {
         controlador.actionPerformed(new ActionEvent(this,2,Constantes.NUEVO_VIAJE));
 
         //creo otro viaje
+        /*  esto segun el contrato tiraria excepcion pero no la tira, aparte como probaria que tire CLIENTE_CON_VIAJE_PENDIENTE?
+            si necesito un pedido para generar un viaje, ahi está raro el contrato de la clase Pedido.
+        */
         Empresa.getInstance().agregarPedido(new Pedido(Empresa.getInstance().getClientes().get("facundo"),1,false,false,2, Constantes.ZONA_STANDARD));
+
         when(vista.getChoferDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getChoferesDesocupados().get(1));
         when(vista.getVehiculoDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getVehiculosDesocupados().get(2));
         Pedido p = Empresa.getInstance().getPedidoDeCliente(
