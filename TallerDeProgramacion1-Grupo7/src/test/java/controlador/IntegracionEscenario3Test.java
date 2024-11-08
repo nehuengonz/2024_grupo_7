@@ -1,6 +1,5 @@
-package test;
+package controlador;
 
-import controlador.Controlador;
 import modeloNegocio.Empresa;
 import org.junit.After;
 import org.junit.Assert;
