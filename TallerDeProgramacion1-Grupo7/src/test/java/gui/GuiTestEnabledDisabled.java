@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import controlador.Controlador;
+import excepciones.ChoferRepetidoException;
 import modeloDatos.Auto;
 import modeloDatos.ChoferPermanente;
 import modeloDatos.ChoferTemporario;
@@ -46,17 +47,8 @@ public class GuiTestEnabledDisabled {
 	        this.dniChofer="14007890";
 	        this.vehiculoPatente="ASD123";
 
-	        Auto auto1=new Auto(this.vehiculoPatente,4,false);
-	        ChoferTemporario chofer1=new ChoferTemporario(this.dniChofer,"pablo");
-	        ChoferPermanente chofer2=new ChoferPermanente("11111111","paul",2000,1);
-	        Empresa.getInstance().agregarChofer(chofer2);
-	        Empresa.getInstance().agregarVehiculo(auto1);
-	        Empresa.getInstance().agregarCliente(userCliente, passCliente, dniChofer);
-	        Cliente cliente = Empresa.getInstance().getClientes().get(this.userCliente);
-	        Pedido pedido= new Pedido(cliente,3,false,false,14,Constantes.ZONA_STANDARD);
-	        Empresa.getInstance().agregarPedido(pedido);
-	        Empresa.getInstance().crearViaje(pedido, chofer2, auto1);
-	        Empresa.getInstance().setViajesIniciados(Empresa.getInstance().getViajesIniciados());
+	     
+	        
 	    
 	    }
 	  @After
@@ -71,7 +63,7 @@ public class GuiTestEnabledDisabled {
 		  Empresa.getInstance().getPedidos().clear();
 		  
 	    }
-	  //no me encuentra el boton registrar
+	  /*
 	  @Test
 	    public void testLog_Vacio()
 	    {
@@ -361,5 +353,150 @@ public class GuiTestEnabledDisabled {
 	      TestUtils.clickComponent(nombrereal, robot);
 	      TestUtils.tipeaTexto("nombrereal", robot);
 	      Assert.assertFalse("El boton de registro deberia estar deshabilitado", aceptarReg.isEnabled());
+	  }
+	  */
+	  @Test
+	  public void testBotonPagar_enabled() throws Exception {
+		  robot.delay(TestUtils.getDelay());
+		  // setup
+		  Auto auto1=new Auto(this.vehiculoPatente,4,false);
+	      ChoferTemporario chofer1=new ChoferTemporario(this.dniChofer,"pablo");
+	      ChoferPermanente chofer2=new ChoferPermanente("11111111","paul",2000,1);
+		  Empresa.getInstance().agregarChofer(chofer2);
+	      Empresa.getInstance().agregarVehiculo(auto1);
+	      Empresa.getInstance().agregarCliente(userCliente, passCliente, dniChofer);
+	      Cliente cliente = Empresa.getInstance().getClientes().get(this.userCliente);
+	      Pedido pedido= new Pedido(cliente,3,false,false,14,Constantes.ZONA_STANDARD);
+	      Empresa.getInstance().agregarPedido(pedido);
+	      Empresa.getInstance().crearViaje(pedido, chofer2, auto1);
+	      Empresa.getInstance().setViajesIniciados(Empresa.getInstance().getViajesIniciados());
+		  //
+		  JTextField nombre = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NOMBRE_USUARIO);
+		  JTextField contrasenia = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PASSWORD);
+		  JButton aceptarReg = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.REGISTRAR);
+	      JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LOGIN);
+	      //completo los textfields
+	      TestUtils.clickComponent(nombre, robot);
+	      TestUtils.tipeaTexto(userCliente, robot);
+	      TestUtils.clickComponent(contrasenia, robot);
+	      TestUtils.tipeaTexto(passCliente, robot);
+	      TestUtils.clickComponent(aceptarLog, robot);
+	      //
+	      robot.delay(TestUtils.getDelay());
+	      //
+	      JTextField calificacion = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.CALIFICACION_DE_VIAJE);
+	      JButton Pagar = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CALIFICAR_PAGAR);
+	      TestUtils.clickComponent(calificacion, robot);
+	      TestUtils.tipeaTexto("4", robot);
+	      robot.delay(2000);
+	      
+	      Assert.assertTrue("El boton de Pagar deberia estar habilitado", Pagar.isEnabled());
+	  }
+	  @Test
+	  public void testBotonPagar_disabled_despues_dePagar() throws Exception {
+		  robot.delay(TestUtils.getDelay());
+		  // setup
+		  Auto auto1=new Auto(this.vehiculoPatente,4,false);
+	      ChoferTemporario chofer1=new ChoferTemporario(this.dniChofer,"pablo");
+	      ChoferPermanente chofer2=new ChoferPermanente("11111111","paul",2000,1);
+		  Empresa.getInstance().agregarChofer(chofer2);
+	      Empresa.getInstance().agregarVehiculo(auto1);
+	      Empresa.getInstance().agregarCliente(userCliente, passCliente, dniChofer);
+	      Cliente cliente = Empresa.getInstance().getClientes().get(this.userCliente);
+	      Pedido pedido= new Pedido(cliente,3,false,false,14,Constantes.ZONA_STANDARD);
+	      Empresa.getInstance().agregarPedido(pedido);
+	      Empresa.getInstance().crearViaje(pedido, chofer2, auto1);
+	      Empresa.getInstance().setViajesIniciados(Empresa.getInstance().getViajesIniciados());
+		  //
+		  JTextField nombre = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NOMBRE_USUARIO);
+		  JTextField contrasenia = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PASSWORD);
+		  JButton aceptarReg = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.REGISTRAR);
+	      JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LOGIN);
+	      //completo los textfields
+	      TestUtils.clickComponent(nombre, robot);
+	      TestUtils.tipeaTexto(userCliente, robot);
+	      TestUtils.clickComponent(contrasenia, robot);
+	      TestUtils.tipeaTexto(passCliente, robot);
+	      TestUtils.clickComponent(aceptarLog, robot);
+	      //
+	      robot.delay(TestUtils.getDelay());
+	      //
+	      JTextField calificacion = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.CALIFICACION_DE_VIAJE);
+	      JButton Pagar = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CALIFICAR_PAGAR);
+	      TestUtils.clickComponent(calificacion, robot);
+	      TestUtils.tipeaTexto("4", robot);
+	      TestUtils.clickComponent(Pagar, robot);
+	      robot.delay(2000);
+	      
+	      Assert.assertFalse("El boton de Pagar deberia estar deshabilitado", Pagar.isEnabled());
+	  }
+	  @Test
+	  public void testBotonPagar_disabled_antes_de_realizar_un_nuevopedido() throws Exception {
+		  robot.delay(TestUtils.getDelay());
+		  // setup
+		  Auto auto1=new Auto(this.vehiculoPatente,4,false);
+	      ChoferTemporario chofer1=new ChoferTemporario(this.dniChofer,"pablo");
+	      ChoferPermanente chofer2=new ChoferPermanente("11111111","paul",2000,1);
+		  Empresa.getInstance().agregarChofer(chofer2);
+	      Empresa.getInstance().agregarVehiculo(auto1);
+	      Empresa.getInstance().agregarCliente(userCliente, passCliente, dniChofer);
+	      Cliente cliente = Empresa.getInstance().getClientes().get(this.userCliente);
+
+		  //
+		  JTextField nombre = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NOMBRE_USUARIO);
+		  JTextField contrasenia = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PASSWORD);
+		  JButton aceptarReg = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.REGISTRAR);
+	      JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LOGIN);
+	      //completo los textfields
+	      TestUtils.clickComponent(nombre, robot);
+	      TestUtils.tipeaTexto(userCliente, robot);
+	      TestUtils.clickComponent(contrasenia, robot);
+	      TestUtils.tipeaTexto(passCliente, robot);
+	      TestUtils.clickComponent(aceptarLog, robot);
+	      //
+	      robot.delay(TestUtils.getDelay());
+	      //
+	      JTextField calificacion = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.CALIFICACION_DE_VIAJE);
+	      JButton Pagar = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CALIFICAR_PAGAR);
+	      TestUtils.clickComponent(calificacion, robot);
+	      TestUtils.tipeaTexto("4", robot);
+	      robot.delay(2000);
+	      Assert.assertFalse("El Campo de texto Calificacion deberia estar deshabilitado", calificacion.isEnabled());
+	      Assert.assertFalse("El boton de Pagar deberia estar deshabilitado", Pagar.isEnabled());
+	  }
+	  @Test
+	  public void testBotonPagar_disabled_despues_de_realizar_un_nuevopedido() throws Exception {
+		  robot.delay(TestUtils.getDelay());
+		  // setup
+		  Auto auto1=new Auto(this.vehiculoPatente,4,false);
+	      ChoferTemporario chofer1=new ChoferTemporario(this.dniChofer,"pablo");
+	      ChoferPermanente chofer2=new ChoferPermanente("11111111","paul",2000,1);
+		  Empresa.getInstance().agregarChofer(chofer2);
+	      Empresa.getInstance().agregarVehiculo(auto1);
+	      Empresa.getInstance().agregarCliente(userCliente, passCliente, dniChofer);
+	      Cliente cliente = Empresa.getInstance().getClientes().get(this.userCliente);
+	      Pedido pedido= new Pedido(cliente,3,false,false,14,Constantes.ZONA_STANDARD);
+	      Empresa.getInstance().agregarPedido(pedido);
+		  //
+		  JTextField nombre = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NOMBRE_USUARIO);
+		  JTextField contrasenia = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PASSWORD);
+		  JButton aceptarReg = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.REGISTRAR);
+	      JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LOGIN);
+	      //completo los textfields
+	      TestUtils.clickComponent(nombre, robot);
+	      TestUtils.tipeaTexto(userCliente, robot);
+	      TestUtils.clickComponent(contrasenia, robot);
+	      TestUtils.tipeaTexto(passCliente, robot);
+	      TestUtils.clickComponent(aceptarLog, robot);
+	      //
+	      robot.delay(TestUtils.getDelay());
+	      //
+	      JTextField calificacion = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.CALIFICACION_DE_VIAJE);
+	      JButton Pagar = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CALIFICAR_PAGAR);
+	      TestUtils.clickComponent(calificacion, robot);
+	      TestUtils.tipeaTexto("4", robot);
+	      robot.delay(2000);
+	      Assert.assertFalse("El Campo de texto Calificacion deberia estar deshabilitado", calificacion.isEnabled());
+	      Assert.assertFalse("El boton de Pagar deberia estar deshabilitado", Pagar.isEnabled());
 	  }
 } 
