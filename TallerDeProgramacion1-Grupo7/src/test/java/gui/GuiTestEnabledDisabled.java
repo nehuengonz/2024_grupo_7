@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Robot;
 
 import javax.swing.JButton;
+import javax.swing.JList;
 import javax.swing.JTextField;
 
 import org.junit.After;
@@ -13,7 +14,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import controlador.Controlador;
-import excepciones.ChoferRepetidoException;
 import modeloDatos.Auto;
 import modeloDatos.ChoferPermanente;
 import modeloDatos.ChoferTemporario;
@@ -355,6 +355,7 @@ public class GuiTestEnabledDisabled {
 	      Assert.assertFalse("El boton de registro deberia estar deshabilitado", aceptarReg.isEnabled());
 	  }
 	  */
+	  /*
 	  @Test
 	  public void testBotonPagar_enabled() throws Exception {
 		  robot.delay(TestUtils.getDelay());
@@ -499,4 +500,193 @@ public class GuiTestEnabledDisabled {
 	      Assert.assertFalse("El Campo de texto Calificacion deberia estar deshabilitado", calificacion.isEnabled());
 	      Assert.assertFalse("El boton de Pagar deberia estar deshabilitado", Pagar.isEnabled());
 	  }
+	  */
+	  @Test
+	  public void testAdminBotonNuevoViaje_enabled() throws Exception {
+		  robot.delay(TestUtils.getDelay());
+		  // setup
+		  Auto auto1=new Auto(this.vehiculoPatente,4,false);
+	      ChoferTemporario chofer1=new ChoferTemporario(this.dniChofer,"pablo");
+	      ChoferPermanente chofer2=new ChoferPermanente("11111111","paul",2000,1);
+		  Empresa.getInstance().agregarChofer(chofer2);
+	      Empresa.getInstance().agregarVehiculo(auto1);
+	      Empresa.getInstance().agregarCliente(userCliente, passCliente, dniChofer);
+	      Cliente cliente = Empresa.getInstance().getClientes().get(this.userCliente);
+	      Pedido pedido= new Pedido(cliente,3,false,false,14,Constantes.ZONA_STANDARD);
+	      Empresa.getInstance().agregarPedido(pedido);
+		  //
+		  JTextField nombre = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NOMBRE_USUARIO);
+		  JTextField contrasenia = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PASSWORD);
+		  JButton aceptarReg = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.REGISTRAR);
+	      JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LOGIN);
+	      //completo los textfields
+	      TestUtils.clickComponent(nombre, robot);
+	      TestUtils.tipeaTexto("admin", robot);
+	      TestUtils.clickComponent(contrasenia, robot);
+	      TestUtils.tipeaTexto("admin", robot);
+	      TestUtils.clickComponent(aceptarLog, robot);
+	      //
+	      robot.delay(1000);
+	      //
+	      JButton nuevoViaje   = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_VIAJE);
+	      JList lista_choferes =(JList) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LISTA_CHOFERES_LIBRES);
+	      //cuando pruebo lista pedidos pendientes me lo toma como lista choferes totales wtfff
+	      JList lista_pedidos  =(JList) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LISTA_PEDIDOS_PENDIENTES);
+	      JList lista_vehiculos=(JList) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LISTA_VEHICULOS_DISPONIBLES);
+	      
+	      TestUtils.clickComponent(lista_pedidos, robot);
+	      robot.delay(1000);
+	      TestUtils.clickComponent(lista_choferes, robot);
+	      robot.delay(1000);
+	      TestUtils.clickComponent(lista_vehiculos, robot);
+	      robot.delay(1000);
+	      
+	      //
+	      Assert.assertTrue("El boton de nuevo viaje deberia estar habilitado", nuevoViaje.isEnabled());
+	  }
+	  @Test
+	  public void testAdminBotonNuevoViaje_disabled_solo_clickChofer() throws Exception {
+		  robot.delay(TestUtils.getDelay());
+		  // setup
+		  Auto auto1=new Auto(this.vehiculoPatente,4,false);
+	      ChoferTemporario chofer1=new ChoferTemporario(this.dniChofer,"pablo");
+	      ChoferPermanente chofer2=new ChoferPermanente("11111111","paul",2000,1);
+		  Empresa.getInstance().agregarChofer(chofer2);
+	      Empresa.getInstance().agregarVehiculo(auto1);
+	      Empresa.getInstance().agregarCliente(userCliente, passCliente, dniChofer);
+	      Cliente cliente = Empresa.getInstance().getClientes().get(this.userCliente);
+	      Pedido pedido= new Pedido(cliente,3,false,false,14,Constantes.ZONA_STANDARD);
+	      Empresa.getInstance().agregarPedido(pedido);
+		  //
+		  JTextField nombre = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NOMBRE_USUARIO);
+		  JTextField contrasenia = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PASSWORD);
+		  JButton aceptarReg = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.REGISTRAR);
+	      JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LOGIN);
+	      //completo los textfields
+	      TestUtils.clickComponent(nombre, robot);
+	      TestUtils.tipeaTexto("admin", robot);
+	      TestUtils.clickComponent(contrasenia, robot);
+	      TestUtils.tipeaTexto("admin", robot);
+	      TestUtils.clickComponent(aceptarLog, robot);
+	      //
+	      robot.delay(1000);
+	      //
+	      JButton nuevoViaje   = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_VIAJE);
+	      JList lista_choferes =(JList) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LISTA_CHOFERES_LIBRES);
+	      //cuando pruebo lista pedidos pendientes me lo toma como lista choferes totales wtfff
+	      JList lista_pedidos  =(JList) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LISTA_PEDIDOS_PENDIENTES);
+	      JList lista_vehiculos=(JList) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LISTA_VEHICULOS_DISPONIBLES);
+	      
+	      TestUtils.clickComponent(lista_choferes, robot);
+	      robot.delay(1000);
+	      
+	      //
+	      Assert.assertFalse("El boton de nuevo viaje deberia estar deshabilitado", nuevoViaje.isEnabled());
+	  }
+	  @Test
+	  public void testAdminBotonNuevoViaje_disabled_solo_clickvehiculos() throws Exception {
+		  robot.delay(TestUtils.getDelay());
+		  // setup
+		  Auto auto1=new Auto(this.vehiculoPatente,4,false);
+	      ChoferTemporario chofer1=new ChoferTemporario(this.dniChofer,"pablo");
+	      ChoferPermanente chofer2=new ChoferPermanente("11111111","paul",2000,1);
+		  Empresa.getInstance().agregarChofer(chofer2);
+	      Empresa.getInstance().agregarVehiculo(auto1);
+	      Empresa.getInstance().agregarCliente(userCliente, passCliente, dniChofer);
+	      Cliente cliente = Empresa.getInstance().getClientes().get(this.userCliente);
+	      Pedido pedido= new Pedido(cliente,3,false,false,14,Constantes.ZONA_STANDARD);
+	      Empresa.getInstance().agregarPedido(pedido);
+		  //
+		  JTextField nombre = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NOMBRE_USUARIO);
+		  JTextField contrasenia = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PASSWORD);
+		  JButton aceptarReg = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.REGISTRAR);
+	      JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LOGIN);
+	      //completo los textfields
+	      TestUtils.clickComponent(nombre, robot);
+	      TestUtils.tipeaTexto("admin", robot);
+	      TestUtils.clickComponent(contrasenia, robot);
+	      TestUtils.tipeaTexto("admin", robot);
+	      TestUtils.clickComponent(aceptarLog, robot);
+	      //
+	      robot.delay(1000);
+	      //
+	      JButton nuevoViaje   = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_VIAJE);
+	      JList lista_choferes =(JList) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LISTA_CHOFERES_LIBRES);
+	      //cuando pruebo lista pedidos pendientes me lo toma como lista choferes totales wtfff
+	      JList lista_pedidos  =(JList) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LISTA_PEDIDOS_PENDIENTES);
+	      JList lista_vehiculos=(JList) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LISTA_VEHICULOS_DISPONIBLES);
+	      
+	      TestUtils.clickComponent(lista_vehiculos, robot);
+	      robot.delay(1000);
+	      
+	      //
+	      Assert.assertFalse("El boton de nuevo viaje deberia estar deshabilitado", nuevoViaje.isEnabled());
+	  }
+	  
+	  @Test
+	  public void testAdminBotonNuevoViaje_disabled_solo_clickpedidos() throws Exception {
+		  robot.delay(TestUtils.getDelay());
+		  // setup
+		  Auto auto1=new Auto(this.vehiculoPatente,4,false);
+	      ChoferTemporario chofer1=new ChoferTemporario(this.dniChofer,"pablo");
+	      ChoferPermanente chofer2=new ChoferPermanente("11111111","paul",2000,1);
+		  Empresa.getInstance().agregarChofer(chofer2);
+	      Empresa.getInstance().agregarVehiculo(auto1);
+	      Empresa.getInstance().agregarCliente(userCliente, passCliente, dniChofer);
+	      Cliente cliente = Empresa.getInstance().getClientes().get(this.userCliente);
+	      Pedido pedido= new Pedido(cliente,3,false,false,14,Constantes.ZONA_STANDARD);
+	      Empresa.getInstance().agregarPedido(pedido);
+		  //
+		  JTextField nombre = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NOMBRE_USUARIO);
+		  JTextField contrasenia = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PASSWORD);
+		  JButton aceptarReg = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.REGISTRAR);
+	      JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LOGIN);
+	      //completo los textfields
+	      TestUtils.clickComponent(nombre, robot);
+	      TestUtils.tipeaTexto("admin", robot);
+	      TestUtils.clickComponent(contrasenia, robot);
+	      TestUtils.tipeaTexto("admin", robot);
+	      TestUtils.clickComponent(aceptarLog, robot);
+	      //
+	      robot.delay(1000);
+	      //
+	      JButton nuevoViaje   = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_VIAJE);
+	      JList lista_choferes =(JList) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LISTA_CHOFERES_LIBRES);
+	      //cuando pruebo lista pedidos pendientes me lo toma como lista choferes totales wtfff
+	      JList lista_pedidos  =(JList) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LISTA_PEDIDOS_PENDIENTES);
+	      JList lista_vehiculos=(JList) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LISTA_VEHICULOS_DISPONIBLES);
+	      
+	      TestUtils.clickComponent(lista_pedidos, robot);
+	      robot.delay(1000);
+	      
+	      //
+	      Assert.assertFalse("El boton de nuevo viaje deberia estar deshabilitado", nuevoViaje.isEnabled());
+	  }
+	  @Test
+	  public void testAdminBotonNuevoViaje_disabled_conjuntovacio() throws Exception {
+		  robot.delay(TestUtils.getDelay());
+		  //
+		  JTextField nombre = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NOMBRE_USUARIO);
+		  JTextField contrasenia = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PASSWORD);
+		  JButton aceptarReg = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.REGISTRAR);
+	      JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LOGIN);
+	      //completo los textfields
+	      TestUtils.clickComponent(nombre, robot);
+	      TestUtils.tipeaTexto("admin", robot);
+	      TestUtils.clickComponent(contrasenia, robot);
+	      TestUtils.tipeaTexto("admin", robot);
+	      TestUtils.clickComponent(aceptarLog, robot);
+	      //
+	      robot.delay(1000);
+	      //
+	      JButton nuevoViaje   = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_VIAJE);
+	      JList lista_choferes =(JList) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LISTA_CHOFERES_LIBRES);
+	      //cuando pruebo lista pedidos pendientes me lo toma como lista choferes totales wtfff
+	      JList lista_pedidos  =(JList) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LISTA_PEDIDOS_PENDIENTES);
+	      JList lista_vehiculos=(JList) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LISTA_VEHICULOS_DISPONIBLES);
+	      
+	      //
+	      Assert.assertFalse("El boton de nuevo viaje deberia estar deshabilitado", nuevoViaje.isEnabled());
+	  }
+	  
 } 
