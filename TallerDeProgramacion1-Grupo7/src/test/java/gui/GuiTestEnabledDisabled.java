@@ -63,7 +63,7 @@ public class GuiTestEnabledDisabled {
 		  Empresa.getInstance().getPedidos().clear();
 		  
 	    }
-	  /*
+	 
 	  @Test
 	    public void testLog_Vacio()
 	    {
@@ -245,7 +245,8 @@ public class GuiTestEnabledDisabled {
 		  TestUtils.clickComponent(confirmarReg, robot);
 		  JTextField confirm_pasword = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.REG_CONFIRM_PASSWORD);
 		  JButton aceptarReg = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.REG_BUTTON_REGISTRAR);
-	      TestUtils.clickComponent(confirm_pasword, robot);
+		  robot.delay(TestUtils.getDelay());
+		  TestUtils.clickComponent(confirm_pasword, robot);
 	      TestUtils.tipeaTexto("password", robot);
 	      Assert.assertFalse("El boton de registro deberia estar deshabilitado", aceptarReg.isEnabled());
 	  }
@@ -354,8 +355,7 @@ public class GuiTestEnabledDisabled {
 	      TestUtils.tipeaTexto("nombrereal", robot);
 	      Assert.assertFalse("El boton de registro deberia estar deshabilitado", aceptarReg.isEnabled());
 	  }
-	  */
-	  /*
+	 
 	  @Test
 	  public void testBotonPagar_enabled() throws Exception {
 		  robot.delay(TestUtils.getDelay());
@@ -500,7 +500,6 @@ public class GuiTestEnabledDisabled {
 	      Assert.assertFalse("El Campo de texto Calificacion deberia estar deshabilitado", calificacion.isEnabled());
 	      Assert.assertFalse("El boton de Pagar deberia estar deshabilitado", Pagar.isEnabled());
 	  }
-	  */
 	  @Test
 	  public void testAdminBotonNuevoViaje_enabled() throws Exception {
 		  robot.delay(TestUtils.getDelay());
@@ -534,6 +533,7 @@ public class GuiTestEnabledDisabled {
 	      JList lista_pedidos  =(JList) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LISTA_PEDIDOS_PENDIENTES);
 	      JList lista_vehiculos=(JList) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LISTA_VEHICULOS_DISPONIBLES);
 	      
+	      lista_pedidos.setSelectedIndex(0);
 	      TestUtils.clickComponent(lista_pedidos, robot);
 	      robot.delay(1000);
 	      TestUtils.clickComponent(lista_choferes, robot);
@@ -655,9 +655,9 @@ public class GuiTestEnabledDisabled {
 	      //cuando pruebo lista pedidos pendientes me lo toma como lista choferes totales wtfff
 	      JList lista_pedidos  =(JList) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LISTA_PEDIDOS_PENDIENTES);
 	      JList lista_vehiculos=(JList) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LISTA_VEHICULOS_DISPONIBLES);
-	      
+	      lista_pedidos.setSelectedIndex(0);
 	      TestUtils.clickComponent(lista_pedidos, robot);
-	      robot.delay(1000);
+	      robot.delay(3000);
 	      
 	      //
 	      Assert.assertFalse("El boton de nuevo viaje deberia estar deshabilitado", nuevoViaje.isEnabled());
@@ -680,11 +680,6 @@ public class GuiTestEnabledDisabled {
 	      robot.delay(1000);
 	      //
 	      JButton nuevoViaje   = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_VIAJE);
-	      JList lista_choferes =(JList) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LISTA_CHOFERES_LIBRES);
-	      //cuando pruebo lista pedidos pendientes me lo toma como lista choferes totales wtfff
-	      JList lista_pedidos  =(JList) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LISTA_PEDIDOS_PENDIENTES);
-	      JList lista_vehiculos=(JList) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LISTA_VEHICULOS_DISPONIBLES);
-	      
 	      //
 	      Assert.assertFalse("El boton de nuevo viaje deberia estar deshabilitado", nuevoViaje.isEnabled());
 	  }

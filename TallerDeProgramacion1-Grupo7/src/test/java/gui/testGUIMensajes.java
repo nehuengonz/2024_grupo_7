@@ -9,15 +9,18 @@ import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import controlador.Controlador;
+import excepciones.ChoferRepetidoException;
 import junit.framework.Assert;
 import modeloDatos.Auto;
 import modeloDatos.ChoferPermanente;
 import modeloDatos.ChoferTemporario;
 import modeloDatos.Cliente;
+import modeloDatos.Pedido;
 import modeloNegocio.Empresa;
 import util.Constantes;
 import util.Mensajes;
@@ -63,7 +66,18 @@ public class testGUIMensajes {
         // Empresa.getInstance().agregarChofer(chofer2);
         //Empresa.getInstance().agregarVehiculo(auto1);
     }
-
+    @After
+    public void tearDown() throws Exception
+    {
+	  Ventana ventana=(Ventana) controlador.getVista();
+	  ventana.setVisible(false);
+	  Empresa.getInstance().getChoferes().clear();
+	  Empresa.getInstance().getClientes().clear();
+	  Empresa.getInstance().getViajesIniciados().clear();
+	  Empresa.getInstance().getVehiculos().clear();
+	  Empresa.getInstance().getPedidos().clear();
+	  
+    }
 
     @SuppressWarnings("deprecation")
 	@Test //este metodo lo hice para los usuarios clientes, no lo testee para admin porque es la misma ventana tanto para uno como para otro
@@ -188,7 +202,7 @@ public class testGUIMensajes {
     }
 
     @Test
-    public void testClienteRealizaPedidoSinVehiculoDisp() {
+    public void testClienteRealizaPedidoSinVehiculoDisp_conjuntovacio() {
     	//
     	robot.delay(TestUtils.getDelay());
         JButton registrar = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.REGISTRAR);
@@ -240,7 +254,57 @@ public class testGUIMensajes {
         Assert.assertEquals("Mensaje incorrecto, deberia decir "+Mensajes.SIN_VEHICULO_PARA_PEDIDO.getValor(),Mensajes.SIN_VEHICULO_PARA_PEDIDO.getValor(),op.getMensaje());
 
     }
+    @Test
+    public void testClienteRealizaPedidoSinVehiculoDisp_yatienevehiculosdisponibles() throws Exception {
+    	 robot.delay(TestUtils.getDelay());
+		 //
+    	 // setup
+		  Auto auto1=new Auto(this.vehiculoPatente,4,false);
+	      ChoferTemporario chofer1=new ChoferTemporario(this.dniChofer,"pablo");
+	      ChoferPermanente chofer2=new ChoferPermanente("11111111","paul",2000,1);
+		  Empresa.getInstance().agregarChofer(chofer2);
+	      Empresa.getInstance().agregarVehiculo(auto1);
+	      Empresa.getInstance().agregarCliente("a", "a", "a");
+	      Empresa.getInstance().agregarCliente(userCliente, passCliente, dniChofer);
+	      Cliente cliente = Empresa.getInstance().getClientes().get("a");
+	      Pedido pedido= new Pedido(cliente,3,false,false,14,Constantes.ZONA_STANDARD);
+	      Empresa.getInstance().agregarPedido(pedido);
+	      Empresa.getInstance().crearViaje(pedido, chofer2, auto1);
+	      Empresa.getInstance().setViajesIniciados(Empresa.getInstance().getViajesIniciados());
+    	 //
+		  JTextField nombre = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NOMBRE_USUARIO);
+		  JTextField contrasenia = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PASSWORD);
+	      JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LOGIN);
+	      
+	      //completo los textfields
+	      robot.delay(2000);
+	      TestUtils.clickComponent(nombre, robot);
+	      TestUtils.tipeaTexto(this.userCliente, robot);
+	      TestUtils.clickComponent(contrasenia, robot);
+	      TestUtils.tipeaTexto(this.passCliente, robot);
+	      TestUtils.clickComponent(aceptarLog, robot);
 
+
+        JTextField cantPax= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.CANT_PAX);
+        JTextField cantKm= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.CANT_KM);
+        JRadioButton zonaPeligrosa= (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.ZONA_PELIGROSA);
+        JCheckBox mascota= (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.CHECK_MASCOTA);
+        JButton nuevoPedido=(JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NUEVO_PEDIDO);
+        //
+        robot.delay(2000);
+        //
+        TestUtils.clickComponent(cantPax, robot);
+        TestUtils.tipeaTexto("10", robot);
+        TestUtils.clickComponent(cantKm, robot);
+        TestUtils.tipeaTexto("33", robot);
+        TestUtils.clickComponent(zonaPeligrosa, robot);
+        TestUtils.clickComponent(mascota, robot);
+        TestUtils.clickComponent(nuevoPedido, robot);
+        robot.delay(2000);
+        //verifico los resultados
+        Assert.assertEquals("Mensaje incorrecto, deberia decir "+Mensajes.SIN_VEHICULO_PARA_PEDIDO.getValor(),Mensajes.SIN_VEHICULO_PARA_PEDIDO.getValor(),op.getMensaje());
+
+    }
     @SuppressWarnings("deprecation")
 	@Test
     public void testRegistroChoferRepetido() {
