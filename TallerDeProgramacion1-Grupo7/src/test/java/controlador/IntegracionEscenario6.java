@@ -1,4 +1,4 @@
-package test;
+package controlador;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -11,7 +11,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import controlador.Controlador;
 import modeloDatos.Cliente;
 import modeloDatos.Viaje;
 import modeloNegocio.Empresa;
