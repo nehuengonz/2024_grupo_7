@@ -36,10 +36,10 @@ public class TestAgregarClienteEscenario1 {
     @Test
     public void testAgregarClienteRepetido() {
         try {
-            Empresa.getInstance().agregarCliente("Sofia1", "123456789", "Sofia Palladino");
+            Empresa.getInstance().agregarCliente("facundo","123","Facundo");
             fail("Se esperaba una excepción UsuarioYaExisteException");
         } catch (UsuarioYaExisteException e) {
-            fail("El usuario Sofia1 ya existe");
+            fail("El usuario ya existe");
         }
     }
 
