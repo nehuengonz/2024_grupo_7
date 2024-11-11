@@ -1,4 +1,4 @@
-package test;
+package modelo_negocio;
 
 import excepciones.VehiculoRepetidoException;
 import modeloDatos.Auto;
@@ -23,7 +23,7 @@ public class TestAgregarVehiculoEscenario2 {
 
     @After
     public void tearDown(){
-        escenario2.teardown();
+        escenario2.tearDown();
     }
 
     @Test
@@ -40,7 +40,7 @@ public class TestAgregarVehiculoEscenario2 {
     @Test
     public void testAgregarVehiculoMotoDuplicado() {
         try {
-            Empresa.getInstance().agregarVehiculo(escenario2.getMoto1()); // Ya fue agregado en el escenario
+            Empresa.getInstance().agregarVehiculo(Empresa.getInstance().getVehiculos().get("pat333")); // Ya fue agregado en el escenario
             fail("Se esperaba una excepción VehiculoRepetidoException");
         } catch (VehiculoRepetidoException e) {
             fail("El vehiculo Moto con patente pat333 ya está registrado");
@@ -61,7 +61,7 @@ public class TestAgregarVehiculoEscenario2 {
     @Test
     public void testAgregarVehiculoAutoDuplicado() {
         try {
-            Empresa.getInstance().agregarVehiculo(escenario2.getAuto1()); // Ya fue agregado en el escenario
+            Empresa.getInstance().agregarVehiculo(Empresa.getInstance().getVehiculos().get("abc123")); // Ya fue agregado en el escenario
             fail("Se esperaba una excepción VehiculoRepetidoException");
         } catch (VehiculoRepetidoException e) {
             fail("El vehiculo con patente abc123 ya está registrado");
@@ -82,7 +82,7 @@ public class TestAgregarVehiculoEscenario2 {
     @Test
     public void testAgregarVehiculoCombiDuplicado() {
         try {
-            Empresa.getInstance().agregarVehiculo(escenario2.getCombi1()); // Ya fue agregado en el escenario
+            Empresa.getInstance().agregarVehiculo(Empresa.getInstance().getVehiculos().get("combi222")); // Ya fue agregado en el escenario
             fail("Se esperaba una excepción VehiculoRepetidoException");
         } catch (VehiculoRepetidoException e) {
             fail("El vehiculo con patente combi222 ya está registrado");

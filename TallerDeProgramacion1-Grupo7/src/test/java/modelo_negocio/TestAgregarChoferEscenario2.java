@@ -1,4 +1,4 @@
-package test;
+package modelo_negocio;
 
 import excepciones.ChoferRepetidoException;
 import modeloDatos.Chofer;
@@ -22,7 +22,7 @@ public class TestAgregarChoferEscenario2 {
 
     @After
     public void tearDown() {
-        escenario2.teardown();
+        escenario2.tearDown();
     }
 
 

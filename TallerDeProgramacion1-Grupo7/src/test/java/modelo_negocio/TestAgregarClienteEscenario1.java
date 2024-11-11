@@ -1,4 +1,4 @@
-package test;
+package modelo_negocio;
 
 import excepciones.UsuarioYaExisteException;
 import modeloNegocio.Empresa;

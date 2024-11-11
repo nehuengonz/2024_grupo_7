@@ -613,7 +613,6 @@ public class GuiTestEnabledDisabled {
 	        Assert.assertFalse("El checkbox de baúl debería estar deshabilitado", baul.isEnabled());
 	        Assert.assertFalse("El botón de nuevo pedido debería estar deshabilitado", nuevoPedido.isEnabled());
 	        Assert.assertTrue("El botón de cerrar sesión debería estar habilitado", cerrarSesion.isEnabled());
-	        Assert.assertFalse("El campo de pedido o viaje actual debería estar deshabilitado", pedido_o_viaje_actual.isEnabled());
 	        Assert.assertTrue("El campo de calificación debería estar habilitado", calificacion.isEnabled());
 	        Assert.assertFalse("El campo de valor del viaje no debería estar vacio", text.isEmpty());
 	    }

@@ -101,4 +101,20 @@ public class Escenario5 {
         Empresa.getInstance().getHistorialViajeChofer(chofer3).clear();
         Empresa.getInstance().getHistorialViajeChofer(chofer4).clear();
     }
+
+    public ChoferPermanente getChofer1() {
+        return chofer1;
+    }
+
+    public ChoferPermanente getChofer2() {
+        return chofer2;
+    }
+
+    public ChoferTemporario getChofer3() {
+        return chofer3;
+    }
+
+    public ChoferTemporario getChofer4() {
+        return chofer4;
+    }
 }

@@ -1,9 +1,6 @@
-package test;
+package controlador;
 
-import modeloNegocio.Empresa;
 import modelo_negocio.Escenario2;
-import org.junit.After;
-import org.junit.Before;
 import persistencia.EmpresaDTO;
 import persistencia.PersistenciaBIN;
 import persistencia.UtilPersistencia;

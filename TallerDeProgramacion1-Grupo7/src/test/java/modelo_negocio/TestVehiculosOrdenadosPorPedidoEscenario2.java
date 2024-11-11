@@ -1,4 +1,4 @@
-package test;
+package modelo_negocio;
 
 import modeloDatos.Cliente;
 import modeloDatos.Pedido;
@@ -23,7 +23,7 @@ public class TestVehiculosOrdenadosPorPedidoEscenario2 {
 
     @After
     public void tearDown(){
-        escenario2.teardown();
+        escenario2.tearDown();
     }
 
     @Test
