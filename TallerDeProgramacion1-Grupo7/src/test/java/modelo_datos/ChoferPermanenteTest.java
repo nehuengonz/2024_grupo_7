@@ -1,12 +1,12 @@
 package modelo_datos;
 
-import modeloDatos.ChoferPermanente;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import modeloDatos.ChoferPermanente;
 
 public class ChoferPermanenteTest {
 
@@ -101,13 +101,13 @@ public class ChoferPermanenteTest {
         assertEquals("El sueldo bruto sin antiguedad con hijos esta mal calculado",2420.0,choferPermanente.getSueldoBruto(),0.0001);
     }
 
-//    @Test
-//    public void getSueldoBrutoAntiguedadAbsurdaTest() {
-//        ChoferPermanente.setSueldoBasico(2000.0);
-//        ChoferPermanente choferPermanente = new ChoferPermanente("1234567","Facundo",3000,0);
-//
-//        assertEquals("El sueldo bruto sin antiguedad con hijos esta mal calculado",2420.0,choferPermanente.getSueldoBruto(),0.0001);
-//    }
+    @Test
+    public void getSueldoBrutoAntiguedadAbsurdaTest() {
+        ChoferPermanente.setSueldoBasico(2000.0);
+        ChoferPermanente choferPermanente = new ChoferPermanente("1234567","Facundo",3000,0);
+
+        assertEquals("El sueldo bruto sin antiguedad con hijos esta mal calculado",2420.0,choferPermanente.getSueldoBruto(),0.0001);
+    }
 
     //TEST DE SUELDOS NETO
     @Test

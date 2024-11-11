@@ -13,4 +13,6 @@ public class Escenario1 {
     public void teardown(){
         Empresa.getInstance().getClientes().clear();
     }
+
+
 }

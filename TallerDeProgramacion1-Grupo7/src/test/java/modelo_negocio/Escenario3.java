@@ -19,11 +19,14 @@ public class Escenario3 {
 
     public void setup() throws Exception {
         Empresa.getInstance();
+        Cliente cliente1 = new Cliente("facundo", "123", "Facundo");
+        Cliente cliente2 = new Cliente("thiago", "321", "Thiago");
+        Cliente cliente3 = new Cliente("nehuen", "4567", "Nehuen");
 
-        ChoferPermanente chofer1 = new ChoferPermanente("1234567", "Roberto", 2020, 0);
-        ChoferPermanente chofer2 = new ChoferPermanente("1234568", "Alberto", 2019, 3);
-        ChoferTemporario chofer3 = new ChoferTemporario("11111111", "Javier");
-        ChoferTemporario chofer4 = new ChoferTemporario("22222222", "Sergio");
+        chofer1 = new ChoferPermanente("1234567", "Roberto", 2020, 0);
+        chofer2 = new ChoferPermanente("1234568", "Alberto", 2019, 3);
+        chofer3 = new ChoferTemporario("11111111", "Javier");
+        chofer4 = new ChoferTemporario("22222222", "Sergio");
 
         Vehiculo auto1 = new Auto("abc123", 4, true);
         Vehiculo auto2 = new Auto("dfg456", 3, false);
@@ -77,7 +80,7 @@ public class Escenario3 {
         
         Empresa.getInstance().setViajesIniciados(viajesIniciados);
 
-
+        Empresa.getInstance().setViajesIniciados(viajesIniciados);
     }
 
     public void tearDown() {
@@ -95,5 +98,21 @@ public class Escenario3 {
         Empresa.getInstance().getHistorialViajeChofer(chofer3).clear();
         Empresa.getInstance().getHistorialViajeChofer(chofer4).clear();
         Empresa.getInstance().getViajesIniciados().clear();
+    }
+
+    public ChoferPermanente getChofer1() {
+        return chofer1;
+    }
+
+    public ChoferPermanente getChofer2() {
+        return chofer2;
+    }
+
+    public ChoferTemporario getChofer3() {
+        return chofer3;
+    }
+
+    public ChoferTemporario getChofer4() {
+        return chofer4;
     }
 }
