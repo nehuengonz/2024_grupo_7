@@ -23,7 +23,7 @@ public class TestVehiculosOrdenadosPorPedidoEscenario2 {
 
     @After
     public void tearDown(){
-        escenario2.teardown();
+        escenario2.tearDown();
     }
 
     @Test

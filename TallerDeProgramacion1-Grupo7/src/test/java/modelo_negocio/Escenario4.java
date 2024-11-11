@@ -103,4 +103,20 @@ public class Escenario4 {
         Empresa.getInstance().getViajesIniciados().clear();
         Empresa.getInstance().getViajesTerminados().clear();
     }
+
+    public ChoferPermanente getChofer1() {
+        return chofer1;
+    }
+
+    public ChoferPermanente getChofer2() {
+        return chofer2;
+    }
+
+    public ChoferTemporario getChofer3() {
+        return chofer3;
+    }
+
+    public ChoferTemporario getChofer4() {
+        return chofer4;
+    }
 }
