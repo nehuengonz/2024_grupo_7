@@ -10,6 +10,9 @@ import org.junit.Test;
 import util.Constantes;
 import util.Mensajes;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertNull;
 
@@ -395,6 +398,74 @@ public class EmpresaEscenario2Test {
         } catch (VehiculoRepetidoException e) {
             fail("El vehiculo con patente combi222 ya está registrado");
         }
+    }
+
+    @Test
+    public void testGetSalariosTotales() {
+        double total=0;
+        total= Empresa.getInstance().getChoferes().get("1234567").getSueldoNeto() +
+                Empresa.getInstance().getChoferes().get("1234568").getSueldoNeto() +
+                Empresa.getInstance().getChoferes().get("11111111").getSueldoNeto() +
+                Empresa.getInstance().getChoferes().get("22222222").getSueldoNeto();
+        assertEquals("el salario total deveria ser ",total, Empresa.getInstance().getTotalSalarios(),0.0001);
+    }
+
+    @Test
+    public void getSalariosTest() {
+        try{
+            Assert.assertEquals("",2003800.0,Empresa.getInstance().getTotalSalarios(),0.001);
+        }catch (Exception e){
+            fail("No deberia lanzar ninguna excepcion");
+        }
+    }
+
+    @Test
+    public void testVehiculosOrdenadosPorPedido() {
+        Cliente cliente = Empresa.getInstance().getClientes().get("facundo");
+        Pedido pedido = Empresa.getInstance().getPedidos().get(cliente);
+
+        ArrayList<Vehiculo> vehiculosOrdenados = Empresa.getInstance().vehiculosOrdenadosPorPedido(pedido);
+
+        assertNotNull("La lista de vehículos ordenados no debería ser nula.", vehiculosOrdenados);
+
+        assertEquals("Se esperaban 2 vehículos ordenados.", 2, vehiculosOrdenados.size());
+
+        assertEquals("El vehículo con mayor puntaje debe ser ABC123.", "abc123", vehiculosOrdenados.get(0).getPatente());
+        assertEquals("El segundo vehículo con mayor puntaje debe ser combi111.", "combi111", vehiculosOrdenados.get(1).getPatente());
+    }
+
+    @Test
+    public void testVehiculosOrdenadosPorPedidoSinVehiculoHabilitado() {
+        Cliente cliente = Empresa.getInstance().getClientes().get("facundo");
+        Pedido pedido = Empresa.getInstance().getPedidos().get(cliente);
+
+        ArrayList<Vehiculo> vehiculosOrdenados = Empresa.getInstance().vehiculosOrdenadosPorPedido(pedido);
+
+        assertNotNull("La lista de vehículos ordenados no debería ser nula.", vehiculosOrdenados);
+
+        assertEquals("Se esperaban 2 vehículos ordenados.", 2, vehiculosOrdenados.size());
+
+        assertEquals("El vehículo con mayor puntaje debe ser ABC123.", "abc123", vehiculosOrdenados.get(0).getPatente());
+        assertEquals("El segundo vehículo con mayor puntaje debe ser combi111.", "combi111", vehiculosOrdenados.get(1).getPatente());
+    }
+
+    @Test
+    public void validarPedidoExisteVehiculoTest() {
+        HashMap<Cliente, Pedido> pedidos = Empresa.getInstance().getPedidos();
+        Cliente cliente = Empresa.getInstance().getClientes().get("facundo");
+        Pedido pedidoValidar = pedidos.get(cliente);
+
+        Assert.assertTrue("Se supone que existe un vehiculo que lo puede satisfacer",Empresa.getInstance().validarPedido(pedidoValidar));
+
+        Cliente cliente1 = Empresa.getInstance().getClientes().get("nehuen");
+        Pedido pedidoValidar1 = pedidos.get(cliente1);
+
+        Assert.assertTrue("Se supone que existe un vehiculo que lo puede satisfacer",Empresa.getInstance().validarPedido(pedidoValidar1));
+
+        Cliente cliente2 = Empresa.getInstance().getClientes().get("thiago");
+        Pedido pedidoValidar2 = pedidos.get(cliente2);
+
+        Assert.assertTrue("Se supone que existe un vehiculo que lo puede satisfacer",Empresa.getInstance().validarPedido(pedidoValidar2));
     }
 
 }

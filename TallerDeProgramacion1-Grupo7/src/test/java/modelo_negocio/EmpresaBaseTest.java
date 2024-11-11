@@ -193,4 +193,18 @@ public class EmpresaBaseTest {
         }
 
     }
+    @Test
+    public void getSalariosTest() {
+        try{
+            Assert.assertEquals("",0.0, Empresa.getInstance().getTotalSalarios(),0.001);
+        }catch (Exception e){
+            fail("No deberia lanzar ninguna excepcion");
+        }
+    }
+
+    @Test
+    public void validarPedidoNoExisteVehiculoTest() {
+        Pedido p = new Pedido(new Cliente("a","111","a a"),1,false,false,10,Constantes.ZONA_SIN_ASFALTAR);
+        Assert.assertFalse("Se supone que los vehiculos disponibles esta vacio",Empresa.getInstance().validarPedido(p));
+    }
 }
