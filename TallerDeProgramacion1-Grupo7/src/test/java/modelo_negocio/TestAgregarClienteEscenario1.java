@@ -29,8 +29,8 @@ public class TestAgregarClienteEscenario1 {
         } catch (UsuarioYaExisteException e) {
             fail("Segun el escenario planteado el usuario ClienteNuevo existe en el sistema");
         }
-        assertNotNull(Empresa.getInstance().getClientes().get("ClienteNuevo"));
-        assertEquals("Cliente Nuevo", Empresa.getInstance().getClientes().get("ClienteNuevo").getNombreReal());
+        assertNotNull(Empresa.getInstance().getClientes().get("Ignacio"));
+        assertEquals("Ignacio", Empresa.getInstance().getClientes().get("Ignacio").getNombreUsuario());
     }
 
     @Test
