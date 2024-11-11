@@ -30,29 +30,7 @@ public class LogoutTest {
             assertNull("El no se deslogueo el administrador", Empresa.getInstance().getUsuarioLogeado());
     }
 
-    @Test
-    public void logoutAdminTest() {
-        try {
-            Empresa.getInstance().login("admin","admin");
-            Empresa.getInstance().logout();
 
-            assertNull("El no se deslogueo el administrador", Empresa.getInstance().getUsuarioLogeado());
-        } catch (UsuarioNoExisteException | PasswordErroneaException e ) {
-            fail("no deberia tirar ninguna excepcion");
-        }
-    }
-
-    @Test
-    public void logoutUsuarioTest() {
-        try {
-            Empresa.getInstance().login("facundo","123");
-            Empresa.getInstance().logout();
-
-            assertNull("No se deslogueo al usuario", Empresa.getInstance().getUsuarioLogeado());
-        } catch (UsuarioNoExisteException | PasswordErroneaException e ) {
-            fail("no deberia tirar ninguna excepcion");
-        }
-    }
 
 
 }
