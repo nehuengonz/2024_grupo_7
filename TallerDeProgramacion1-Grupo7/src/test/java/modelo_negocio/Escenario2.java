@@ -37,8 +37,8 @@ public class Escenario2 {
         Vehiculo auto2=new Auto("dfg456",3,false);
         Vehiculo moto1=new Moto("pat333");
         Vehiculo combi1=new Combi("combi222",10,false);
-        Vehiculo combi2=new Combi("combi111",10,true);
-        
+        //Vehiculo combi2=new Combi("combi111",10,true);
+
         Empresa.getInstance().agregarCliente("facundo","123","Facundo");
         Empresa.getInstance().agregarCliente("thiago","321","Thiago");
         Empresa.getInstance().agregarCliente("nehuen","4567","Nehuen");

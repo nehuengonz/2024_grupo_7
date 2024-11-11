@@ -77,6 +77,8 @@ public class Escenario3 {
                         auto1
                 )
         );
+        
+        Empresa.getInstance().setViajesIniciados(viajesIniciados);
 
         Empresa.getInstance().setViajesIniciados(viajesIniciados);
     }
