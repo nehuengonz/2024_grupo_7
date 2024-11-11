@@ -73,7 +73,7 @@ public class testGUIPaneles {
 
         robot.delay(1000);
         JPanel panel_cliente=(JPanel) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PANEL_CLIENTE);
-        
+        Assert.assertEquals("El panel debería ser el de Cliente", this.vistaAct, controlador.getVista());
         Assert.assertTrue("El panel debería ser el de Cliente", panel_cliente.isVisible());
     }
 
@@ -86,6 +86,7 @@ public class testGUIPaneles {
 
         robot.delay(1000);
         JPanel panel_Registro=(JPanel) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PANEL_REGISTRO);
+        Assert.assertEquals("El panel deberia ser el de Registro",this.vistaAct,controlador.getVista());
         Assert.assertTrue("El panel deberia ser el de Registro",panel_Registro.isVisible());
     }
 
@@ -105,6 +106,7 @@ public class testGUIPaneles {
 
         robot.delay(1000);
         JPanel panel_admin=(JPanel) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PANEL_ADMINISTRADOR);
+        Assert.assertEquals("El panel deberia ser el de Admin", this.vistaAct,controlador.getVista());
         Assert.assertTrue("El panel deberia ser el de Admin", panel_admin.isVisible());
     }
 
@@ -119,6 +121,7 @@ public class testGUIPaneles {
 
         robot.delay(1000);
         JPanel panel_login=(JPanel) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PANEL_LOGIN);
+        Assert.assertEquals("El panel deberia ser el de Login",this.vistaAct,controlador.getVista());
         Assert.assertTrue("El panel deberia ser el de Login",panel_login.isVisible());
     }
 
@@ -140,6 +143,7 @@ public class testGUIPaneles {
 
         robot.delay(1000);
         JPanel panel_login=(JPanel) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PANEL_LOGIN);
+        Assert.assertEquals("El panel deberia ser el de Login",this.vistaAct,controlador.getVista());
         Assert.assertTrue("El panel deberia ser el de Login",panel_login.isVisible());
 
     }
@@ -163,6 +167,7 @@ public class testGUIPaneles {
         robot.delay(1000);
 
         JPanel panel_login=(JPanel) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PANEL_LOGIN);
+        Assert.assertTrue("El panel deberia ser el de Login",this.vistaAct==controlador.getVista());
         Assert.assertTrue("El panel deberia ser el de Login",panel_login.isVisible());
     }
 
