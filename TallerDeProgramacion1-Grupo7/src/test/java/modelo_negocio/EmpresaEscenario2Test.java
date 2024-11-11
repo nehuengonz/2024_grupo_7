@@ -1,10 +1,7 @@
 package modelo_negocio;
 
 import excepciones.*;
-import modeloDatos.Chofer;
-import modeloDatos.Cliente;
-import modeloDatos.Pedido;
-import modeloDatos.Vehiculo;
+import modeloDatos.*;
 import modeloNegocio.Empresa;
 import org.junit.After;
 import org.junit.Assert;
@@ -98,6 +95,8 @@ public class EmpresaEscenario2Test {
             fail("no deberia tirar ninguna excepcion");
         }
     }
+
+
     @Test
     public void creoViajeValido() {
         Cliente c = Empresa.getInstance().getClientes().get("facundo");
@@ -268,6 +267,133 @@ public class EmpresaEscenario2Test {
             assertEquals("la patente de la excepcion no es correcta ", e.getVehiculo().getPatente(), v.getPatente());
         } catch (VehiculoNoValidoException e) {
             fail("no tiene que tirar vehiculo no valido");
+        }
+    }
+
+    @Test
+    public void testAgregarChoferPermanenteExitoso() {
+        Chofer nuevoChofer = new ChoferPermanente("41990235", "Martin",2020,2);
+        try {
+            Empresa.getInstance().agregarChofer(nuevoChofer);
+            assertEquals("El DNI del chofer agregado no es el esperado", "41990235", Empresa.getInstance().getChoferes().get("41990235").getDni());
+        } catch (ChoferRepetidoException e) {
+            fail("Se esperaba que el chofer se agregara exitosamente, pero ocurrió una excepción: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testAgregarChoferPermanenteDuplicado() {
+        try {
+            Empresa.getInstance().agregarChofer(escenario2.getChofer1()); // Ya fue agregado en el escenario
+            fail("Se esperaba una excepción ChoferRepetidoException");
+        } catch (ChoferRepetidoException e) {
+            fail("El chofer con DNI 1234567 ya está registrado");
+        }
+    }
+
+    @Test
+    public void testAgregarChoferTemporarioExitoso() {
+        Chofer nuevoChofer = new ChoferTemporario("7777777", "Constantino");
+        try {
+            Empresa.getInstance().agregarChofer(nuevoChofer);
+            assertEquals("El DNI del chofer agregado no es el esperado", "7777777", Empresa.getInstance().getChoferes().get("7777777").getDni());
+        } catch (ChoferRepetidoException e) {
+            fail("Se esperaba que el chofer se agregara exitosamente, pero ocurrió una excepción: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testAgregarChoferTemporarioDuplicado() {
+        try {
+            Empresa.getInstance().agregarChofer(escenario2.getChofer3()); // Ya fue agregado en el escenario
+            fail("Se esperaba una excepción ChoferRepetidoException");
+        } catch (ChoferRepetidoException e) {
+            fail("El chofer con DNI 11111111 ya está registrado");
+        }
+    }
+
+    @Test
+    public void testAgregarClienteExitoso() {
+        try {
+            Empresa.getInstance().agregarCliente("Ignacio","123456","Ignacio Florezz");
+            assertNotNull(Empresa.getInstance().getClientes().get("Ignacio"));
+            assertEquals("Ignacio", Empresa.getInstance().getClientes().get("Ignacio").getNombreUsuario());
+        } catch (UsuarioYaExisteException e) {
+            fail("Segun el escenario planteado el usuario ClienteNuevo existe en el sistema");
+        }
+
+    }
+
+    @Test
+    public void testAgregarClienteRepetido() {
+        try {
+            Empresa.getInstance().agregarCliente("facundo","123","Facundo");
+            fail("Se esperaba una excepción UsuarioYaExisteException");
+        } catch (UsuarioYaExisteException e) {
+            assertEquals("No esta bien el mensaje",e.getMessage(), Mensajes.USUARIO_REPETIDO.getValor());
+        }
+    }
+
+    @Test
+    public void testAgregarVehiculoMotoExitoso() {
+        Vehiculo nuevoVehiculo = new Moto("XYZ789");
+        try {
+            Empresa.getInstance().agregarVehiculo(nuevoVehiculo);
+            assertEquals("La patente del vehículo agregado no es la esperada", "XYZ789", Empresa.getInstance().getVehiculos().get("XYZ789").getPatente());
+        } catch (VehiculoRepetidoException e) {
+            fail("Se esperaba que el vehículo se agregara exitosamente, pero ocurrió una excepción: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testAgregarVehiculoMotoDuplicado() {
+        try {
+            Empresa.getInstance().agregarVehiculo(Empresa.getInstance().getVehiculos().get("pat333")); // Ya fue agregado en el escenario
+            fail("Se esperaba una excepción VehiculoRepetidoException");
+        } catch (VehiculoRepetidoException e) {
+            fail("El vehiculo Moto con patente pat333 ya está registrado");
+        }
+    }
+
+    @Test
+    public void testAgregarVehiculoAutoExitoso() {
+        Vehiculo nuevoVehiculo = new Auto("ASD789",4,true);
+        try {
+            Empresa.getInstance().agregarVehiculo(nuevoVehiculo);
+            assertEquals("La patente del vehículo agregado no es la esperada", "ASD789", Empresa.getInstance().getVehiculos().get("ASD789").getPatente());
+        } catch (VehiculoRepetidoException e) {
+            fail("Se esperaba que el vehículo se agregara exitosamente, pero ocurrió una excepción: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testAgregarVehiculoAutoDuplicado() {
+        try {
+            Empresa.getInstance().agregarVehiculo(Empresa.getInstance().getVehiculos().get("abc123")); // Ya fue agregado en el escenario
+            fail("Se esperaba una excepción VehiculoRepetidoException");
+        } catch (VehiculoRepetidoException e) {
+            fail("El vehiculo con patente abc123 ya está registrado");
+        }
+    }
+
+    @Test
+    public void testAgregarVehiculoCombiExitoso() {
+        Vehiculo nuevoVehiculo = new Combi("DDD789",6,false);
+        try {
+            Empresa.getInstance().agregarVehiculo(nuevoVehiculo);
+            assertEquals("La patente del vehículo agregado no es la esperada", "DDD789", Empresa.getInstance().getVehiculos().get("DDD789").getPatente());
+        } catch (VehiculoRepetidoException e) {
+            fail("Se esperaba que el vehículo se agregara exitosamente, pero ocurrió una excepción: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testAgregarVehiculoCombiDuplicado() {
+        try {
+            Empresa.getInstance().agregarVehiculo(Empresa.getInstance().getVehiculos().get("combi222")); // Ya fue agregado en el escenario
+            fail("Se esperaba una excepción VehiculoRepetidoException");
+        } catch (VehiculoRepetidoException e) {
+            fail("El vehiculo con patente combi222 ya está registrado");
         }
     }
 
