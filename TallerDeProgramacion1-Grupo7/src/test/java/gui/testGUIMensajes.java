@@ -277,7 +277,7 @@ public class testGUIMensajes {
 	      JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LOGIN);
 	      
 	      //completo los textfields
-	      robot.delay(2000);
+	      robot.delay(1000);
 	      TestUtils.clickComponent(nombre, robot);
 	      TestUtils.tipeaTexto(this.userCliente, robot);
 	      TestUtils.clickComponent(contrasenia, robot);
@@ -291,16 +291,18 @@ public class testGUIMensajes {
         JCheckBox mascota= (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.CHECK_MASCOTA);
         JButton nuevoPedido=(JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NUEVO_PEDIDO);
         //
-        robot.delay(2000);
+        robot.delay(1000);
         //
         TestUtils.clickComponent(cantPax, robot);
         TestUtils.tipeaTexto("10", robot);
         TestUtils.clickComponent(cantKm, robot);
         TestUtils.tipeaTexto("33", robot);
         TestUtils.clickComponent(zonaPeligrosa, robot);
-        TestUtils.clickComponent(mascota, robot);
+        //TestUtils.clickComponent(mascota, robot);
         TestUtils.clickComponent(nuevoPedido, robot);
-        robot.delay(2000);
+        robot.delay(1000);
+        TestUtils.clickComponent(nuevoPedido, robot);
+        robot.delay(1000);
         //verifico los resultados
         Assert.assertEquals("Mensaje incorrecto, deberia decir "+Mensajes.SIN_VEHICULO_PARA_PEDIDO.getValor(),Mensajes.SIN_VEHICULO_PARA_PEDIDO.getValor(),op.getMensaje());
 
