@@ -1,6 +1,5 @@
-package test;
+package controlador;
 
-import controlador.Controlador;
 import excepciones.ClienteConPedidoPendienteException;
 import excepciones.ClienteConViajePendienteException;
 import excepciones.ClienteNoExisteException;

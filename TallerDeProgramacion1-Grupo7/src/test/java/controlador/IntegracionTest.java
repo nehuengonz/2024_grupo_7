@@ -1,25 +1,20 @@
-package test;
+package controlador;
 
-import controlador.Controlador;
 import modeloDatos.*;
 import modeloNegocio.Empresa;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito.*;
 import persistencia.EmpresaDTO;
-import persistencia.IPersistencia;
 import persistencia.PersistenciaBIN;
 import util.Constantes;
 import util.Mensajes;
 import vista.*;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.EnumMap;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
