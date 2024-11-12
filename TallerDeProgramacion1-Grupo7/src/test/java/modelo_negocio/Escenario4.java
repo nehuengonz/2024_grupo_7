@@ -34,7 +34,7 @@ public class Escenario4 {
         Vehiculo auto2 = new Auto("dfg456", 3, false);
         Vehiculo moto1 = new Moto("pat333");
         Vehiculo combi1 = new Combi("combi222", 10, false);
-        //Vehiculo combi2 = new Combi("combi111", 10, true);
+
 
         Empresa.getInstance().agregarCliente("facundo", "123", "Facundo");
         Empresa.getInstance().agregarCliente("thiago", "321", "Thiago");
@@ -47,7 +47,7 @@ public class Escenario4 {
         Empresa.getInstance().agregarVehiculo(auto2);
         Empresa.getInstance().agregarVehiculo(moto1);
         Empresa.getInstance().agregarVehiculo(combi1);
-        //Empresa.getInstance().agregarVehiculo(combi2);
+
 
         ArrayList<Chofer> chofdesocupados = new ArrayList<>();
         chofdesocupados.add(chofer2);
@@ -84,13 +84,13 @@ public class Escenario4 {
                 )
         );
 
-        /*viajesTerminados.add(
+        viajesTerminados.add(
                 new Viaje(
                         new Pedido(Empresa.getInstance().getClientes().get("nehuen"), 8, false, true, 1, Constantes.ZONA_PELIGROSA),
                         chofer3,
                         combi1
                 )
-        ); */
+        );
 
         Empresa.getInstance().setViajesIniciados(viajesIniciados);
         Empresa.getInstance().setViajesTerminados(viajesTerminados);

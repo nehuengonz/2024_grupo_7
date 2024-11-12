@@ -1,16 +1,13 @@
 package modelo_negocio;
 
-import excepciones.ClienteSinViajePendienteException;
-import excepciones.SinViajesException;
-import modeloDatos.Chofer;
-import modeloDatos.Cliente;
-import modeloDatos.Pedido;
-import modeloDatos.Viaje;
+import excepciones.*;
+import modeloDatos.*;
 import modeloNegocio.Empresa;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import util.Constantes;
 import util.Mensajes;
 
 import static org.junit.Assert.assertEquals;
@@ -31,10 +28,93 @@ public class EmpresaEscenario3Test {
 
 
     @Test
+    public void creoViajeConViajePendiente() {
+        Cliente c = Empresa.getInstance().getClientes().get("facundo");
+
+        Pedido p = new Pedido(c, 1, false, false, 10, Constantes.ZONA_STANDARD);
+
+        Vehiculo v = Empresa.getInstance().getVehiculos().get("pat333");
+
+        Chofer chofer = Empresa.getInstance().getChoferes().get("1234568");
+
+        try {
+            Empresa.getInstance().agregarPedido(p);
+            Empresa.getInstance().crearViaje(p, chofer, v);
+            fail("no tiene que continuar la ejecucion");
+        } catch (ChoferNoDisponibleException e) {
+            fail("no tiene que tirar chofer no disponible");
+        } catch (ClienteConViajePendienteException e) {
+            assertEquals("El mensaje de la excepcion no es correcto ", e.getMessage(), Mensajes.CLIENTE_CON_VIAJE_PENDIENTE.getValor());
+        } catch (PedidoInexistenteException e) {
+            fail("no tiene que tirar pedido inexistente");
+        } catch (VehiculoNoDisponibleException e) {
+            fail("no tiene que tirar vehiculo no disponible");
+        } catch (VehiculoNoValidoException e) {
+            fail("no tiene que tirar vehiculo no valido");
+        }catch (Exception e){
+            fail("no tiene que tirar excepcion");
+        }
+    }
+
+    @Test
+    public void creoViajeConChoferNoDisponible(){
+        Cliente c = Empresa.getInstance().getClientes().get("thiago");
+
+        Pedido p = Empresa.getInstance().getPedidoDeCliente(c);
+
+        Vehiculo v = Empresa.getInstance().getVehiculos().get("pat333");
+
+        Chofer chofer = Empresa.getInstance().getChoferes().get("1234567");
+        //Chofer chofer1 = Empresa.getInstance().getChoferes().get("1234568");
+
+        try {
+            Empresa.getInstance().crearViaje(p, chofer, v);
+            fail("no tiene que continuar la ejecucion");
+        } catch (ChoferNoDisponibleException e) {
+            assertEquals("El mensaje de la excepcion no es correcto ", e.getMessage(), Mensajes.CHOFER_NO_DISPONIBLE.getValor());
+            assertEquals("El chofer de la excepcion no es correcto ", e.getChofer().getDni(), chofer.getDni());
+        } catch (ClienteConViajePendienteException e) {
+            fail("no tiene que tirar viaje pendiente");
+        } catch (PedidoInexistenteException e) {
+            fail("no tiene que tirar pedido inexistente");
+        } catch (VehiculoNoDisponibleException e) {
+            fail("no tiene que tirar vehiculo no disponible");
+        } catch (VehiculoNoValidoException e) {
+            fail("no tiene que tirar vehiculo no valido");
+        }
+    }
+
+    @Test
+    public void creoViajeConVehiculoNoDisponible(){
+        Cliente c = Empresa.getInstance().getClientes().get("thiago");
+        Pedido p = Empresa.getInstance().getPedidoDeCliente(c);
+
+        Vehiculo v = Empresa.getInstance().getVehiculos().get("abc123");
+
+        Chofer chofer = Empresa.getInstance().getChoferes().get("1234568");
+
+        try {
+            Empresa.getInstance().crearViaje(p, chofer, v);
+
+            fail("no tiene que continuar la ejecucion");
+        } catch (ChoferNoDisponibleException e) {
+            fail("no tiene que tirar chofer no disponible");
+        } catch (ClienteConViajePendienteException e) {
+            fail("no tiene que tirar viaje pendiente");
+        } catch (PedidoInexistenteException e) {
+            fail("no tiene que tirar pedido inexistente");
+        } catch (VehiculoNoDisponibleException e) {
+            assertEquals("El mensaje de la excepcion no es correcto ", e.getMessage(), Mensajes.VEHICULO_NO_DISPONIBLE.getValor());
+            assertEquals("la patente de la excepcion no es correcta ", e.getVehiculo().getPatente(), v.getPatente());
+        } catch (VehiculoNoValidoException e) {
+            fail("no tiene que tirar vehiculo no valido");
+        }
+    }
+    @Test
     public void pagarYFinalizarViajeTest() {
         try {
-
-            Cliente clienteLogueado = Empresa.getInstance().getClientes().get(Empresa.getInstance().getUsuarioLogeado().getNombreUsuario());
+            Empresa.getInstance().login("facundo","123");
+            Cliente clienteLogueado = Empresa.getInstance().getClientes().get("facundo");
             Viaje v = Empresa.getInstance().getViajeDeCliente(clienteLogueado);
             Empresa.getInstance().pagarYFinalizarViaje(5);
 
@@ -42,12 +122,15 @@ public class EmpresaEscenario3Test {
             Assert.assertEquals("No se guardo bien la calificacion del viaje",v.getCalificacion(),5);
         } catch (ClienteSinViajePendienteException e) {
             fail("El cliente tiene un viaje pendiente de terminar");
+        } catch (Exception e){
+            fail("No deberia arrojar la excepcion " + e.getMessage());
         }
     }
 
     @Test
     public void pagarYFinalizarViajeClienteSinViajeTest() {
         try {
+            Empresa.getInstance().login("facundo","123");
             Empresa.getInstance().pagarYFinalizarViaje(5);
             Empresa.getInstance().pagarYFinalizarViaje(5);
 
@@ -55,6 +138,8 @@ public class EmpresaEscenario3Test {
 
         } catch (ClienteSinViajePendienteException e) {
             Assert.assertEquals("El mensaje esta mal",e.getMessage(), Mensajes.CLIENTE_SIN_VIAJE_PENDIENTE.getValor());
+        } catch (Exception e){
+            fail("No deberia arrojar la excepcion " + e.getMessage());
         }
     }
 
@@ -110,12 +195,13 @@ public class EmpresaEscenario3Test {
     @Test
     public void calificacionDeChoferConUnViajeTest() {
         try {
+            Empresa.getInstance().login("facundo","123");
             Empresa.getInstance().pagarYFinalizarViaje(5);
             // Obtengo a chofer con su dni, (podría ser con el chofer del escenario directamente)
             Chofer chofer = Empresa.getInstance().getChoferes().get("1234567");
             double calificacion = Empresa.getInstance().calificacionDeChofer(chofer);
             // Me obliga a poner un delta
-            assertEquals("No calcula bien el promedio", 5.0, calificacion, 0);
+            assertEquals("No calcula bien el promedio", 5.0, calificacion, 0.01);
         } catch (SinViajesException ex) {
             fail("No debería haber fallado, el cliente tiene viaje");
         } catch (Exception ex) {
@@ -123,10 +209,6 @@ public class EmpresaEscenario3Test {
         }
     }
 
-    @Test
-    public void calificacionDeChoferConVariosViajesTest() {
-
-    }
 
     @Test
     public void calificacionDeChoferSinViajes() {

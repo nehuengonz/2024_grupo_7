@@ -180,100 +180,6 @@ public class EmpresaEscenario2Test {
     }
 
     @Test
-    public void creoViajeConViajePendiente() throws ClienteNoExisteException, SinVehiculoParaPedidoException, ClienteConPedidoPendienteException {
-        Cliente c = Empresa.getInstance().getClientes().get("thiago");
-        Pedido p = Empresa.getInstance().getPedidoDeCliente(c);
-        Pedido p2 = new Pedido(c, 4, true, true, 10, Constantes.ZONA_STANDARD);
-
-
-        Vehiculo v = Empresa.getInstance().getVehiculos().get("pat333");
-        Vehiculo v1 = Empresa.getInstance().getVehiculos().get("abc123");
-
-        Chofer chofer = Empresa.getInstance().getChoferes().get("1234567");
-        Chofer chofer1 = Empresa.getInstance().getChoferes().get("1234568");
-
-        try {
-            Empresa.getInstance().crearViaje(p, chofer, v);
-            Empresa.getInstance().agregarPedido(p2);
-            Empresa.getInstance().crearViaje(p2, chofer1, v1);
-            fail("no tiene que continuar la ejecucion");
-        } catch (ChoferNoDisponibleException e) {
-            fail("no tiene que tirar chofer no disponible");
-        } catch (ClienteConViajePendienteException e) {
-            assertEquals("El mensaje de la excepcion no es correcto ", e.getMessage(), Mensajes.CLIENTE_CON_VIAJE_PENDIENTE.getValor());
-        } catch (PedidoInexistenteException e) {
-            fail("no tiene que tirar pedido inexistente");
-        } catch (VehiculoNoDisponibleException e) {
-            fail("no tiene que tirar vehiculo no disponible");
-        } catch (VehiculoNoValidoException e) {
-            fail("no tiene que tirar vehiculo no valido");
-        }
-    }
-
-    @Test
-    public void creoViajeConChoferNoDisponible(){
-        Cliente c = Empresa.getInstance().getClientes().get("thiago");
-        Pedido p = Empresa.getInstance().getPedidoDeCliente(c);
-
-        Cliente c1 = Empresa.getInstance().getClientes().get("facundo");
-        Pedido p1 = Empresa.getInstance().getPedidoDeCliente(c1);
-
-        Vehiculo v = Empresa.getInstance().getVehiculos().get("pat333");
-        Vehiculo v1 = Empresa.getInstance().getVehiculos().get("abc123");
-
-        Chofer chofer = Empresa.getInstance().getChoferes().get("1234567");
-        //Chofer chofer1 = Empresa.getInstance().getChoferes().get("1234568");
-
-        try {
-            Empresa.getInstance().crearViaje(p, chofer, v);
-            Empresa.getInstance().crearViaje(p1, chofer, v1);
-            fail("no tiene que continuar la ejecucion");
-        } catch (ChoferNoDisponibleException e) {
-            assertEquals("El mensaje de la excepcion no es correcto ", e.getMessage(), Mensajes.CHOFER_NO_DISPONIBLE.getValor());
-            assertEquals("El chofer de la excepcion no es correcto ", e.getChofer().getDni(), chofer.getDni());
-        } catch (ClienteConViajePendienteException e) {
-            fail("no tiene que tirar viaje pendiente");
-        } catch (PedidoInexistenteException e) {
-            fail("no tiene que tirar pedido inexistente");
-        } catch (VehiculoNoDisponibleException e) {
-            fail("no tiene que tirar vehiculo no disponible");
-        } catch (VehiculoNoValidoException e) {
-            fail("no tiene que tirar vehiculo no valido");
-        }
-    }
-
-    @Test
-    public void creoViajeConVehiculoNoDisponible(){
-        Cliente c = Empresa.getInstance().getClientes().get("thiago");
-        Pedido p = Empresa.getInstance().getPedidoDeCliente(c);
-
-        Cliente c1 = Empresa.getInstance().getClientes().get("facundo");
-        Pedido p1 = Empresa.getInstance().getPedidoDeCliente(c1);
-
-        Vehiculo v = Empresa.getInstance().getVehiculos().get("abc123");
-
-        Chofer chofer = Empresa.getInstance().getChoferes().get("1234567");
-        Chofer chofer1 = Empresa.getInstance().getChoferes().get("1234568");
-
-        try {
-            Empresa.getInstance().crearViaje(p, chofer, v);
-            Empresa.getInstance().crearViaje(p1, chofer1, v);
-            fail("no tiene que continuar la ejecucion");
-        } catch (ChoferNoDisponibleException e) {
-            fail("no tiene que tirar chofer no disponible");
-        } catch (ClienteConViajePendienteException e) {
-            fail("no tiene que tirar viaje pendiente");
-        } catch (PedidoInexistenteException e) {
-            fail("no tiene que tirar pedido inexistente");
-        } catch (VehiculoNoDisponibleException e) {
-            assertEquals("El mensaje de la excepcion no es correcto ", e.getMessage(), Mensajes.VEHICULO_NO_DISPONIBLE.getValor());
-            assertEquals("la patente de la excepcion no es correcta ", e.getVehiculo().getPatente(), v.getPatente());
-        } catch (VehiculoNoValidoException e) {
-            fail("no tiene que tirar vehiculo no valido");
-        }
-    }
-
-    @Test
     public void testAgregarChoferPermanenteExitoso() {
         Chofer nuevoChofer = new ChoferPermanente("41990235", "Martin",2020,2);
         try {
@@ -290,7 +196,9 @@ public class EmpresaEscenario2Test {
             Empresa.getInstance().agregarChofer(escenario2.getChofer1()); // Ya fue agregado en el escenario
             fail("Se esperaba una excepción ChoferRepetidoException");
         } catch (ChoferRepetidoException e) {
-            fail("El chofer con DNI 1234567 ya está registrado");
+            Assert.assertEquals("El mensaje de la excepcion no es el esperado",e.getMessage(),Mensajes.CHOFER_YA_REGISTRADO.getValor());
+            Assert.assertEquals("Excepcion mal construida",e.getChoferExistente().getDni(),escenario2.getChofer1().getDni());
+            Assert.assertEquals("Excepcion mal construida",e.getDniPrentendido(),escenario2.getChofer1().getDni());
         }
     }
 
@@ -311,7 +219,9 @@ public class EmpresaEscenario2Test {
             Empresa.getInstance().agregarChofer(escenario2.getChofer3()); // Ya fue agregado en el escenario
             fail("Se esperaba una excepción ChoferRepetidoException");
         } catch (ChoferRepetidoException e) {
-            fail("El chofer con DNI 11111111 ya está registrado");
+            Assert.assertEquals("El mensaje de la excepcion no es el esperado",e.getMessage(),Mensajes.CHOFER_YA_REGISTRADO.getValor());
+            Assert.assertEquals("Excepcion mal construida",e.getChoferExistente().getDni(),escenario2.getChofer3().getDni());
+            Assert.assertEquals("Excepcion mal construida",e.getDniPrentendido(),escenario2.getChofer3().getDni());
         }
     }
 
@@ -354,7 +264,10 @@ public class EmpresaEscenario2Test {
             Empresa.getInstance().agregarVehiculo(Empresa.getInstance().getVehiculos().get("pat333")); // Ya fue agregado en el escenario
             fail("Se esperaba una excepción VehiculoRepetidoException");
         } catch (VehiculoRepetidoException e) {
-            fail("El vehiculo Moto con patente pat333 ya está registrado");
+            Assert.assertEquals("El mensaje de la excepcion esta mal",e.getMessage(),Mensajes.VEHICULO_YA_REGISTRADO.getValor());
+            Assert.assertNotNull("La excepcion esta mal construida",e.getVehiculoExistente());
+            Assert.assertEquals("La excepcion esta mal construida",e.getVehiculoExistente().getPatente(),"pat333");
+            Assert.assertEquals("La excepcion esta mal construida",e.getPatentePrentendida(),"pat333");
         }
     }
 
@@ -375,7 +288,10 @@ public class EmpresaEscenario2Test {
             Empresa.getInstance().agregarVehiculo(Empresa.getInstance().getVehiculos().get("abc123")); // Ya fue agregado en el escenario
             fail("Se esperaba una excepción VehiculoRepetidoException");
         } catch (VehiculoRepetidoException e) {
-            fail("El vehiculo con patente abc123 ya está registrado");
+            Assert.assertEquals("El mensaje de la excepcion esta mal",e.getMessage(),Mensajes.VEHICULO_YA_REGISTRADO.getValor());
+            Assert.assertNotNull("La excepcion esta mal construida",e.getVehiculoExistente());
+            Assert.assertEquals("La excepcion esta mal construida",e.getVehiculoExistente().getPatente(),"abc123");
+            Assert.assertEquals("La excepcion esta mal construida",e.getPatentePrentendida(),"abc123");
         }
     }
 
@@ -396,7 +312,10 @@ public class EmpresaEscenario2Test {
             Empresa.getInstance().agregarVehiculo(Empresa.getInstance().getVehiculos().get("combi222")); // Ya fue agregado en el escenario
             fail("Se esperaba una excepción VehiculoRepetidoException");
         } catch (VehiculoRepetidoException e) {
-            fail("El vehiculo con patente combi222 ya está registrado");
+            Assert.assertEquals("El mensaje de la excepcion esta mal",e.getMessage(),Mensajes.VEHICULO_YA_REGISTRADO.getValor());
+            Assert.assertNotNull("La excepcion esta mal construida",e.getVehiculoExistente());
+            Assert.assertEquals("La excepcion esta mal construida",e.getVehiculoExistente().getPatente(),"combi222");
+            Assert.assertEquals("La excepcion esta mal construida",e.getPatentePrentendida(),"combi222");
         }
     }
 
