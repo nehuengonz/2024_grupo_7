@@ -13,18 +13,18 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class TestVehiculosOrdenadosPorPedidoEscenario6 {
-    private Escenario6 escenario6 = new Escenario6();
-
+public class EmpresaEscenario6Test {
+    private final Escenario6 escenario6 = new Escenario6();;
     @Before
     public void setUp() throws Exception {
         escenario6.setup();
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() throws Exception {
         escenario6.teardown();
     }
+
 
     @Test
     public void testVehiculosOrdenadosPorPedidoSinVehiculoHabilitado() {

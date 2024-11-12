@@ -1,17 +1,25 @@
 package modelo_negocio;
 
+import excepciones.ClienteConPedidoPendienteException;
+import excepciones.ClienteConViajePendienteException;
+import excepciones.ClienteNoExisteException;
+import excepciones.SinVehiculoParaPedidoException;
 import modeloDatos.Chofer;
 import modeloDatos.Cliente;
+import modeloDatos.Pedido;
 import modeloDatos.Viaje;
 import modeloNegocio.Empresa;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import util.Constantes;
+import util.Mensajes;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class EmpresaEscenario4Test {
     private Escenario4 escenario4;
@@ -76,6 +84,53 @@ public class EmpresaEscenario4Test {
             Assert.assertTrue("El cliente no deberia tener un viaje en el historial", viajes.isEmpty());
         }catch (Exception e){
             fail("Hubo un error inesperado el metodo no funciona como deberia");
+        }
+    }
+
+    @Test
+    public void testAgregarPedidoValido() {
+        Cliente cliente = Empresa.getInstance().getClientes().get("thiago");
+        Pedido p = new Pedido(cliente, 1, true, true, 2, Constantes.ZONA_PELIGROSA);
+        try {
+            Empresa.getInstance().agregarPedido(p);
+            assertNotNull("El pedido no es agregado correctamente", Empresa.getInstance().getPedidos().get(cliente));
+        } catch (SinVehiculoParaPedidoException | ClienteNoExisteException | ClienteConViajePendienteException
+                 | ClienteConPedidoPendienteException ex) {
+            fail("No debería tirar excepción del tipo " + ex.getMessage());
+        }
+    }
+
+    @Test
+    public void testAgregarPedidoEmpresaNoCumple() {
+        Cliente cliente = Empresa.getInstance().getClientes().get("thiago");
+        Pedido p = new Pedido(cliente, 8, true, true, 10, Constantes.ZONA_PELIGROSA);
+        try {
+            Empresa.getInstance().agregarPedido(p);
+            fail("Debería tirar excepcion SinVehiculoParaPedidoException");
+        } catch (SinVehiculoParaPedidoException ex) {
+            // Debe ir por aquí
+            assertEquals("La excepcion no tira el mensaje correcto", "Ningun vehiculo puede satisfacer el pedido"
+                    , Mensajes.SIN_VEHICULO_PARA_PEDIDO.getValor());
+        } catch (ClienteNoExisteException | ClienteConViajePendienteException
+                 | ClienteConPedidoPendienteException ex) {
+            fail("No debería tirar excepcion " + ex.getMessage());
+        }
+    }
+
+    @Test
+    public void testAgregarPedidoClienteConViajeIniciado() {
+        Cliente cliente = Empresa.getInstance().getClientes().get("facundo");
+        Pedido p = new Pedido(cliente, 1, true, true, 2, Constantes.ZONA_PELIGROSA);
+        try {
+            Empresa.getInstance().agregarPedido(p);
+            fail("Deberia tirar excepcion ClienteConViajePendienteException");
+        } catch (ClienteConViajePendienteException ex) {
+            // Debe ir por aquí
+            assertEquals("La excepcion no tira el mensaje correcto", "Cliente con viaje pendiente"
+                    , Mensajes.CLIENTE_CON_VIAJE_PENDIENTE.getValor());
+        } catch (ClienteNoExisteException | SinVehiculoParaPedidoException
+                 | ClienteConPedidoPendienteException ex) {
+            fail("No debería tirar excepcion " + ex.getMessage());
         }
     }
 }

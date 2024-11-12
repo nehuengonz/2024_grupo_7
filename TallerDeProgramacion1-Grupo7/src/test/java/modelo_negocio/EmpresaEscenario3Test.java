@@ -1,6 +1,8 @@
 package modelo_negocio;
 
 import excepciones.ClienteSinViajePendienteException;
+import excepciones.SinViajesException;
+import modeloDatos.Chofer;
 import modeloDatos.Cliente;
 import modeloDatos.Pedido;
 import modeloDatos.Viaje;
@@ -11,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import util.Mensajes;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 public class EmpresaEscenario3Test {
@@ -103,6 +106,40 @@ public class EmpresaEscenario3Test {
         }
     }
 
+
+    @Test
+    public void calificacionDeChoferConUnViajeTest() {
+        try {
+            Empresa.getInstance().pagarYFinalizarViaje(5);
+            // Obtengo a chofer con su dni, (podría ser con el chofer del escenario directamente)
+            Chofer chofer = Empresa.getInstance().getChoferes().get("1234567");
+            double calificacion = Empresa.getInstance().calificacionDeChofer(chofer);
+            // Me obliga a poner un delta
+            assertEquals("No calcula bien el promedio", 5.0, calificacion, 0);
+        } catch (SinViajesException ex) {
+            fail("No debería haber fallado, el cliente tiene viaje");
+        } catch (Exception ex) {
+            fail("No debería tirar al excepción " + ex.getMessage());
+        }
+    }
+
+    @Test
+    public void calificacionDeChoferConVariosViajesTest() {
+
+    }
+
+    @Test
+    public void calificacionDeChoferSinViajes() {
+        try {
+            Chofer chofer = Empresa.getInstance().getChoferes().get("1234568");
+            double calificacion = Empresa.getInstance().calificacionDeChofer(chofer);
+            fail("Se esperaba excepcion SinViajeException");
+        } catch (SinViajesException ex) {
+            assertEquals(Mensajes.CHOFER_SIN_VIAJES.getValor(), ex.getMessage());
+        } catch (Exception ex) {
+            fail("Se lanzo una excepción que no es la esperada: " + ex.getMessage());
+        }
+    }
 
 
 }

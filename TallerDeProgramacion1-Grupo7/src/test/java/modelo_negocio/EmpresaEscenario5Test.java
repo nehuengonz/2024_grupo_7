@@ -12,8 +12,8 @@ import java.util.HashMap;
 
 import static org.junit.Assert.assertTrue;
 
-public class ValidarPedidoEscenario5Test {
-    Escenario5 escenario5 = new Escenario5();
+public class EmpresaEscenario5Test {
+    private final Escenario5 escenario5 = new Escenario5();
     @Before
     public void setUp() throws Exception {
         escenario5.setup();
@@ -36,11 +36,11 @@ public class ValidarPedidoEscenario5Test {
     @Test
     public void validarPedidosNoValidosTest() {
 
-            HashMap<Cliente, Pedido> pedidos = Empresa.getInstance().getPedidos();
-            Cliente cliente = Empresa.getInstance().getClientes().get("facundo");
-            Pedido pedidoValidar = pedidos.get(cliente);
+        HashMap<Cliente, Pedido> pedidos = Empresa.getInstance().getPedidos();
+        Cliente cliente = Empresa.getInstance().getClientes().get("facundo");
+        Pedido pedidoValidar = pedidos.get(cliente);
 
-            Assert.assertFalse("No hay vehiculos cargados que satisfagan este pedido",Empresa.getInstance().validarPedido(pedidoValidar));
+        Assert.assertFalse("No hay vehiculos cargados que satisfagan este pedido",Empresa.getInstance().validarPedido(pedidoValidar));
 
     }
 
@@ -67,5 +67,4 @@ public class ValidarPedidoEscenario5Test {
         Pedido pedido = new Pedido(cliente, 10,false,false,20,"ZONA_STANDARD");
         Assert.assertFalse("No debería encontrar un vehículo adecuado.", Empresa.getInstance().validarPedido(pedido));
     }
-
 }

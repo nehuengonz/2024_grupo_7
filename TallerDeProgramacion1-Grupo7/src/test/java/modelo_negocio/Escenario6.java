@@ -3,7 +3,6 @@ package modelo_negocio;
 
 import modeloDatos.*;
 import modeloNegocio.Empresa;
-
 import util.Constantes;
 
 import java.util.ArrayList;
@@ -28,9 +27,9 @@ public class Escenario6 {
         Empresa.getInstance().agregarCliente("thiago","321","Thiago");
         Empresa.getInstance().agregarCliente("nehuen","4567","Nehuen");
 
+        Cliente cliente1 = Empresa.getInstance().getClientes().get("facundo");
 
-        //Cliente cliente1 = Empresa.getInstance().getClientes().get("facundo");
-      
+
         Empresa.getInstance().agregarChofer(chofer1);
         Empresa.getInstance().agregarChofer(chofer2);
         Empresa.getInstance().agregarChofer(chofer3);
@@ -40,7 +39,7 @@ public class Escenario6 {
         Empresa.getInstance().agregarVehiculo(moto1);
         Empresa.getInstance().agregarVehiculo(combi1);
 
-        /*Pedido pedido1=new Pedido(Empresa.getInstance().getClientes().get("facundo"), 3,true,true,10,Constantes.ZONA_PELIGROSA);
+        Pedido pedido1=new Pedido(Empresa.getInstance().getClientes().get("facundo"), 3,true,true,10,Constantes.ZONA_PELIGROSA);
         Pedido pedido2=new Pedido(Empresa.getInstance().getClientes().get("thiago"),1,false,false,3,Constantes.ZONA_STANDARD);
         Pedido pedido3=new Pedido(Empresa.getInstance().getClientes().get("nehuen"),8,false,true,1,Constantes.ZONA_PELIGROSA);
 
@@ -50,7 +49,6 @@ public class Escenario6 {
         Empresa.getInstance().setPedidos(pedidos);
         Empresa.getInstance().agregarPedido(pedido2);
         Empresa.getInstance().agregarPedido(pedido3);
-       */
 
         ArrayList<Chofer> chofdesocupados= new ArrayList<>();
         chofdesocupados.add(chofer1);
@@ -78,4 +76,5 @@ public class Escenario6 {
         Empresa.getInstance().getClientes().clear();
         Empresa.getInstance().getPedidos().clear();
     }
+
 }
