@@ -22,7 +22,7 @@ import vista.IOptionPane;
 import vista.IVista;
 import vista.Ventana;
 
-public class IntegracionEscenario6 {
+public class IntegracionEscenario6Test {
 	
 	private ArchivoEscenario6 archivoEscenario6;
 	private PersistenciaBIN persistencia;
