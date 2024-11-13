@@ -1127,7 +1127,40 @@ public class GuiTestEnabledDisabled {
 		Assert.assertFalse("El boton de aceptar chofer debería estar deshabilitado", aceptarVehiculo.isEnabled());
 
 	}
+	@Test
+	public void testAdminAgregaVehiculoAutoPlazaInvalida_0(){
+		robot.delay(TestUtils.getDelay());
 
+		JTextField contrasenia= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
+		JTextField usuario= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NOMBRE_USUARIO);
+		JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.LOGIN);
+
+		TestUtils.clickComponent(usuario, robot);
+		TestUtils.tipeaTexto("admin", robot);
+		TestUtils.clickComponent(contrasenia, robot);
+		TestUtils.tipeaTexto("admin", robot);
+
+		TestUtils.clickComponent(aceptarLog, robot);
+
+		JTextField patente = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PATENTE);
+		JRadioButton auto = (JRadioButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.AUTO);
+		JCheckBox mascota = (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CHECK_VEHICULO_ACEPTA_MASCOTA);
+		JTextField cantPlazas = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CANTIDAD_PLAZAS);
+		JButton aceptarVehiculo = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NUEVO_VEHICULO);
+		JButton cerrarSesion = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.CERRAR_SESION_ADMIN);
+
+		robot.delay(2000);
+
+		TestUtils.clickComponent(auto, robot);
+		TestUtils.clickComponent(mascota, robot);
+		TestUtils.clickComponent(patente,robot);
+		TestUtils.tipeaTexto("a",robot);
+		TestUtils.clickComponent(cantPlazas,robot);
+		TestUtils.tipeaTexto("0",robot);
+		robot.delay(2000);
+		Assert.assertTrue("El boton de cerrar sesion deberia estar habilitado", cerrarSesion.isEnabled());
+		Assert.assertFalse("El boton de aceptar chofer debería estar deshabilitado", aceptarVehiculo.isEnabled());
+	}
 	@Test
 	public void testAdminAgregaVehiculoCombiValido(){
 		robot.delay(TestUtils.getDelay());
