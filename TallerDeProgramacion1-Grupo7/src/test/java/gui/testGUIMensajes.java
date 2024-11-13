@@ -342,7 +342,7 @@ public class testGUIMensajes {
 
         //verifico los resultados
         Assert.assertEquals("Mensaje incorrecto, deberia decir "+Mensajes.CHOFER_YA_REGISTRADO.getValor(),Mensajes.CHOFER_YA_REGISTRADO.getValor(),op.getMensaje());
-
+        
     }
 
     @SuppressWarnings("deprecation")
@@ -379,7 +379,8 @@ public class testGUIMensajes {
         TestUtils.clickComponent(aceptarVehiculo,robot);
         //vehiculo repetido
         TestUtils.clickComponent(aceptarVehiculo,robot);
+        robot.delay(TestUtils.getDelay());
         Assert.assertEquals("Mensaje incorrecto, deberia decir "+Mensajes.VEHICULO_YA_REGISTRADO.getValor(),Mensajes.VEHICULO_YA_REGISTRADO.getValor(),op.getMensaje());
-
+        
     }
 }

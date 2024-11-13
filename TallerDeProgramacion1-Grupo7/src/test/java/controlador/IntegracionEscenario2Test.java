@@ -66,7 +66,7 @@ public class IntegracionEscenario2Test {
         when(vista.getRegConfirmPassword()).thenReturn("123");
 
         controlador.actionPerformed(new ActionEvent(this,1, Constantes.REG_BUTTON_REGISTRAR)); //apreta boton de registrar
-        Assert.assertEquals("El mensaje de error no es el correcto", ventanaErrores.getMensajeError(), Mensajes.USUARIO_REPETIDO.getValor());
+        Assert.assertEquals("El mensaje de error no es el correcto", Mensajes.USUARIO_REPETIDO.getValor(), ventanaErrores.getMensajeError());
     }
 
     @Test
@@ -96,7 +96,7 @@ public class IntegracionEscenario2Test {
 
         controlador.actionPerformed(new ActionEvent(this,2,Constantes.NUEVO_VEHICULO)); //agregar chofer
 
-        Assert.assertEquals("El mensaje de error no es el correcto", ventanaErrores.getMensajeError(), Mensajes.VEHICULO_YA_REGISTRADO.getValor());
+        Assert.assertEquals("El mensaje de error no es el correcto", Mensajes.VEHICULO_YA_REGISTRADO.getValor(), ventanaErrores.getMensajeError());
     }
 
     @Test
@@ -116,7 +116,7 @@ public class IntegracionEscenario2Test {
 
         controlador.actionPerformed(new ActionEvent(this,2,Constantes.NUEVO_CHOFER)); //agregar chofer
 
-        Assert.assertEquals("El mensaje de error no es el correcto", ventanaErrores.getMensajeError(), Mensajes.CHOFER_YA_REGISTRADO.getValor());
+        Assert.assertEquals("El mensaje de error no es el correcto", Mensajes.CHOFER_YA_REGISTRADO.getValor(), ventanaErrores.getMensajeError());
     }
 
 
@@ -207,7 +207,7 @@ public class IntegracionEscenario2Test {
 
         controlador.actionPerformed(new ActionEvent(this,1,Constantes.NUEVO_VIAJE));
 
-        Assert.assertEquals("El mensaje de excepcion no es correcto", ventanaErrores.getMensajeError(), Mensajes.PEDIDO_INEXISTENTE.getValor());
+        Assert.assertEquals("El mensaje de excepcion no es correcto", Mensajes.PEDIDO_INEXISTENTE.getValor(), ventanaErrores.getMensajeError());
 
         controlador.actionPerformed(new ActionEvent(this,3,Constantes.CERRAR_SESION_ADMIN)); //logout
 
@@ -247,7 +247,7 @@ public class IntegracionEscenario2Test {
 
         controlador.actionPerformed(new ActionEvent(this,3,Constantes.NUEVO_VIAJE));
 
-        Assert.assertEquals("El mensaje de excepcion CLIENTE_CON_VIAJE_PENDIENTE no es correcto", ventanaErrores.getMensajeError(), Mensajes.CLIENTE_CON_VIAJE_PENDIENTE.getValor());
+        Assert.assertEquals("El mensaje de excepcion CLIENTE_CON_VIAJE_PENDIENTE no es correcto", Mensajes.CLIENTE_CON_VIAJE_PENDIENTE.getValor(), ventanaErrores.getMensajeError());
 
         controlador.actionPerformed(new ActionEvent(this,4,Constantes.CERRAR_SESION_ADMIN)); //logout
 
@@ -269,11 +269,9 @@ public class IntegracionEscenario2Test {
 
         controlador.actionPerformed(new ActionEvent(this,2,Constantes.NUEVO_VIAJE));
 
-        Assert.assertEquals("El mensaje de excepcion VEHICULO_NO_VALIDO no es correcto", ventanaErrores.getMensajeError(), Mensajes.VEHICULO_NO_VALIDO.getValor());
+        Assert.assertEquals("El mensaje de excepcion VEHICULO_NO_VALIDO no es correcto", Mensajes.VEHICULO_NO_VALIDO.getValor(), ventanaErrores.getMensajeError());
 
         controlador.actionPerformed(new ActionEvent(this,4,Constantes.CERRAR_SESION_ADMIN)); //logout
 
     }
-
-
 }
