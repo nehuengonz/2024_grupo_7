@@ -5,6 +5,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.awt.event.ActionEvent;
+import java.util.Iterator;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -14,6 +15,7 @@ import org.junit.Test;
 import modeloDatos.Cliente;
 import modeloDatos.Viaje;
 import modeloNegocio.Empresa;
+import persistencia.EmpresaDTO;
 import persistencia.PersistenciaBIN;
 import util.Constantes;
 import util.Mensajes;
@@ -118,17 +120,27 @@ public class IntegracionEscenario6Test {
 	        controlador.actionPerformed(new ActionEvent(this, 2, Constantes.NUEVO_PEDIDO));
 	        
 	        Cliente cliente = (Cliente) Empresa.getInstance().getClientes().get("facundo");
+	        
+	        // ** Se verifica que se asigne bien en el pedido **
+	        Assert.assertEquals("La cantidad de pasajeros no se asigna correctamente", 3,
+	        		Empresa.getInstance().getPedidos().get(cliente).getCantidadPasajeros());
+	        Assert.assertEquals("La condicion de mascota no se asigna correctamente", false,
+	        		Empresa.getInstance().getPedidos().get(cliente).isMascota());
+	        Assert.assertEquals("La condicion de baul no se asigna correctamente", false,
+	        		Empresa.getInstance().getPedidos().get(cliente).isBaul());
+	        Assert.assertEquals("Los km no se asignan correctamente", 5,
+	        		Empresa.getInstance().getPedidos().get(cliente).getKm());
+	        Assert.assertEquals("La Zona no se asignan correctamente", Constantes.ZONA_STANDARD,
+	        		Empresa.getInstance().getPedidos().get(cliente).getZona());
+	        
 	        Assert.assertNotNull("El cliente logueado deberia tener un pedido",
 		    		Empresa.getInstance().getPedidoDeCliente(cliente));
-			System.out.println(Empresa.getInstance().getPedidoDeCliente(cliente));
-	        // *** Inicio del viaje ***
 	        when(vista.getChoferDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getChoferesDesocupados().get(0));
 	        when(vista.getVehiculoDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getVehiculosDesocupados().get(0));
 	        when(vista.getPedidoSeleccionado()).thenReturn(Empresa.getInstance().getPedidoDeCliente(cliente));
 	        controlador.actionPerformed(new ActionEvent(this, 3, Constantes.NUEVO_VIAJE));
 
 	        Viaje viajeEmpezado = Empresa.getInstance().getViajesIniciados().get(cliente);
-			System.out.println(viajeEmpezado);
 	        Assert.assertNotNull("El viaje no se inicio",viajeEmpezado);
 	        
 	        // *** Finalización del viaje ***
@@ -138,8 +150,38 @@ public class IntegracionEscenario6Test {
 	        boolean viajeFinalizado = Empresa.getInstance().getViajesTerminados().contains(viajeEmpezado);
 	        Assert.assertTrue("El viaje debería haber finalizado correctamente", viajeFinalizado);
 	        Assert.assertEquals("La calificación del viaje debería ser la asignada", 2, viajeEmpezado.getCalificacion());
-
 	        
+	        controlador.actionPerformed(new ActionEvent(this,3,Constantes.CERRAR_SESION_CLIENTE));
+
+	        Assert.assertNull("No se deslogueo al usuario", Empresa.getInstance().getUsuarioLogeado());
+	        
+	        // ** Se verifica que se persista correctamente **
+	        persistencia.abrirInput(controlador.getFileName());
+	        EmpresaDTO empresaLeida = (EmpresaDTO) persistencia.leer();
+	        persistencia.cerrarInput();
+
+	        for (Cliente clienteLeido : empresaLeida.getViajesIniciados().keySet()) {
+	            Viaje viajeLeido = empresaLeida.getViajesIniciados().get(clienteLeido);
+
+	            Iterator<Cliente> iteradorClientesOriginales = Empresa.getInstance().getViajesIniciados().keySet().iterator();
+	            Cliente clienteOriginalEncontrado = null;
+
+	            while (iteradorClientesOriginales.hasNext() && clienteOriginalEncontrado == null) {
+	                Cliente clienteOriginal = iteradorClientesOriginales.next();
+	                if (clienteOriginal.getNombreUsuario().equals(clienteLeido.getNombreUsuario())) {
+	                    clienteOriginalEncontrado = clienteOriginal;
+	                }
+	            }
+	            Assert.assertNotNull("No se encontró un Cliente persistido (" + clienteLeido.getNombreUsuario() + ") en la empresa Original", clienteOriginalEncontrado);
+	            Viaje viajeOriginal = Empresa.getInstance().getViajesIniciados().get(clienteOriginalEncontrado);
+
+	            Assert.assertNotNull("El viaje original no debería ser nulo", viajeOriginal);
+	            Assert.assertEquals("El chofer del viaje no coincide", viajeOriginal.getChofer().getDni(), viajeLeido.getChofer().getDni());
+	            Assert.assertEquals("El pedido del viaje no coincide", viajeOriginal.getPedido().getCliente().getNombreReal(), viajeLeido.getPedido().getCliente().getNombreReal());
+	            Assert.assertEquals("El valor del viaje no coincide", viajeOriginal.getValor(), viajeLeido.getValor(), 0.0001);
+	            Assert.assertEquals("El vehículo del viaje no coincide", viajeOriginal.getVehiculo().getPatente(), viajeLeido.getVehiculo().getPatente());
+	            Assert.assertEquals("La calificación del viaje no coincide", viajeOriginal.getCalificacion(), viajeLeido.getCalificacion());
+	        }
 	    } catch (Exception e) {
 			Assert.fail("Excepcion inesperada: " + e.getMessage());
 		}
