@@ -107,7 +107,7 @@ public class Test_verif_jtextfield {
 	
 	@SuppressWarnings("deprecation")
     @Test
-    public void testRegistroChoferRepetido() {
+    public void testRegistroChofer_correctamente() {
         robot.delay(TestUtils.getDelay());
 
         JTextField password= (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.PASSWORD);
