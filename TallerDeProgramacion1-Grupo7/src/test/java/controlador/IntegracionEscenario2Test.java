@@ -70,6 +70,15 @@ public class IntegracionEscenario2Test {
     }
 
     @Test
+    public void LoginDeClienteNoExiste()  {
+        when(vista.getUsserName()).thenReturn("sofia");
+        when(vista.getPassword()).thenReturn("123");
+
+        controlador.actionPerformed(new ActionEvent(this,1, Constantes.LOGIN)); //apreta boton de registrar
+        Assert.assertEquals("El mensaje de error no es el correcto", ventanaErrores.getMensajeError(), Mensajes.USUARIO_DESCONOCIDO.getValor());
+    }
+
+    @Test
     public void loginAdmin_y_VehiculoRepetido()  {
         when(vista.getPassword()).thenReturn("admin");
         when(vista.getUsserName()).thenReturn("admin");
