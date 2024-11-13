@@ -161,17 +161,13 @@ public class Test_verif_jtextfield {
         Empresa.getInstance().agregarCliente("a", "a", "a");
         Empresa.getInstance().agregarCliente(userCliente, passCliente, dniChofer);
         Cliente cliente = Empresa.getInstance().getClientes().get("a");
-        Pedido pedido= new Pedido(cliente,3,false,false,14,Constantes.ZONA_STANDARD);
-        Empresa.getInstance().agregarPedido(pedido);
-        Empresa.getInstance().crearViaje(pedido, chofer2, auto1);
-        Empresa.getInstance().setViajesIniciados(Empresa.getInstance().getViajesIniciados());
         //
         JTextField nombre = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.NOMBRE_USUARIO);
         JTextField contrasenia = (JTextField) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.PASSWORD);
         JButton aceptarLog = (JButton) TestUtils.getComponentForName((Component) controlador.getVista(), Constantes.LOGIN);
 
         //completo los textfields
-        robot.delay(1000);
+        robot.delay(TestUtils.getDelay());
         TestUtils.clickComponent(nombre, robot);
         TestUtils.tipeaTexto(this.userCliente, robot);
         TestUtils.clickComponent(contrasenia, robot);
@@ -185,16 +181,17 @@ public class Test_verif_jtextfield {
         JCheckBox mascota= (JCheckBox) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.CHECK_MASCOTA);
         JButton nuevoPedido=(JButton) TestUtils.getComponentForName((Component) controlador.getVista(),Constantes.NUEVO_PEDIDO);
 
-        robot.delay(1000);
+        robot.delay(TestUtils.getDelay());
 
         TestUtils.clickComponent(cantPax, robot);
-        TestUtils.tipeaTexto("10", robot);
+        TestUtils.tipeaTexto("3", robot);
         TestUtils.clickComponent(cantKm, robot);
         TestUtils.tipeaTexto("33", robot);
         TestUtils.clickComponent(zonaPeligrosa, robot);
-
+        robot.delay(1000);
         TestUtils.clickComponent(nuevoPedido, robot);
         robot.delay(1000);
+        TestUtils.clickComponent(nuevoPedido, robot);
 
         //verifico los resultados
         Assert.assertEquals("el campo cantidad depasajeros deberia estar vacio","",cantPax.getText());
