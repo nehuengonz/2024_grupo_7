@@ -80,7 +80,7 @@ public class IntegracionEscenario6Test {
 	        controlador.actionPerformed(new ActionEvent(this, 2, Constantes.NUEVO_PEDIDO));
 	        
 	        // Verificar que se muestra el mensaje de error
-			Assert.assertEquals("El mensaje de error no es correcto",ventanaErrores.getMensajeError(),Mensajes.SIN_VEHICULO_PARA_PEDIDO.getValor());
+			Assert.assertEquals("El mensaje de error no es correcto", Mensajes.SIN_VEHICULO_PARA_PEDIDO.getValor(),ventanaErrores.getMensajeError());
 	        
 	        Cliente cliente = (Cliente) Empresa.getInstance().getClientes().get("thiago");
 		    Assert.assertNull("No debería haberse creado un pedido sin disponibilidad",
@@ -219,7 +219,7 @@ public class IntegracionEscenario6Test {
 	        controlador.actionPerformed(new ActionEvent(this, 4, Constantes.CALIFICAR_PAGAR));
 	        
 	        // Verificar que el mensaje de error se muestra
-			Assert.assertEquals("El mensaje de error no es correcto",ventanaErrores.getMensajeError(),Mensajes.CLIENTE_SIN_VIAJE_PENDIENTE.getValor());
+			Assert.assertEquals("El mensaje de error no es correcto",Mensajes.CLIENTE_SIN_VIAJE_PENDIENTE.getValor(), ventanaErrores.getMensajeError());
 	        
 	    } catch (Exception e) {
 	        Assert.fail("Excepción inesperada: " + e.getMessage());

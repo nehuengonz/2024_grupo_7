@@ -69,7 +69,7 @@ public class IntegracionEscenario3Test {
 
         controlador.actionPerformed(new ActionEvent(this,2,Constantes.NUEVO_VIAJE));
 
-        Assert.assertEquals("El mensaje de excepcion VEHICULO_NO_DISPONIBLE no es correcto", ventanaErrores.getMensajeError(), Mensajes.VEHICULO_NO_DISPONIBLE.getValor());
+        Assert.assertEquals("El mensaje de excepcion VEHICULO_NO_DISPONIBLE no es correcto", Mensajes.VEHICULO_NO_DISPONIBLE.getValor(), ventanaErrores.getMensajeError());
 
         controlador.actionPerformed(new ActionEvent(this,4,Constantes.CERRAR_SESION_ADMIN)); //logout
     }
@@ -93,7 +93,7 @@ public class IntegracionEscenario3Test {
         System.out.println(Empresa.getInstance().getPedidoDeCliente(
                 Empresa.getInstance().getClientes().get("thiago")
         ));
-        Assert.assertEquals("El mensaje de excepcion CHOFER_NO_DISPONIBLE no es correcto", ventanaErrores.getMensajeError(), Mensajes.CHOFER_NO_DISPONIBLE.getValor());
+        Assert.assertEquals("El mensaje de excepcion CHOFER_NO_DISPONIBLE no es correcto", Mensajes.CHOFER_NO_DISPONIBLE.getValor(), ventanaErrores.getMensajeError());
 
         controlador.actionPerformed(new ActionEvent(this,4,Constantes.CERRAR_SESION_ADMIN)); //logout
     }
