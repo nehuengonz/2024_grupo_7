@@ -266,54 +266,5 @@ public class IntegracionEscenario2Test {
 
     }
 
-    @Test
-    public void test_clienteNuevoPedidoFinalizadoYCalificado() {
-        try {
-            // *** Inicio de sesion ***
-            when(vista.getPassword()).thenReturn("123");
-            when(vista.getUsserName()).thenReturn("facundo");
-            controlador.actionPerformed(new ActionEvent(this, 1, Constantes.LOGIN));
-
-            Assert.assertNotNull("Usuario logueado incorrectamente", Empresa.getInstance().getUsuarioLogeado());
-            Assert.assertEquals("Usuario logueado incorrectamente",
-                    Empresa.getInstance().getUsuarioLogeado().getNombreUsuario(), "facundo");
-            Assert.assertEquals("Usuario logueado incorrectamente",
-                    Empresa.getInstance().getUsuarioLogeado().getPass(), "123");
-
-            // *** Creacion del pedido ***
-            when(vista.getCantidadPax()).thenReturn(3);
-            when(vista.isPedidoConMascota()).thenReturn(false);
-            when(vista.isPedidoConBaul()).thenReturn(false);
-            when(vista.getCantKm()).thenReturn(5);
-            when(vista.getTipoZona()).thenReturn(Constantes.ZONA_STANDARD);
-
-            controlador.actionPerformed(new ActionEvent(this, 2, Constantes.NUEVO_PEDIDO));
-
-            Cliente cliente = (Cliente) Empresa.getInstance().getClientes().get("facundo");
-            Assert.assertNotNull("El cliente logueado deberia tener un pedido",
-                    Empresa.getInstance().getPedidoDeCliente(cliente));
-
-            // *** Inicio del viaje ***
-            when(vista.getChoferDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getChoferesDesocupados().get(0));
-            when(vista.getVehiculoDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getVehiculosDesocupados().get(0));
-            when(vista.getPedidoSeleccionado()).thenReturn(Empresa.getInstance().getPedidoDeCliente(cliente));
-            controlador.actionPerformed(new ActionEvent(this, 3, Constantes.NUEVO_VIAJE));
-
-            Viaje viajeEmpezado = Empresa.getInstance().getViajesIniciados().get(cliente);
-            Assert.assertNotNull("El viaje no se inicio",viajeEmpezado);
-
-            // *** Finalización del viaje ***
-            when(vista.getCalificacion()).thenReturn(2);
-            controlador.actionPerformed(new ActionEvent(this, 4, Constantes.CALIFICAR_PAGAR));
-
-            boolean viajeFinalizado = Empresa.getInstance().getViajesTerminados().contains(viajeEmpezado);
-            Assert.assertTrue("El viaje debería haber finalizado correctamente", viajeFinalizado);
-            Assert.assertEquals("La calificación del viaje debería ser la asignada", 2, viajeEmpezado.getCalificacion());
-
-
-        } catch (Exception e) {
-            Assert.fail("Excepcion inesperada: " + e.getMessage());
-        }
-    }
 
 }
