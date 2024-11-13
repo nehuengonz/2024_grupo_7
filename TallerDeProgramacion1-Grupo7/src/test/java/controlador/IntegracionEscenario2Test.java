@@ -139,8 +139,27 @@ public class IntegracionEscenario2Test {
         controlador.actionPerformed(new ActionEvent(this,1,Constantes.NUEVO_VIAJE));
 
         Viaje viajeEmpezado = Empresa.getInstance().getViajesIniciados().get(Empresa.getInstance().getClientes().get("facundo"));
+        Pedido pedido = viajeEmpezado.getPedido();
+        Chofer chofer = viajeEmpezado.getChofer();
+        Vehiculo vehiculo = viajeEmpezado.getVehiculo();
+
 
         Assert.assertNotNull("El viaje no se inicio",viajeEmpezado);
+        Assert.assertEquals("Pedido no se corresponde el cliente",
+                pedido.getCliente().getNombreUsuario(),
+                "facundo");
+        Assert.assertEquals("La cantidad de pasajeros no se asigna correctamente", 3,
+                pedido.getCantidadPasajeros());
+        Assert.assertTrue("La condicion de mascota no se asigna correctamente", viajeEmpezado.getPedido().isMascota());
+        Assert.assertTrue("La condicion de baul no se asigna correctamente", viajeEmpezado.getPedido().isBaul());
+        Assert.assertEquals("Los km no se asignan correctamente", 10,
+                viajeEmpezado.getPedido().getKm());
+        Assert.assertEquals("La Zona no se asignan correctamente", Constantes.ZONA_PELIGROSA,
+                viajeEmpezado.getPedido().getZona());
+
+        Assert.assertEquals("El chofer asignado no es correcto",chofer.getDni(),"1234567");
+
+        Assert.assertEquals("El vehiculo no es el correcto",vehiculo.getPatente(),"abc123");
 
         controlador.actionPerformed(new ActionEvent(this,3,Constantes.CERRAR_SESION_ADMIN)); //logout
 
