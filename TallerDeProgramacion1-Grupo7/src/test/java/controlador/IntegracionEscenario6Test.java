@@ -124,10 +124,8 @@ public class IntegracionEscenario6Test {
 	        // ** Se verifica que se asigne bien en el pedido **
 	        Assert.assertEquals("La cantidad de pasajeros no se asigna correctamente", 3,
 	        		Empresa.getInstance().getPedidos().get(cliente).getCantidadPasajeros());
-	        Assert.assertEquals("La condicion de mascota no se asigna correctamente", false,
-	        		Empresa.getInstance().getPedidos().get(cliente).isMascota());
-	        Assert.assertEquals("La condicion de baul no se asigna correctamente", false,
-	        		Empresa.getInstance().getPedidos().get(cliente).isBaul());
+            Assert.assertFalse("La condicion de mascota no se asigna correctamente", Empresa.getInstance().getPedidos().get(cliente).isMascota());
+            Assert.assertFalse("La condicion de baul no se asigna correctamente", Empresa.getInstance().getPedidos().get(cliente).isBaul());
 	        Assert.assertEquals("Los km no se asignan correctamente", 5,
 	        		Empresa.getInstance().getPedidos().get(cliente).getKm());
 	        Assert.assertEquals("La Zona no se asignan correctamente", Constantes.ZONA_STANDARD,
