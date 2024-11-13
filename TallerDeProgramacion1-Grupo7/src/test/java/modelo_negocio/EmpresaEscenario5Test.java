@@ -2,15 +2,18 @@ package modelo_negocio;
 
 import modeloDatos.Cliente;
 import modeloDatos.Pedido;
+import modeloDatos.Vehiculo;
 import modeloNegocio.Empresa;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import util.Constantes;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class EmpresaEscenario5Test {
     private final Escenario5 escenario5 = new Escenario5();
@@ -66,5 +69,16 @@ public class EmpresaEscenario5Test {
         Cliente cliente = Empresa.getInstance().getClientes().get("sofi");
         Pedido pedido = new Pedido(cliente, 10,false,false,20,"ZONA_STANDARD");
         Assert.assertFalse("No debería encontrar un vehículo adecuado.", Empresa.getInstance().validarPedido(pedido));
+    }
+    @Test
+    public void testVehiculosOrdenadosPorPedidoSinVehiculoHabilitado() {
+        Cliente cliente = Empresa.getInstance().getClientes().get("facundo");
+        Pedido pedido = new Pedido(cliente,5,true,true,10, Constantes.ZONA_STANDARD);
+
+        ArrayList<Vehiculo> vehiculosOrdenados = Empresa.getInstance().vehiculosOrdenadosPorPedido(pedido);
+
+        assertNotNull("La lista de vehículos ordenados no debería ser nula.", vehiculosOrdenados);
+
+        assertEquals("Se esperaban 0 vehículos ordenados.", 0, vehiculosOrdenados.size());
     }
 }

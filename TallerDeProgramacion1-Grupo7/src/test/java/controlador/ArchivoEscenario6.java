@@ -27,17 +27,7 @@ public class ArchivoEscenario6 {
         persistencia.cerrarOutput();
 
 
-        Empresa.getInstance().getHistorialViajeCliente(Empresa.getInstance().getClientes().get("facundo")).clear();
-        Empresa.getInstance().getHistorialViajeCliente(Empresa.getInstance().getClientes().get("thiago")).clear();
-        Empresa.getInstance().getHistorialViajeCliente(Empresa.getInstance().getClientes().get("nehuen")).clear();
-        Empresa.getInstance().getChoferes().clear();
-        Empresa.getInstance().getVehiculos().clear();
-        Empresa.getInstance().getVehiculosDesocupados().clear();
-        Empresa.getInstance().getChoferesDesocupados().clear();
-        Empresa.getInstance().getClientes().clear();
-        Empresa.getInstance().getPedidos().clear();
-        Empresa.getInstance().getViajesIniciados().clear();
-        Empresa.getInstance().getViajesTerminados().clear();
+        escenario6.teardown();
     }
 
     public void tearDown() throws Exception {
@@ -45,6 +35,7 @@ public class ArchivoEscenario6 {
         if(archivo.exists()){
             archivo.delete();
         }
+        escenario6.teardown();
     }
 
 }

@@ -28,13 +28,16 @@ public class IntegracionEscenario6Test {
 	private PersistenciaBIN persistencia;
 	private IVista vista;
     private Controlador controlador;
-    private IOptionPane ventanaErrores;
+    private VentanaErrores ventanaErrores;
 
 	@Before
 	public void setUp() throws Exception {
 		vista = mock(Ventana.class);
-		ventanaErrores = mock(DefaultOptionPane.class);
+		ventanaErrores = new VentanaErrores();
 		when(vista.getOptionPane()).thenReturn(ventanaErrores);
+
+		archivoEscenario6 = new ArchivoEscenario6();
+		archivoEscenario6.setUp();
 		
         persistencia = new PersistenciaBIN();
 		
@@ -42,9 +45,8 @@ public class IntegracionEscenario6Test {
         controlador.setVista(vista);
         controlador.setPersistencia(persistencia);
         controlador.setFileName("empresaIntegracion.bin");
-        
-        archivoEscenario6 = new ArchivoEscenario6();
-        archivoEscenario6.setUp();
+        controlador.leer();
+
 	}
 
 	@After
@@ -76,7 +78,7 @@ public class IntegracionEscenario6Test {
 	        controlador.actionPerformed(new ActionEvent(this, 2, Constantes.NUEVO_PEDIDO));
 	        
 	        // Verificar que se muestra el mensaje de error
-	        verify(ventanaErrores).ShowMessage(Mensajes.SIN_VEHICULO_PARA_PEDIDO.getValor());
+			Assert.assertEquals("El mensaje de error no es correcto",ventanaErrores.getMensajeError(),Mensajes.SIN_VEHICULO_PARA_PEDIDO.getValor());
 	        
 	        Cliente cliente = (Cliente) Empresa.getInstance().getClientes().get("thiago");
 		    Assert.assertNull("No debería haberse creado un pedido sin disponibilidad",
@@ -118,14 +120,15 @@ public class IntegracionEscenario6Test {
 	        Cliente cliente = (Cliente) Empresa.getInstance().getClientes().get("facundo");
 	        Assert.assertNotNull("El cliente logueado deberia tener un pedido",
 		    		Empresa.getInstance().getPedidoDeCliente(cliente));
-	        
+			System.out.println(Empresa.getInstance().getPedidoDeCliente(cliente));
 	        // *** Inicio del viaje ***
 	        when(vista.getChoferDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getChoferesDesocupados().get(0));
 	        when(vista.getVehiculoDisponibleSeleccionado()).thenReturn(Empresa.getInstance().getVehiculosDesocupados().get(0));
 	        when(vista.getPedidoSeleccionado()).thenReturn(Empresa.getInstance().getPedidoDeCliente(cliente));
 	        controlador.actionPerformed(new ActionEvent(this, 3, Constantes.NUEVO_VIAJE));
-	        
+
 	        Viaje viajeEmpezado = Empresa.getInstance().getViajesIniciados().get(cliente);
+			System.out.println(viajeEmpezado);
 	        Assert.assertNotNull("El viaje no se inicio",viajeEmpezado);
 	        
 	        // *** Finalización del viaje ***
@@ -174,7 +177,7 @@ public class IntegracionEscenario6Test {
 	        controlador.actionPerformed(new ActionEvent(this, 4, Constantes.CALIFICAR_PAGAR));
 	        
 	        // Verificar que el mensaje de error se muestra
-	        verify(ventanaErrores).ShowMessage(Mensajes.CLIENTE_SIN_VIAJE_PENDIENTE.getValor());
+			Assert.assertEquals("El mensaje de error no es correcto",ventanaErrores.getMensajeError(),Mensajes.CLIENTE_SIN_VIAJE_PENDIENTE.getValor());
 	        
 	    } catch (Exception e) {
 	        Assert.fail("Excepción inesperada: " + e.getMessage());
